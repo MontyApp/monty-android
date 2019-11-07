@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.monty.R
 import com.monty.ui.adverts.AdvertsFragment
+import com.monty.ui.myadverts.MyAdvertsFragment
 import javax.inject.Inject
 
 class MainPagerAdapter @Inject constructor(
@@ -13,7 +14,7 @@ class MainPagerAdapter @Inject constructor(
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> AdvertsFragment.newInstance()
-            1 -> Fragment()
+            1 -> MyAdvertsFragment.newInstance()
             2 -> Fragment()
             3 -> Fragment()
             else -> Fragment()
