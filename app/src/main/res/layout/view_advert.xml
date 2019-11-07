@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_marginStart="@dimen/d4"
+    android:layout_marginTop="@dimen/d1"
+    android:layout_marginEnd="@dimen/d4"
+    android:layout_marginBottom="@dimen/d1">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/bg_selected_with_radius"
+        app:cardCornerRadius="@dimen/advert_radius"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/advert_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_25" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/advert_location"
+        style="@style/Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/d2"
+        android:layout_marginTop="@dimen/d2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Brno" />
+
+    <View
+        android:id="@+id/advert_location_dot"
+        android:layout_width="@dimen/d1"
+        android:layout_height="@dimen/d1"
+        android:layout_marginStart="@dimen/d2"
+        android:background="@drawable/bg_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/advert_location"
+        app:layout_constraintStart_toEndOf="@+id/advert_location"
+        app:layout_constraintTop_toTopOf="@+id/advert_location" />
+
+    <TextView
+        android:id="@+id/advert_distance"
+        style="@style/Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/d2"
+        android:layout_marginTop="@dimen/d2"
+        app:layout_constraintStart_toEndOf="@+id/advert_location_dot"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="800m" />
+
+    <TextView
+        android:id="@+id/advert_title"
+        style="@style/TitleLight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/d2"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintBottom_toTopOf="@+id/advert_price"
+        app:layout_constraintEnd_toStartOf="@+id/advert_favourite"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Kolo na víkend" />
+
+    <TextView
+        android:id="@+id/advert_price"
+        style="@style/PriceLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/d2"
+        android:layout_marginBottom="@dimen/d2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="100 €" />
+
+    <ImageView
+        android:id="@+id/advert_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/d2"
+        android:layout_marginBottom="@dimen/d2"
+        android:src="@drawable/ic_favourite_inactive"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

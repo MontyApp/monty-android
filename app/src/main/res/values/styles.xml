@@ -1,0 +1,23 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/app_background</item>
+        <item name="android:actionOverflowButtonStyle">@style/ToolbarOverflowMenu</item>
+    </style>
+
+    <style name="ToolbarOverflowMenu" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_search</item>
+    </style>
+
+    <style name="BottomMenu">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/d14</item>
+        <item name="android:background">@color/white</item>
+        <item name="itemIconTint">@color/bottom_menu_color</item>
+        <item name="itemTextColor">@color/bottom_menu_color</item>
+    </style>
+
+</resources>

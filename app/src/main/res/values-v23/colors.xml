@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    we can have dark icons in status bar on M+ so we can have white statusbar-->
+    <color name="colorPrimaryDark">@color/white</color>
+</resources>

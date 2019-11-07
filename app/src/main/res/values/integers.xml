@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="phone_number_length">9</integer>
+    <item name="empty" type="id"/>
+
+    <item name="state_unspecified" type="id"/>
+    <item name="state_loading" type="id"/>
+    <item name="state_content" type="id"/>
+    <item name="state_empty" type="id"/>
+    <item name="state_error" type="id"/>
+</resources>

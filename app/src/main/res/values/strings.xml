@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">monty-android</string>
+    <string name="menu_adverts">Inzeráty</string>
+    <string name="menu_my">Moje</string>
+    <string name="menu_favourite">Obľúbené</string>
+    <string name="menu_profile">Profil</string>
+</resources>
