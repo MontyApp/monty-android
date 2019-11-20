@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.monty.R
+import com.monty.tool.extensions.titleTypeface
 import com.monty.ui.base.BaseFragment
 import com.monty.ui.common.AdvertsAdapter
 import com.monty.ui.myadverts.contract.MyAdvertsState
@@ -31,6 +32,7 @@ class MyAdvertsFragment : BaseFragment<MyAdvertsState>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        my_adverts_toolbar_layout.titleTypeface()
 
         my_adverts_recycler.layoutManager = LinearLayoutManager(context)
         my_adverts_recycler.adapter = adapter

@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_device_coordinator_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        style="@style/Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Inzeráty">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        style="@style/AppBar">
 
-    </androidx.appcompat.widget.Toolbar>
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/adverts_toolbar_layout"
+            style="@style/CollapsingToolbar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/adverts_toolbar"
+                style="@style/Toolbar"
+                android:titleTextAppearance="@style/ToolbarTitle"
+                app:title="@string/adverts_title" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.monty.ui.base.placeholder.PlaceholderLayoutView
         android:id="@+id/adverts_stateLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
             android:id="@+id/state_content"
@@ -43,8 +51,8 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/d4"
             android:gravity="center"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -63,6 +71,6 @@
 
         </LinearLayout>
     </com.monty.ui.base.placeholder.PlaceholderLayoutView>
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

@@ -20,4 +20,26 @@
         <item name="itemTextColor">@color/bottom_menu_color</item>
     </style>
 
+    <style name="AppBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">150dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?actionBarSize</item>
+        <item name="android:titleTextAppearance">@style/ToolbarTitle</item>
+    </style>
+
+    <style name="CollapsingToolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="expandedTitleTextAppearance">@style/CollapsedToolbarTitle</item>
+        <item name="collapsedTitleTextAppearance">@style/ToolbarTitle</item>
+        <item name="expandedTitleGravity">center_horizontal</item>
+        <item name="layout_scrollFlags">scroll|exitUntilCollapsed</item>
+    </style>
+
 </resources>

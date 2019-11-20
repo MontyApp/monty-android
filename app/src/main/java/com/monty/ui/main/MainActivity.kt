@@ -41,6 +41,13 @@ class MainActivity : BaseActivity<MainState>() {
 
         main_viewPager.offscreenPageLimit = 4
 
+        main_bottomMenu.setOnNavigationItemSelectedListener { menuItem ->
+            val position = pagerAdapter.getPositionForItemId(menuItem.itemId)
+            selectedTabId = position
+            main_viewPager.setCurrentItem(position, false)
+            return@setOnNavigationItemSelectedListener true
+        }
+
         if (intent.hasExtra(Constant.Bundle.TAB_ID) && savedInstanceState == null) {
             selectedTabId = intent.getIntExtra(Constant.Bundle.TAB_ID, R.id.empty)
         } else if (savedInstanceState != null) {

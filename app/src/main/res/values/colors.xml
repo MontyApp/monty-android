@@ -4,10 +4,11 @@
     <color name="colorPrimaryDark">@color/dark_grey</color>
     <color name="colorAccent">@color/red</color>
     <color name="app_background">@color/white</color>
+    <color name="advert_background">@color/black_30</color>
 
     <color name="white">#FFFFFF</color>
     <color name="white_ripple">#44000000</color>
-    <color name="black_25">#25000000</color>
+    <color name="black_30">#30000000</color>
     <color name="blueish_grey">#20363D</color>
     <color name="dark_grey">#7A7A7A</color>
     <color name="light_grey">#F2F2F2</color>
