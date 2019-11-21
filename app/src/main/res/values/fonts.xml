@@ -15,6 +15,10 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    <style name="TextRegular.Blueish.32">
+        <item name="android:textSize">32sp</item>
+    </style>
+
     <style name="TextRegular.Blueish.16">
         <item name="android:textSize">16sp</item>
     </style>
@@ -94,7 +98,8 @@
     </style>
 
     <!-- Monty styles -->
-    <style name="Toolbar" parent="TextRegular.Blueish.22" />
+    <style name="ToolbarTitle" parent="TextRegular.Blueish.22" />
+    <style name="CollapsedToolbarTitle" parent="TextRegular.Blueish.32" />
     <style name="TitleLight" parent="TextMedium.White.20" />
     <style name="TitleDark" parent="TextMedium.Blueish.20" />
     <style name="Subtitle" parent="TextMedium.Blueish.16" />

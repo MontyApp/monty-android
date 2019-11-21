@@ -11,20 +11,20 @@
         style="@style/AppBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/my_adverts_toolbar_layout"
+            android:id="@+id/favourite_adverts_toolbar_layout"
             style="@style/CollapsingToolbar">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/my_adverts_toolbar"
+                android:id="@+id/favourite_adverts_toolbar"
                 style="@style/Toolbar"
                 android:titleTextAppearance="@style/ToolbarTitle"
-                app:title="@string/my_adverts_title" />
+                app:title="@string/favourite_adverts_title" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.monty.ui.base.placeholder.PlaceholderLayoutView
-        android:id="@+id/my_adverts_stateLayout"
+        android:id="@+id/favourite_adverts_stateLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -35,7 +35,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/my_adverts_recycler"
+                android:id="@+id/favourite_adverts_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"

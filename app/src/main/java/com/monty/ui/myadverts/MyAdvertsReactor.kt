@@ -14,7 +14,7 @@ class MyAdvertsReactor @Inject constructor() : MviReactor<MyAdvertsState>() {
 
     override fun bind(actions: Observable<MviAction<MyAdvertsState>>) {
        attachLifecycleObservable
-           .map { UpdateMyAdvertsReducer(adverts) }
+           .map { UpdateMyAdvertsReducer(adverts.sortedByDescending { it.id }) }
            .bindToView()
     }
 }

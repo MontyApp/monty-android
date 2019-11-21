@@ -30,6 +30,7 @@ class AdvertView @JvmOverloads constructor(
         advert_price.text = advert.price
         advert_location.text = "Brno"
         advert_distance.text = "800 m"
+        advert_interval.text = advert.interval
 
         Picasso.with(context)
             .load(advert.image)
