@@ -3,11 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:layout_marginStart="@dimen/d4"
-    android:layout_marginTop="@dimen/d1"
-    android:layout_marginEnd="@dimen/d4"
-    android:layout_marginBottom="@dimen/d1">
+    android:layout_height="150dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -104,8 +100,8 @@
         android:id="@+id/advert_favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/d2"
-        android:layout_marginBottom="@dimen/d2"
+        android:background="?actionBarItemBackground"
+        android:padding="@dimen/d2"
         android:src="@drawable/ic_favourite_inactive"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -1,11 +1,14 @@
 package com.monty.injection.module
 
 import android.content.Context
+import androidx.room.Room
 import com.monty.App
+import com.monty.data.database.AppDatabase
 import com.monty.injection.ApplicationContext
 import com.thefuntasty.taste.res.TRes
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 class ApplicationModule {
@@ -17,11 +20,11 @@ class ApplicationModule {
     @Provides
     fun res(@ApplicationContext context: Context): TRes = TRes(context)
 
-    //@Provides
-    //@Singleton
-    //fun database(@ApplicationContext context: Context): AppDatabase {
-    //    return Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DATABASE_NAME)
-    //        .fallbackToDestructiveMigration()
-    //        .build()
-    //}
+    @Provides
+    @Singleton
+    fun database(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 }

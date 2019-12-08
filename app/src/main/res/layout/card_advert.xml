@@ -5,6 +5,10 @@
 
     <com.monty.ui.common.AdvertView
         android:id="@+id/advert"
+        android:layout_marginStart="@dimen/d4"
+        android:layout_marginTop="@dimen/d1"
+        android:layout_marginEnd="@dimen/d4"
+        android:layout_marginBottom="@dimen/d1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

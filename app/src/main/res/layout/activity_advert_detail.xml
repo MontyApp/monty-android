@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        style="@style/AppBar"
+        android:layout_height="230dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/advert_detail_toolbar_layout"
+            style="@style/CollapsingToolbar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/advert_detail_toolbar"
+                style="@style/Toolbar"
+                android:titleTextAppearance="@style/ToolbarTitle" />
+
+            <ImageView
+                android:id="@+id/advert_detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.monty.ui.base.placeholder.PlaceholderLayoutView
+        android:id="@+id/advert_detail_stateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ScrollView
+            android:id="@+id/state_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/advert_detail_title"
+                    style="@style/TitleDark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginTop="@dimen/d4"
+                    android:layout_marginRight="@dimen/d4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Kolo na víkend" />
+
+                <TextView
+                    android:id="@+id/advert_detail_description"
+                    style="@style/Description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginTop="@dimen/d4"
+                    android:layout_marginRight="@dimen/d4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_title"
+                    tools:text="Plně funkční, kolo s blatníky, zvonkem, ..." />
+
+                <View
+                    android:id="@+id/advert_detail_description_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginTop="@dimen/d4"
+                    android:layout_marginRight="@dimen/d4"
+                    android:background="@color/light_grey"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_description" />
+
+                <TextView
+                    android:id="@+id/advert_detail_deposit_title"
+                    style="@style/Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginTop="@dimen/d4"
+                    android:layout_marginRight="@dimen/d4"
+                    android:text="@string/adverts_deposit_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_description_separator" />
+
+                <TextView
+                    android:id="@+id/advert_detail_deposit_info"
+                    style="@style/SmallDescriptionDark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginTop="@dimen/d1"
+                    android:layout_marginRight="@dimen/d4"
+                    android:text="@string/adverts_deposit_info"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_title" />
+
+                <View
+                    android:id="@+id/advert_detail_deposit_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginTop="@dimen/d4"
+                    android:layout_marginRight="@dimen/d4"
+                    android:background="@color/light_grey"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_info" />
+
+                <TextView
+                    android:id="@+id/advert_detail_address_title"
+                    style="@style/Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginTop="@dimen/d4"
+                    android:layout_marginRight="@dimen/d4"
+                    android:text="@string/adverts_address_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_separator" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/state_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/d4"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/d4"
+                app:srcCompat="@drawable/ic_favourite_inactive" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/d6"
+                android:gravity="center"
+                android:paddingLeft="@dimen/d4"
+                android:paddingRight="@dimen/d4"
+                android:text="Empty text" />
+
+        </LinearLayout>
+    </com.monty.ui.base.placeholder.PlaceholderLayoutView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+

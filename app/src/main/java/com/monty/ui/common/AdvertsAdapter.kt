@@ -8,12 +8,14 @@ import com.jakewharton.rxrelay2.PublishRelay
 import com.monty.R
 import com.monty.data.model.ui.Advert
 import com.monty.tool.extensions.withAdapterPosition
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.card_advert.view.*
 import javax.inject.Inject
 
 class AdvertsAdapter @Inject constructor() : RecyclerView.Adapter<AdvertsAdapter.ViewHolder>() {
 
     val onItemClick: PublishRelay<Advert> = PublishRelay.create()
+    val onFavouriteClick: PublishSubject<Advert> = PublishSubject.create()
 
     private val items = ArrayList<Advert>()
 
@@ -33,6 +35,10 @@ class AdvertsAdapter @Inject constructor() : RecyclerView.Adapter<AdvertsAdapter
             viewHolder.withAdapterPosition { adapterPosition ->
                 onItemClick.accept(items[adapterPosition])
             }
+        }
+
+        view.advert.onFavouriteClick.subscribe {
+            onFavouriteClick.onNext(it)
         }
 
         return viewHolder
