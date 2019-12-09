@@ -30,7 +30,9 @@
     <style name="Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?actionBarSize</item>
+        <item name="layout_collapseMode">pin</item>
         <item name="android:titleTextAppearance">@style/ToolbarTitle</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <style name="CollapsingToolbar">
@@ -40,6 +42,7 @@
         <item name="collapsedTitleTextAppearance">@style/ToolbarTitle</item>
         <item name="expandedTitleGravity">center_horizontal</item>
         <item name="layout_scrollFlags">scroll|exitUntilCollapsed</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <style name="ProgressWheel">

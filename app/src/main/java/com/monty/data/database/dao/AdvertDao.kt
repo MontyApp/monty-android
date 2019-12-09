@@ -19,6 +19,9 @@ abstract class AdvertDao {
     @Query(value = "SELECT * FROM advert WHERE advert.id = :advertId LIMIT 1")
     abstract fun getAdvertByIdFlowable(advertId: Int): Flowable<Advert>
 
+    @Query("UPDATE advert SET is_favourite = :isFavourite WHERE id = :id")
+    abstract fun updateIsFavourite(id: Int, isFavourite: Boolean)
+
     @Query("DELETE FROM advert")
     abstract fun deleteAll()
 

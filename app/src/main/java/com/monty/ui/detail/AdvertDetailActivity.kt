@@ -3,14 +3,13 @@ package com.monty.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.jakewharton.rxbinding2.support.v7.widget.navigationClicks
 import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
 import com.monty.data.model.ui.Advert
 import com.monty.tool.constant.Constant
 import com.monty.ui.base.BaseActivity
-import com.monty.ui.detail.contract.AdvertDetailState
-import com.monty.ui.detail.contract.NavigateToShowPhotoEvent
-import com.monty.ui.detail.contract.OnPhotoClick
+import com.monty.ui.detail.contract.*
 import com.monty.ui.photo.ShowPhotoActivity
 import com.squareup.picasso.Picasso
 import com.sumera.koreactor.reactor.MviReactor
@@ -42,6 +41,10 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        advert_detail_toolbar.navigationClicks()
+            .map { OnBackAction }
+            .bindToReactor()
+
         advert_detail_image.clicks()
             .map { OnPhotoClick }
             .bindToReactor()
@@ -51,7 +54,6 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
         stateObservable.getChange { it.advert }
             .filter { it != Advert.EMPTY }
             .observeState {
-                advert_detail_toolbar.title = it.title
                 advert_detail_title.text = it.title
                 advert_detail_description.text = it.description
                 advert_detail_price.text = it.price
@@ -79,6 +81,7 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 is NavigateToShowPhotoEvent -> {
                     startActivity(ShowPhotoActivity.getStartIntent(this, event.url))
                 }
+                BackEvent -> finish()
             }
         }
     }

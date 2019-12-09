@@ -16,12 +16,14 @@ class FavouriteAdvertsStore @Inject constructor(
     fun addFavouriteAdvert(advertId: Int): Completable {
         return Completable.fromCallable {
             database.favouriteAdvertDao().insert(FavouriteAdvert(advertId))
+            database.advertDao().updateIsFavourite(advertId, true)
         }
     }
 
     fun removeFavouriteAdvert(advertId: Int): Completable {
         return Completable.fromCallable {
             database.favouriteAdvertDao().delete(advertId)
+            database.advertDao().updateIsFavourite(advertId, false)
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.FavouriteAdvert
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 abstract class FavouriteAdvertDao {
@@ -16,6 +17,9 @@ abstract class FavouriteAdvertDao {
 
     @Query(value = "SELECT advert.*, favourite_advert.* FROM advert INNER JOIN favourite_advert WHERE advert.id = favourite_advert.id")
     abstract fun getAll(): Flowable<List<Advert>>
+
+    @Query(value = "SELECT advert.*, favourite_advert.* FROM advert INNER JOIN favourite_advert WHERE advert.id = favourite_advert.id")
+    abstract fun getAllSingle(): Single<List<Advert>>
 
     @Query("DELETE FROM favourite_advert WHERE id = :advertId")
     abstract fun delete(advertId: Int)

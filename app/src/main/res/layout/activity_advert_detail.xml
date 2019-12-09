@@ -13,17 +13,20 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/advert_detail_toolbar_layout"
-            style="@style/CollapsingToolbar">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/advert_detail_toolbar"
-                style="@style/Toolbar"
-                android:titleTextAppearance="@style/ToolbarTitle" />
+            style="@style/CollapsingToolbar"
+            app:contentScrim="@color/white">
 
             <ImageView
                 android:id="@+id/advert_detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/advert_detail_toolbar"
+                style="@style/Toolbar"
+                android:titleTextAppearance="@style/ToolbarTitle"
+                app:navigationIcon="@drawable/ic_back" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -81,11 +84,12 @@
                 <TextView
                     android:id="@+id/advert_detail_description"
                     style="@style/Description"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/d4"
                     android:layout_marginTop="@dimen/d4"
                     android:layout_marginRight="@dimen/d4"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/advert_detail_title"
                     tools:text="Plně funkční, kolo s blatníky, zvonkem, ..." />
