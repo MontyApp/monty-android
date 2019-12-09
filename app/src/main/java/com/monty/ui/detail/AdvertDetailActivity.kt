@@ -8,6 +8,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
 import com.monty.data.model.ui.Advert
 import com.monty.tool.constant.Constant
+import com.monty.tool.currency.CurrencyFormatter
 import com.monty.ui.base.BaseActivity
 import com.monty.ui.detail.contract.*
 import com.monty.ui.photo.ShowPhotoActivity
@@ -21,8 +22,9 @@ import javax.inject.Inject
 
 class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
 
-    @Inject
-    lateinit var reactorFactory: AdvertDetailReactorFactory
+    @Inject lateinit var reactorFactory: AdvertDetailReactorFactory
+
+    @Inject lateinit var currencyFormatter: CurrencyFormatter
 
     companion object {
         fun getStartIntent(context: Context, advertId: Int): Intent {
@@ -56,9 +58,9 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
             .observeState {
                 advert_detail_title.text = it.title
                 advert_detail_description.text = it.description
-                advert_detail_price.text = it.price
-                advert_detail_price_interval.text = it.interval
-                advert_detail_deposit_price.text = it.price
+                advert_detail_price.text = it.getPrice(currencyFormatter)
+                advert_detail_price_interval.text = it.getInterval(resources)
+                advert_detail_deposit_price.text = it.getDeposit(currencyFormatter)
             }
 
         stateObservable.getChange { it.advert.image }

@@ -24,4 +24,9 @@
     <string name="adverts_deposit_info">Nič sa neboj. Kaucia sa ti na konci vráti.</string>
     <string name="adverts_address_title">Kde to nájdem?</string>
     <string name="adverts_user_title">Kto to ponúka?</string>
+
+    <!-- Intervals -->
+    <string name="interval_day">za deň</string>
+    <string name="interval_week">za týždeň</string>
+    <string name="interval_month">za mesiac</string>
 </resources>
