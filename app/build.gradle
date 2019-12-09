@@ -59,6 +59,7 @@ dependencies {
     final TASTE_VERSION = '3.0.0-kotlin-beta10'
     final PHOTO_VIEW = '2.0.0'
     final MATERIALISH_PROGRESS = '1.7'
+    final GOOGLE_GCM = '17.0.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -102,6 +103,10 @@ dependencies {
 
     // Permissions
     implementation "com.tbruyelle.rxpermissions2:rxpermissions:$RX_PERMISSIONS"
+
+    // Google
+    implementation "com.google.android.gms:play-services-maps:$GOOGLE_GCM"
+    implementation "com.google.android.gms:play-services-location:$GOOGLE_GCM"
 
     // Networking
     implementation "com.squareup.retrofit2:retrofit:$RETROFIT"
