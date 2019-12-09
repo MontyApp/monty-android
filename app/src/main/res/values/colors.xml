@@ -7,6 +7,7 @@
     <color name="advert_background">@color/black_30</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="white_ripple">#44000000</color>
     <color name="black_30">#30000000</color>
     <color name="blueish_grey">#20363D</color>

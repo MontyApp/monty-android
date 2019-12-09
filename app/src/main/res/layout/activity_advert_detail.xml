@@ -46,14 +46,37 @@
                 <TextView
                     android:id="@+id/advert_detail_title"
                     style="@style/TitleDark"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/d4"
                     android:layout_marginTop="@dimen/d4"
                     android:layout_marginRight="@dimen/d4"
+                    app:layout_constraintEnd_toStartOf="@+id/advert_detail_price_barrier"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Kolo na víkend" />
+
+                <TextView
+                    android:id="@+id/advert_detail_price"
+                    style="@style/PriceDark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginRight="@dimen/d4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/advert_detail_title"
+                    tools:text="100€" />
+
+                <TextView
+                    android:id="@+id/advert_detail_price_interval"
+                    style="@style/SmallDescriptionDark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginRight="@dimen/d4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_price"
+                    tools:text="za týždeň" />
 
                 <TextView
                     android:id="@+id/advert_detail_description"
@@ -66,6 +89,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/advert_detail_title"
                     tools:text="Plně funkční, kolo s blatníky, zvonkem, ..." />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/advert_detail_price_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="advert_detail_price_interval,advert_detail_price" />
 
                 <View
                     android:id="@+id/advert_detail_description_separator"
@@ -88,6 +118,17 @@
                     android:text="@string/adverts_deposit_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/advert_detail_description_separator" />
+
+                <TextView
+                    android:id="@+id/advert_detail_deposit_price"
+                    style="@style/Description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:layout_marginRight="@dimen/d4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/advert_detail_deposit_title"
+                    tools:text="100€" />
 
                 <TextView
                     android:id="@+id/advert_detail_deposit_info"

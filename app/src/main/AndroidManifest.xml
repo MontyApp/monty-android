@@ -27,6 +27,9 @@
         <activity
             android:name=".ui.detail.AdvertDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.photo.ShowPhotoActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 </manifest>
