@@ -42,4 +42,14 @@
         <item name="layout_scrollFlags">scroll|exitUntilCollapsed</item>
     </style>
 
+    <style name="ProgressWheel">
+        <item name="matProg_barColor">@color/red</item>
+        <item name="matProg_progressIndeterminate">true</item>
+    </style>
+
+    <style name="ProgressWheel.Large">
+        <item name="android:layout_width">@dimen/d12</item>
+        <item name="android:layout_height">@dimen/d12</item>
+    </style>
+
 </resources>

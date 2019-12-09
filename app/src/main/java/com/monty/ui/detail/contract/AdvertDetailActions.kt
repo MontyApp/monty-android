@@ -5,3 +5,5 @@ import com.sumera.koreactor.reactor.data.MviAction
 sealed class AdvertDetailAction : MviAction<AdvertDetailState>
 
 object OnRefreshAction : AdvertDetailAction()
+
+object OnPhotoClick: AdvertDetailAction()

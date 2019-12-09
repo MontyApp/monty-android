@@ -2,6 +2,8 @@ package com.monty.ui.detail
 
 import com.monty.domain.advert.GetAdvertObservabler
 import com.monty.ui.detail.contract.AdvertDetailState
+import com.monty.ui.detail.contract.NavigateToShowPhotoEvent
+import com.monty.ui.detail.contract.OnPhotoClick
 import com.monty.ui.detail.contract.UpdateAdvertReducer
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviAction
@@ -16,7 +18,14 @@ class AdvertDetailReactor @Inject constructor(
     override fun createInitialState() = AdvertDetailState.INITIAL
 
     override fun bind(actions: Observable<MviAction<AdvertDetailState>>) {
-       attachLifecycleObservable
+        val onPhotoClick = actions.ofActionType<OnPhotoClick>()
+
+        onPhotoClick
+            .flatMapSingle { stateSingle }
+            .map { NavigateToShowPhotoEvent(it.advert.image) }
+            .bindToView()
+
+        attachLifecycleObservable
            .flatMap { getAdvertObservabler.init(advertId).execute() }
            .map { UpdateAdvertReducer(it) }
            .bindToView()

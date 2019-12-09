@@ -5,6 +5,8 @@ import com.monty.ui.detail.AdvertDetailActivity
 import com.monty.ui.detail.AdvertDetailActivityModule
 import com.monty.ui.main.MainActivity
 import com.monty.ui.main.MainActivityModule
+import com.monty.ui.photo.ShowPhotoActivity
+import com.monty.ui.photo.ShowPhotoActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -18,4 +20,8 @@ abstract class ActivityBuilderModule {
     @PerActivity
     @ContributesAndroidInjector(modules = [AdvertDetailActivityModule::class])
     abstract fun advertDetailActivity(): AdvertDetailActivity
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = [ShowPhotoActivityModule::class])
+    abstract fun showPhotoActivity(): ShowPhotoActivity
 }

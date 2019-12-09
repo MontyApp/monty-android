@@ -57,6 +57,8 @@ dependencies {
     final SHIMMER_LAYOUT = '2.0.0'
     final ACKEE = '1.0.4'
     final TASTE_VERSION = '3.0.0-kotlin-beta10'
+    final PHOTO_VIEW = '2.0.0'
+    final MATERIALISH_PROGRESS = '1.7'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -121,6 +123,8 @@ dependencies {
     implementation "com.ethanhua:skeleton:$SKELETON"
     implementation "androidx.cardview:cardview:$SUPPORT_LIBRARY"
     implementation "io.supercharge:shimmerlayout:$SHIMMER_LAYOUT"
+    implementation "com.github.chrisbanes:PhotoView:$PHOTO_VIEW"
+    implementation "com.pnikosis:materialish-progress:$MATERIALISH_PROGRESS"
 
     // Persistence
     implementation "com.orhanobut:hawk:$HAWK"
