@@ -1,8 +1,14 @@
 package com.monty.data.model.ui
 
+import android.content.res.Resources
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.monty.R
+import com.monty.data.model.ui.type.IntervalType
+import com.monty.tool.currency.CurrencyFormatter
+import org.threeten.bp.LocalDateTime
 
 @Entity(tableName = "advert")
 data class Advert(
@@ -16,14 +22,17 @@ data class Advert(
     @ColumnInfo(name = "description")
     val description: String,
 
-    @ColumnInfo(name = "interval")
-    val interval: String,
-
     @ColumnInfo(name = "image")
     val image: String,
 
-    @ColumnInfo(name = "price")
-    val price: String,
+    @ColumnInfo(name = "created_at")
+    val createdAt: LocalDateTime,
+
+    @Embedded(prefix = "price_")
+    val price: Price,
+
+    @Embedded(prefix = "deposit_")
+    val deposit: Price,
 
     @ColumnInfo(name = "is_favourite")
     val isFavourite: Boolean = false
@@ -34,9 +43,28 @@ data class Advert(
             id = -1,
             title = "",
             image = "",
-            interval = "",
             description = "",
-            price = ""
+            createdAt = LocalDateTime.MIN,
+            price = Price.EMPTY,
+            deposit = Price.EMPTY,
+            isFavourite = false
         )
+    }
+
+    fun getPrice(currencyFormatter: CurrencyFormatter): String {
+        return currencyFormatter.format(price.value, price.currency)
+    }
+
+    fun getDeposit(currencyFormatter: CurrencyFormatter): String {
+        return currencyFormatter.format(deposit.value, deposit.currency)
+    }
+
+    fun getInterval(resources: Resources): String {
+        return when (price.interval.name) {
+            IntervalType.DAY.value -> resources.getString(R.string.interval_day)
+            IntervalType.WEEK.value -> resources.getString(R.string.interval_week)
+            IntervalType.MONTH.value -> resources.getString(R.string.interval_month)
+            else -> ""
+        }
     }
 }
