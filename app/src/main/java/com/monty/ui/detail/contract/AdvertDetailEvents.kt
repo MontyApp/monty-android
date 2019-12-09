@@ -6,4 +6,6 @@ sealed class AdvertDetailEvent : MviEvent<AdvertDetailState>()
 
 data class ErrorEvent(val message: String) : AdvertDetailEvent()
 
+object BackEvent : AdvertDetailEvent()
+
 data class NavigateToShowPhotoEvent(val url: String): AdvertDetailEvent()

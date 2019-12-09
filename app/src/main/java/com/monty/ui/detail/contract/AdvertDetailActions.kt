@@ -6,4 +6,6 @@ sealed class AdvertDetailAction : MviAction<AdvertDetailState>
 
 object OnRefreshAction : AdvertDetailAction()
 
+object OnBackAction : AdvertDetailAction()
+
 object OnPhotoClick: AdvertDetailAction()

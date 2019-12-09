@@ -14,9 +14,13 @@ class AdvertsStore @Inject constructor(
 ) {
 
     fun syncAdverts(): Completable {
-        return Completable.fromCallable {
-            database.advertDao().insert(adverts)
-        }
+        return database.favouriteAdvertDao().getAllSingle()
+            .flatMapCompletable { favourites ->
+                Completable.fromCallable {
+                    adverts.map { advert -> advert.copy(isFavourite = favourites.find { it.id == advert.id } != null) }
+                        .let { database.advertDao().insert(it) }
+                }
+            }
     }
 
     fun getAdverts(): Observable<List<Advert>> {
