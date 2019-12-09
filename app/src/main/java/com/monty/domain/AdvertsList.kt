@@ -19,7 +19,7 @@ val adverts = listOf(
         price = "48 €",
         interval = "za týždeň",
         image = "https://assets.bosch.com/media/global/products_and_solutions/industry_and_trade/power-tools-for-professionals_res_800x450.jpg",
-        isFavourite = true
+        isFavourite = false
     ),
     Advert(
         id = 3,
@@ -37,7 +37,7 @@ val adverts = listOf(
         price = "20 €",
         interval = "za deň",
         image = "https://www.batchbicycles.com/media/wysiwyg/home-slide/batch-fitness-homepage.jpg",
-        isFavourite = true
+        isFavourite = false
     ),
     Advert(
         id = 5,
@@ -55,6 +55,6 @@ val adverts = listOf(
         price = "48 €",
         interval = "za týždeň",
         image = "https://assets.bosch.com/media/global/products_and_solutions/industry_and_trade/power-tools-for-professionals_res_800x450.jpg",
-        isFavourite = true
+        isFavourite = false
     )
 )

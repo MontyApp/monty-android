@@ -46,7 +46,7 @@
     </style>
 
     <style name="TextMedium.Blueish.16">
-        <item name="android:textSize">26sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextMedium.Blueish.20">

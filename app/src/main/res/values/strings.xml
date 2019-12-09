@@ -18,4 +18,10 @@
 
     <!-- Profile -->
     <string name="profile_title">Profil</string>
+
+    <!-- Advert Detail -->
+    <string name="adverts_deposit_title">Kaucia</string>
+    <string name="adverts_deposit_info">Nič sa neboj. Kaucia sa ti na konci vráti.</string>
+    <string name="adverts_address_title">Kde to nájdem?</string>
+    <string name="adverts_user_title">Kto to ponúka?</string>
 </resources>

@@ -8,6 +8,7 @@ import com.monty.R
 import com.monty.data.model.ui.Advert
 import com.monty.tool.extensions.drawable
 import com.squareup.picasso.Picasso
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.view_advert.view.*
 
 class AdvertView @JvmOverloads constructor(
@@ -15,6 +16,8 @@ class AdvertView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
+
+    val onFavouriteClick: PublishSubject<Advert> = PublishSubject.create()
 
     private var advertView: View = View.inflate(getContext(), R.layout.view_advert, this)
 
@@ -47,5 +50,15 @@ class AdvertView @JvmOverloads constructor(
                 context.drawable(R.drawable.ic_favourite_inactive)
             }
         )
+
+        advert_favourite.setOnClickListener {
+            advert_favourite.setImageDrawable(if (advert.isFavourite) {
+                context.drawable(R.drawable.ic_favourite_inactive)
+            } else {
+                context.drawable(R.drawable.ic_favourite_active_white)
+            })
+            onFavouriteClick.onNext(advert)
+            advert = advert.copy(isFavourite = !advert.isFavourite)
+        }
     }
 }

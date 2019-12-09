@@ -6,6 +6,7 @@ interface Constant {
 
     object Bundle {
         const val TAB_ID = "tab_id"
+        const val ADVERT_ID = "advert_id"
     }
 
     object Formatter {

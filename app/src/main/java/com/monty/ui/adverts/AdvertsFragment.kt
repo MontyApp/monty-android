@@ -6,10 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.monty.R
 import com.monty.tool.extensions.titleTypeface
 import com.monty.ui.adverts.contract.AdvertsState
+import com.monty.ui.adverts.contract.NavigateToAdvertDetailEvent
 import com.monty.ui.adverts.contract.OnAdvertClickAction
+import com.monty.ui.adverts.contract.OnFavouriteClickAction
 import com.monty.ui.base.BaseFragment
 import com.monty.ui.common.AdvertsAdapter
+import com.monty.ui.detail.AdvertDetailActivity
 import com.sumera.koreactor.reactor.MviReactor
+import com.sumera.koreactor.reactor.data.MviEvent
 import com.sumera.koreactor.util.extension.getChange
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_adverts.*
@@ -40,6 +44,10 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
         adapter.onItemClick
             .map { OnAdvertClickAction(it) }
             .bindToReactor()
+
+        adapter.onFavouriteClick
+            .map { OnFavouriteClickAction(it) }
+            .bindToReactor()
     }
 
     override fun bindToState(stateObservable: Observable<AdvertsState>) {
@@ -48,5 +56,15 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
 
         stateObservable.getChange { it.layoutState }
             .observeState { adverts_stateLayout.setState(it) }
+    }
+
+    override fun bindToEvent(eventsObservable: Observable<MviEvent<AdvertsState>>) {
+        eventsObservable.observeEvent { event ->
+            when (event) {
+                is NavigateToAdvertDetailEvent -> {
+                    startActivity(AdvertDetailActivity.getStartIntent(requireContext(), event.advertId))
+                }
+            }
+        }
     }
 }

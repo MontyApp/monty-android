@@ -5,3 +5,5 @@ import com.sumera.koreactor.reactor.data.MviEvent
 sealed class FavouriteAdvertsEvent : MviEvent<FavouriteAdvertsState>()
 
 data class ErrorEvent(val message: String) : FavouriteAdvertsEvent()
+
+data class NavigateToAdvertDetailEvent(val advertId: Int) : FavouriteAdvertsEvent()

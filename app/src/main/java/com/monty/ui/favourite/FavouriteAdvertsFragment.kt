@@ -7,9 +7,13 @@ import com.monty.R
 import com.monty.tool.extensions.titleTypeface
 import com.monty.ui.base.BaseFragment
 import com.monty.ui.common.AdvertsAdapter
+import com.monty.ui.detail.AdvertDetailActivity
 import com.monty.ui.favourite.contract.FavouriteAdvertsState
+import com.monty.ui.favourite.contract.NavigateToAdvertDetailEvent
 import com.monty.ui.favourite.contract.OnAdvertClickAction
+import com.monty.ui.favourite.contract.OnFavouriteClickAction
 import com.sumera.koreactor.reactor.MviReactor
+import com.sumera.koreactor.reactor.data.MviEvent
 import com.sumera.koreactor.util.extension.getChange
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_favourite_adverts.*
@@ -40,6 +44,10 @@ class FavouriteAdvertsFragment : BaseFragment<FavouriteAdvertsState>() {
         adapter.onItemClick
             .map { OnAdvertClickAction(it) }
             .bindToReactor()
+
+        adapter.onFavouriteClick
+            .map { OnFavouriteClickAction(it) }
+            .bindToReactor()
     }
 
     override fun bindToState(stateObservable: Observable<FavouriteAdvertsState>) {
@@ -48,5 +56,15 @@ class FavouriteAdvertsFragment : BaseFragment<FavouriteAdvertsState>() {
 
         stateObservable.getChange { it.layoutState }
             .observeState { favourite_adverts_stateLayout.setState(it) }
+    }
+
+    override fun bindToEvent(eventsObservable: Observable<MviEvent<FavouriteAdvertsState>>) {
+        eventsObservable.observeEvent { event ->
+            when (event) {
+                is NavigateToAdvertDetailEvent -> {
+                    startActivity(AdvertDetailActivity.getStartIntent(requireContext(), event.advertId))
+                }
+            }
+        }
     }
 }

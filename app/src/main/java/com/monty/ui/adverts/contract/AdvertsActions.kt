@@ -7,4 +7,6 @@ sealed class AdvertsAction : MviAction<AdvertsState>
 
 object OnRefreshAction : AdvertsAction()
 
-data class OnAdvertClickAction(private val advert: Advert) : AdvertsAction()
+data class OnAdvertClickAction(val advert: Advert) : AdvertsAction()
+
+data class OnFavouriteClickAction(val advert: Advert) : AdvertsAction()
