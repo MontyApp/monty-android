@@ -1,9 +1,6 @@
 package com.monty.domain
 
-import com.monty.data.model.ui.Advert
-import com.monty.data.model.ui.Currency
-import com.monty.data.model.ui.Interval
-import com.monty.data.model.ui.Price
+import com.monty.data.model.ui.*
 import com.monty.data.model.ui.type.IntervalType
 import org.threeten.bp.LocalDateTime
 
@@ -25,6 +22,12 @@ val priceZ = Price(
     value = 75f
 )
 
+val address = Address(
+    name = "Brno",
+    latitude = 49.195061,
+    longitude = 16.606836
+)
+
 val adverts = listOf(
     Advert(
         id = 1,
@@ -34,6 +37,7 @@ val adverts = listOf(
         price = priceX,
         deposit = priceX,
         image = "https://images-na.ssl-images-amazon.com/images/I/91RqROIuniL._SL1500_.jpg",
+        address = address,
         isFavourite = false
     ),
     Advert(
@@ -43,6 +47,7 @@ val adverts = listOf(
         createdAt = LocalDateTime.MIN,
         price = priceY,
         deposit = priceX,
+        address = address,
         image = "https://assets.bosch.com/media/global/products_and_solutions/industry_and_trade/power-tools-for-professionals_res_800x450.jpg",
         isFavourite = false
     ),
@@ -53,6 +58,7 @@ val adverts = listOf(
         createdAt = LocalDateTime.MIN,
         price = priceZ,
         deposit = priceY,
+        address = address,
         image = "https://www.eastgatemusic.com.au/wp-content/uploads/2018/08/Gibson-Les-Paul-Classic-2018-Ebony-Electric-Guitar-in-case.jpg",
         isFavourite = false
     ),
@@ -63,6 +69,7 @@ val adverts = listOf(
         createdAt = LocalDateTime.MIN,
         price = priceX,
         deposit = priceZ,
+        address = address,
         image = "https://www.batchbicycles.com/media/wysiwyg/home-slide/batch-fitness-homepage.jpg",
         isFavourite = false
     ),
@@ -73,6 +80,7 @@ val adverts = listOf(
         createdAt = LocalDateTime.MIN,
         price = priceZ,
         deposit = priceX,
+        address = address,
         image = "https://images-na.ssl-images-amazon.com/images/I/91RqROIuniL._SL1500_.jpg",
         isFavourite = false
     ),
@@ -83,6 +91,7 @@ val adverts = listOf(
         createdAt = LocalDateTime.MIN,
         price = priceY,
         deposit = priceZ,
+        address = address,
         image = "https://assets.bosch.com/media/global/products_and_solutions/industry_and_trade/power-tools-for-professionals_res_800x450.jpg",
         isFavourite = false
     )

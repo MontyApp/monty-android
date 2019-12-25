@@ -3,12 +3,18 @@ package com.monty.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.jakewharton.rxbinding2.support.v7.widget.navigationClicks
 import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
+import com.monty.data.model.ui.Address
 import com.monty.data.model.ui.Advert
+import com.monty.data.model.ui.User
 import com.monty.tool.constant.Constant
 import com.monty.tool.currency.CurrencyFormatter
+import com.monty.tool.extensions.configureMap
 import com.monty.ui.base.BaseActivity
 import com.monty.ui.detail.contract.*
 import com.monty.ui.photo.ShowPhotoActivity
@@ -61,6 +67,12 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 advert_detail_price.text = it.getPrice(currencyFormatter)
                 advert_detail_price_interval.text = it.getInterval(resources)
                 advert_detail_deposit_price.text = it.getDeposit(currencyFormatter)
+                advert_detail_user.init(
+                    User(
+                        name = "Hanka Nováková",
+                        photo = "https://www.midlandsderm.com/wp-content/uploads/2019/04/Rachel-R.-Person-760x760.jpg"
+                    )
+                )
             }
 
         stateObservable.getChange { it.advert.image }
@@ -71,6 +83,17 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                     .fit()
                     .centerCrop()
                     .into(advert_detail_image)
+            }
+
+        stateObservable.getChange { it.advert.address }
+            .filter { it != Address.EMPTY }
+            .observeState { address ->
+                val addressLatLon = LatLng(address.latitude, address.longitude)
+                val mapFragment = supportFragmentManager.findFragmentById(R.id.advert_detail_map) as SupportMapFragment
+                val callback = OnMapReadyCallback { googleMap ->
+                    googleMap.configureMap(this, addressLatLon)
+                }
+                mapFragment.getMapAsync(callback)
             }
 
         stateObservable.getChange { it.layoutState }

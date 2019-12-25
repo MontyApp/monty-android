@@ -9,17 +9,17 @@ data class Address(
     val name: String,
 
     @ColumnInfo(name = "latitude")
-    val latitude: String,
+    val latitude: Double,
 
     @ColumnInfo(name = "longitude")
-    val longitude: String
+    val longitude: Double
 ) {
 
     companion object {
         val EMPTY = Address(
             name = "",
-            latitude = "",
-            longitude = ""
+            latitude = 0.0,
+            longitude = 0.0
         )
     }
 }

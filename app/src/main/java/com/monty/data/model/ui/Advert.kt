@@ -34,6 +34,9 @@ data class Advert(
     @Embedded(prefix = "deposit_")
     val deposit: Price,
 
+    @Embedded(prefix = "address_")
+    val address: Address,
+
     @ColumnInfo(name = "is_favourite")
     val isFavourite: Boolean = false
 ) {
@@ -47,6 +50,7 @@ data class Advert(
             createdAt = LocalDateTime.MIN,
             price = Price.EMPTY,
             deposit = Price.EMPTY,
+            address = Address.EMPTY,
             isFavourite = false
         )
     }
