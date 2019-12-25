@@ -6,4 +6,10 @@ sealed class CreateAdvertEvent : MviEvent<CreateAdvertState>()
 
 data class ErrorEvent(val message: String) : CreateAdvertEvent()
 
+object ShowGetPhotoDialogEvent : CreateAdvertEvent()
+
+object OpenCameraEvent : CreateAdvertEvent()
+
+object OpenGalleryEvent : CreateAdvertEvent()
+
 object SuccessEvent : CreateAdvertEvent()

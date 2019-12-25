@@ -116,6 +116,7 @@
     <style name="SmallDescriptionDark" parent="TextLight.DarkGrey.12" />
     <style name="PriceDark" parent="TextRegular.Blueish.16" />
     <style name="PriceLight" parent="TextRegular.White.16" />
+    <style name="SubmitButton" parent="TextRegular.White.16" />
     <style name="Location" parent="TextRegular.White.14" />
     <style name="TextInputHint" parent="TextLight.DarkGrey.13" />
     <style name="EditTextInputHint" parent="TextLight.Blueish.18" />

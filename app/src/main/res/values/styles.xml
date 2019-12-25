@@ -50,6 +50,11 @@
         <item name="matProg_progressIndeterminate">true</item>
     </style>
 
+    <style name="ProgressWheel.Small">
+        <item name="android:layout_width">@dimen/d4</item>
+        <item name="android:layout_height">@dimen/d4</item>
+    </style>
+
     <style name="ProgressWheel.Large">
         <item name="android:layout_width">@dimen/d12</item>
         <item name="android:layout_height">@dimen/d12</item>
@@ -69,6 +74,14 @@
         <item name="android:layout_height">56dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BaseBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialogTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
 </resources>

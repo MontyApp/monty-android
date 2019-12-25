@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.multidex.MultiDexApplication
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.monty.injection.component.DaggerApplicationComponent
+import com.thefuntasty.taste.Taste
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -17,6 +18,8 @@ class App : MultiDexApplication(), HasActivityInjector {
         super.onCreate()
 
         AndroidThreeTen.init(this)
+
+        Taste.init(this)
 
         DaggerApplicationComponent
             .builder()

@@ -3,4 +3,14 @@
     <declare-styleable name="SpinnerInputLayout">
         <attr name="spinner_hint" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="SubmitFormFieldRounded">
+        <attr name="sffr_text_color_disabled" format="color"/>
+        <attr name="sffr_text_color_enabled" format="color"/>
+
+        <attr name="sffr_background_color_base" format="integer"/>
+
+        <attr name="sffr_label_idle" format="string"/>
+        <attr name="sffr_label_disabled" format="string"/>
+    </declare-styleable>
 </resources>
