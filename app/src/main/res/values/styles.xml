@@ -55,4 +55,20 @@
         <item name="android:layout_height">@dimen/d12</item>
     </style>
 
+    <style name="TextInputLayout">
+        <item name="hintEnabled">true</item>
+        <item name="hintTextAppearance">@style/TextInputHint</item>
+        <item name="errorEnabled">true</item>
+    </style>
+
+    <style name="TextInputEditText">
+        <item name="android:textAppearance">@style/EditTextInputHint</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

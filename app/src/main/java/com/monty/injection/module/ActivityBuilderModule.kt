@@ -1,6 +1,8 @@
 package com.monty.injection.module
 
 import com.monty.injection.PerActivity
+import com.monty.ui.create.CreateAdvertActivity
+import com.monty.ui.create.CreateAdvertActivityModule
 import com.monty.ui.detail.AdvertDetailActivity
 import com.monty.ui.detail.AdvertDetailActivityModule
 import com.monty.ui.main.MainActivity
@@ -24,4 +26,8 @@ abstract class ActivityBuilderModule {
     @PerActivity
     @ContributesAndroidInjector(modules = [ShowPhotoActivityModule::class])
     abstract fun showPhotoActivity(): ShowPhotoActivity
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = [CreateAdvertActivityModule::class])
+    abstract fun createAdvertActivity(): CreateAdvertActivity
 }

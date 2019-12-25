@@ -81,12 +81,20 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextLight.Blueish.18">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="TextLight.DarkGrey">
         <item name="android:textColor">@color/dark_grey</item>
     </style>
 
     <style name="TextLight.DarkGrey.12">
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextLight.DarkGrey.13">
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="TextLight.LightGrey">
@@ -109,5 +117,7 @@
     <style name="PriceDark" parent="TextRegular.Blueish.16" />
     <style name="PriceLight" parent="TextRegular.White.16" />
     <style name="Location" parent="TextRegular.White.14" />
+    <style name="TextInputHint" parent="TextLight.DarkGrey.13" />
+    <style name="EditTextInputHint" parent="TextLight.Blueish.18" />
 
 </resources>

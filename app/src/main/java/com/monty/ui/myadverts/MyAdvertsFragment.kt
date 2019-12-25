@@ -3,13 +3,17 @@ package com.monty.ui.myadverts
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
 import com.monty.tool.extensions.titleTypeface
 import com.monty.ui.base.BaseFragment
 import com.monty.ui.common.AdvertsAdapter
+import com.monty.ui.create.CreateAdvertActivity
 import com.monty.ui.detail.AdvertDetailActivity
 import com.monty.ui.myadverts.contract.MyAdvertsState
 import com.monty.ui.myadverts.contract.NavigateToAdvertDetailEvent
+import com.monty.ui.myadverts.contract.NavigateToCreateAdvertEvent
+import com.monty.ui.myadverts.contract.OnAddAdvertAction
 import com.monty.ui.myadverts.contract.OnAdvertClickAction
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviEvent
@@ -43,6 +47,10 @@ class MyAdvertsFragment : BaseFragment<MyAdvertsState>() {
         adapter.onItemClick
             .map { OnAdvertClickAction(it) }
             .bindToReactor()
+
+        my_adverts_add.clicks()
+            .map { OnAddAdvertAction }
+            .bindToReactor()
     }
 
     override fun bindToState(stateObservable: Observable<MyAdvertsState>) {
@@ -58,6 +66,9 @@ class MyAdvertsFragment : BaseFragment<MyAdvertsState>() {
             when (event) {
                 is NavigateToAdvertDetailEvent -> {
                     startActivity(AdvertDetailActivity.getStartIntent(requireContext(), event.advertId))
+                }
+                is NavigateToCreateAdvertEvent -> {
+                    startActivity(CreateAdvertActivity.getStartIntent(requireContext()))
                 }
             }
         }

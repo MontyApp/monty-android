@@ -70,6 +70,17 @@
 
         </LinearLayout>
     </com.monty.ui.base.placeholder.PlaceholderLayoutView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/my_adverts_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:elevation="@dimen/d1"
+        android:layout_marginEnd="@dimen/d4"
+        android:layout_marginBottom="@dimen/d4"
+        android:src="@drawable/ic_add"
+        android:tint="@color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
