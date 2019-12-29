@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -60,9 +60,16 @@
         <item name="android:layout_height">@dimen/d12</item>
     </style>
 
-    <style name="TextInputLayout">
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="hintEnabled">true</item>
         <item name="hintTextAppearance">@style/TextInputHint</item>
+        <item name="hintTextColor">@color/text_input_hint_color</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxStrokeColor">@color/text_input_color</item>
+        <item name="boxBackgroundColor">@color/light_grey</item>
         <item name="errorEnabled">true</item>
     </style>
 

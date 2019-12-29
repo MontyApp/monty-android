@@ -111,14 +111,112 @@
 
         </LinearLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/state_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_advert_title"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/create_advert_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_advert_titleEditText"
+                        style="@style/TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_advert_description"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:hint="@string/create_advert_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_advert_title">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_advert_descriptionEditText"
+                        style="@style/TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_advert_price"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:hint="@string/create_advert_price"
+                    app:layout_constraintEnd_toStartOf="@+id/price_guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_advert_description">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_advert_priceEditText"
+                        style="@style/TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.monty.ui.common.SpinnerInputLayout
+                    android:id="@+id/create_advert_currency"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/price_guideline"
+                    app:layout_constraintTop_toTopOf="@+id/create_advert_price"
+                    app:spinner_hint="@string/create_advert_interval" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_advert_deposit"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:hint="@string/create_advert_deposit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_advert_price">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_advert_depositEditText"
+                        style="@style/TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/create_advert_address_title"
@@ -127,31 +225,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/d4"
                     android:layout_marginRight="@dimen/d4"
-                    android:text="@string/adverts_address_title"
+                    android:text="@string/create_advert_address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/create_advert_deposit" />
-
-                <TextView
-                    android:id="@+id/create_advert_price_title"
-                    style="@style/Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    android:text="@string/create_advert_price"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/create_advert_description" />
-
-                <TextView
-                    android:id="@+id/create_advert_deposit_title"
-                    style="@style/Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    android:text="@string/create_advert_deposit"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/create_advert_price" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/create_advert_address_card"
@@ -182,91 +258,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/create_advert_price"
-                    style="@style/TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="12dp"
-                    android:hint="@string/create_advert_price"
-                    app:layout_constraintEnd_toStartOf="@+id/price_guideline"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/create_advert_price_title">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/create_advert_priceEditText"
-                        style="@style/TextInputEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/create_advert_deposit"
-                    style="@style/TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="12dp"
-                    android:hint="@string/create_advert_deposit"
-                    app:layout_constraintEnd_toStartOf="@+id/price_guideline"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/create_advert_deposit_title">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/create_advert_depositEditText"
-                        style="@style/TextInputEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/create_advert_description"
-                    style="@style/TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginStart="12dp"
-                    android:hint="@string/create_advert_description"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/create_advert_title">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/create_advert_descriptionEditText"
-                        style="@style/TextInputEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/create_advert_title"
-                    style="@style/TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:hint="@string/create_advert_title"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/create_advert_titleEditText"
-                        style="@style/TextInputEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <com.monty.ui.base.SubmitButton
                     android:id="@+id/create_advert_button"
                     android:layout_width="0dp"
@@ -281,20 +272,8 @@
                     app:sffr_label_disabled="@string/create_advert_add"
                     app:sffr_label_idle="@string/create_advert_add" />
 
-                <com.monty.ui.common.SpinnerInputLayout
-                    android:id="@+id/create_advert_currency"
-                    style="@style/TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/price_guideline"
-                    app:layout_constraintTop_toTopOf="@+id/create_advert_price"
-                    app:spinner_hint="@string/create_advert_interval" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </com.monty.ui.base.placeholder.PlaceholderLayoutView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

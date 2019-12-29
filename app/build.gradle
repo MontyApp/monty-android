@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    final MATERIAL = '1.1.0-alpha10'
+    final MATERIAL = '1.2.0-alpha01'
     final APP_COMPAT = '1.1.0'
     final SUPPORT_LIBRARY = '1.0.0'
     final ARCH_COMPONENTS = '2.0.0-beta01'

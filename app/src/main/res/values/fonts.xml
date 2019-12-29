@@ -23,6 +23,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextRegular.Blueish.18">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="TextRegular.White">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -33,6 +37,14 @@
 
     <style name="TextRegular.White.16">
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextRegular.DarkGrey">
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="TextRegular.DarkGrey.18">
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextMedium" parent="@android:style/TextAppearance">
@@ -71,6 +83,14 @@
         <item name="android:fontFamily">@font/rubik_light</item>
         <item name="fontFamily">@font/rubik_light</item>
         <item name="android:background">@null</item>
+    </style>
+
+    <style name="TextLight.Blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="TextLight.Blue.13">
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="TextLight.Blueish">
@@ -118,7 +138,7 @@
     <style name="PriceLight" parent="TextRegular.White.16" />
     <style name="SubmitButton" parent="TextRegular.White.16" />
     <style name="Location" parent="TextRegular.White.14" />
-    <style name="TextInputHint" parent="TextLight.DarkGrey.13" />
-    <style name="EditTextInputHint" parent="TextLight.Blueish.18" />
+    <style name="TextInputHint" parent="TextLight.Blue.13" />
+    <style name="EditTextInputHint" parent="TextRegular.DarkGrey.18" />
 
 </resources>

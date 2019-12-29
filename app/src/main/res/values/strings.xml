@@ -31,10 +31,12 @@
     <string name="interval_month">za mesiac</string>
 
     <!-- Create Advert -->
+    <string name="create_advert_info">Názov a popis</string>
     <string name="create_advert_title">Názov</string>
     <string name="create_advert_description">Popis</string>
     <string name="create_advert_price">Cena</string>
     <string name="create_advert_deposit">Kaucia</string>
+    <string name="create_advert_address">Kde to bude dostupné?</string>
     <string name="create_advert_add_photo">Pridať fotku</string>
     <string name="create_advert_interval">Obdobie</string>
     <string name="create_advert_add">Pridať inzerát</string>

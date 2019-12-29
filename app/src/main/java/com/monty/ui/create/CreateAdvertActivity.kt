@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.FileProvider
+import com.jakewharton.rxbinding2.support.v7.widget.navigationClicks
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.monty.R
@@ -19,18 +20,7 @@ import com.monty.ui.base.BaseActivity
 import com.monty.ui.base.BaseBottomSheetFragment
 import com.monty.ui.base.SubmitState
 import com.monty.ui.common.dialog.GetPhotoDialogFragment
-import com.monty.ui.create.contract.CreateAdvertState
-import com.monty.ui.create.contract.OnAddImageClickAction
-import com.monty.ui.create.contract.OnDepositChangeAction
-import com.monty.ui.create.contract.OnDescriptionChangeAction
-import com.monty.ui.create.contract.OnGetPhotoFromCameraAction
-import com.monty.ui.create.contract.OnGetPhotoFromGalleryAction
-import com.monty.ui.create.contract.OnPriceChangeAction
-import com.monty.ui.create.contract.OnTitleChangeAction
-import com.monty.ui.create.contract.OnUploadPhotoAction
-import com.monty.ui.create.contract.OpenCameraEvent
-import com.monty.ui.create.contract.OpenGalleryEvent
-import com.monty.ui.create.contract.ShowGetPhotoDialogEvent
+import com.monty.ui.create.contract.*
 import com.squareup.picasso.Picasso
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviEvent
@@ -93,6 +83,10 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
             .map { OnAddImageClickAction }
             .bindToReactor()
 
+        advert_detail_toolbar.navigationClicks()
+            .map { OnBackAction }
+            .bindToReactor()
+
         //create
         //    .map { OnAddAdvertAction }
         //    .bindToReactor()
@@ -135,6 +129,7 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
                 ShowGetPhotoDialogEvent -> showChooseImageSource()
                 OpenCameraEvent -> openCamera()
                 OpenGalleryEvent -> openGallery()
+                BackEvent -> finish()
             }
         }
     }

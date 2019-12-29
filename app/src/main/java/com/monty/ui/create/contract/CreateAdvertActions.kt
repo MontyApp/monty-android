@@ -21,4 +21,6 @@ data class OnUploadPhotoAction(val uri: Uri) : CreateAdvertAction()
 
 object OnAddImageClickAction : CreateAdvertAction()
 
+object OnBackAction : CreateAdvertAction()
+
 object OnAddAdvertAction : CreateAdvertAction()

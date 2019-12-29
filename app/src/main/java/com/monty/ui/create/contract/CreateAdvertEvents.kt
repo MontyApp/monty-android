@@ -12,4 +12,6 @@ object OpenCameraEvent : CreateAdvertEvent()
 
 object OpenGalleryEvent : CreateAdvertEvent()
 
+object BackEvent : CreateAdvertEvent()
+
 object SuccessEvent : CreateAdvertEvent()
