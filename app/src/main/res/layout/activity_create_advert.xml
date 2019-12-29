@@ -71,7 +71,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/advert_detail_toolbar"
+                android:id="@+id/create_advert_toolbar"
                 style="@style/Toolbar"
                 android:titleTextAppearance="@style/ToolbarTitle"
                 app:navigationIcon="@drawable/ic_back" />
@@ -186,7 +186,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.monty.ui.common.SpinnerInputLayout
-                    android:id="@+id/create_advert_currency"
+                    android:id="@+id/create_advert_interval"
                     style="@style/TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

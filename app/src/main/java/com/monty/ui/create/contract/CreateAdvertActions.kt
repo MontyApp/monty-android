@@ -1,6 +1,7 @@
 package com.monty.ui.create.contract
 
 import android.net.Uri
+import com.monty.data.model.ui.SpinnerData
 import com.sumera.koreactor.reactor.data.MviAction
 
 sealed class CreateAdvertAction : MviAction<CreateAdvertState>
@@ -12,6 +13,8 @@ data class OnDescriptionChangeAction(val description: String) : CreateAdvertActi
 data class OnPriceChangeAction(val price: String) : CreateAdvertAction()
 
 data class OnDepositChangeAction(val deposit: String) : CreateAdvertAction()
+
+data class OnSelectedIntervalAction(val data: SpinnerData) : CreateAdvertAction()
 
 object OnGetPhotoFromGalleryAction : CreateAdvertAction()
 

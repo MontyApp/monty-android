@@ -10,6 +10,8 @@ import com.jakewharton.rxbinding2.support.v7.widget.navigationClicks
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.monty.R
+import com.monty.data.model.ui.IntervalData
+import com.monty.data.model.ui.mapper.IntervalMapper
 import com.monty.tool.constant.Constant
 import com.monty.tool.extensions.gone
 import com.monty.tool.extensions.titleTypeface
@@ -24,7 +26,9 @@ import com.monty.ui.create.contract.*
 import com.squareup.picasso.Picasso
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviEvent
+import com.sumera.koreactor.util.data.Optional
 import com.sumera.koreactor.util.extension.getChange
+import com.sumera.koreactor.util.extension.getNotNull
 import com.sumera.koreactor.util.extension.getTrue
 import com.thefuntasty.taste.intent.TIntent
 import io.reactivex.Observable
@@ -35,7 +39,8 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
 
     private var getPhotoDialogFragment: GetPhotoDialogFragment? = null
 
-    @Inject lateinit var reactorFactory: CreateAdvertReactorFactory
+    @Inject
+    lateinit var reactorFactory: CreateAdvertReactorFactory
 
     companion object {
         fun getStartIntent(context: Context, advertId: Int? = null): Intent {
@@ -83,13 +88,17 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
             .map { OnAddImageClickAction }
             .bindToReactor()
 
-        advert_detail_toolbar.navigationClicks()
+        create_advert_toolbar.navigationClicks()
             .map { OnBackAction }
             .bindToReactor()
 
-        //create
-        //    .map { OnAddAdvertAction }
-        //    .bindToReactor()
+        create_advert_interval.onItemSelected
+            .map { OnSelectedIntervalAction(it) }
+            .bindToReactor()
+
+        create_advert_button.onIdleButtonClickSubject
+            .map { OnAddAdvertAction }
+            .bindToReactor()
     }
 
     override fun bindToState(stateObservable: Observable<CreateAdvertState>) {
@@ -113,6 +122,20 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
                 }
             }
 
+        stateObservable.getChange { it.intervalTypes }
+            .filter { it.isNotEmpty() }
+            .observeState {
+                create_advert_interval.items = it.map { interval ->
+                    IntervalData(
+                        id = interval.value,
+                        name = IntervalMapper.getInterval(resources, interval.value)
+                    )
+                }
+            }
+
+        stateObservable.getNotNull { Optional(it.selectedIntervalType) }
+            .observeState { create_advert_interval.selectedItem = it }
+
         stateObservable.getChange { it.photoState }
             .observeState { create_advert_progress.visible(it == SubmitState.PROGRESS) }
 
@@ -121,6 +144,9 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
 
         stateObservable.getTrue { it.photo == null && it.photoState != SubmitState.PROGRESS }
             .observeState { create_advert_placeholder.visible() }
+
+        stateObservable.getChange { it.buttonState }
+            .observeState { create_advert_button.buttonState = it }
     }
 
     override fun bindToEvent(eventsObservable: Observable<MviEvent<CreateAdvertState>>) {
@@ -130,6 +156,7 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
                 OpenCameraEvent -> openCamera()
                 OpenGalleryEvent -> openGallery()
                 BackEvent -> finish()
+                SuccessEvent -> finish()
             }
         }
     }
@@ -157,10 +184,14 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
     }
 
     private fun openCamera() {
-        tempFileUri = FileProvider.getUriForFile(this, "$packageName.provider", FileHelper.temp(this))
+        tempFileUri =
+            FileProvider.getUriForFile(this, "$packageName.provider", FileHelper.temp(this))
 
         tempFileUri?.let {
-            startActivityForResult(Navigation.getPhotoFromCamera(it), Constant.Intent.TAKE_PHOTO_REQUEST)
+            startActivityForResult(
+                Navigation.getPhotoFromCamera(it),
+                Constant.Intent.TAKE_PHOTO_REQUEST
+            )
         }
     }
 

@@ -1,6 +1,9 @@
 package com.monty.ui.create.contract
 
 import com.monty.data.model.ui.Advert
+import com.monty.data.model.ui.SpinnerData
+import com.monty.data.model.ui.type.IntervalType
+import com.monty.ui.base.SubmitButtonState
 import com.monty.ui.base.SubmitState
 import com.sumera.koreactor.reactor.data.MviState
 import java.io.File
@@ -13,7 +16,10 @@ data class CreateAdvertState(
     val advert: Advert,
     val photo: File?,
     val photoUuid: String?,
-    val photoState: SubmitState
+    val photoState: SubmitState,
+    val buttonState: SubmitButtonState,
+    val intervalTypes: List<IntervalType>,
+    val selectedIntervalType: SpinnerData?
     ) : MviState {
 
     companion object {
@@ -25,7 +31,10 @@ data class CreateAdvertState(
             advert = Advert.EMPTY,
             photo = null,
             photoUuid = null,
-            photoState = SubmitState.IDLE
+            photoState = SubmitState.IDLE,
+            buttonState = SubmitButtonState.IDLE,
+            intervalTypes = emptyList(),
+            selectedIntervalType = null
         )
     }
 }

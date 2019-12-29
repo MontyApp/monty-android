@@ -23,6 +23,12 @@ class AdvertsStore @Inject constructor(
             }
     }
 
+    fun addAdvert(advert: Advert) : Completable {
+        return Completable.fromAction {
+            database.advertDao().insert(advert)
+        }
+    }
+
     fun getAdverts(): Observable<List<Advert>> {
         return database.advertDao().getAll().toObservable()
     }

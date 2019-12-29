@@ -1,6 +1,6 @@
 package com.monty.data.model.ui
 
 interface SpinnerData {
-    val id: Int
+    val id: String
     val name: String
 }

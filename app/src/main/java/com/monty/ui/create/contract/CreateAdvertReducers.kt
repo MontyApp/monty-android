@@ -1,5 +1,8 @@
 package com.monty.ui.create.contract
 
+import com.monty.data.model.ui.SpinnerData
+import com.monty.data.model.ui.type.IntervalType
+import com.monty.ui.base.SubmitButtonState
 import com.monty.ui.base.SubmitState
 import com.sumera.koreactor.reactor.data.MviStateReducer
 import java.io.File
@@ -33,3 +36,16 @@ data class ChangePhotoUuidReducer(private val uuid: String) : CreateAdvertReduce
 data class ChangePhotoStateReducer(private val state: SubmitState) : CreateAdvertReducer() {
     override fun reduce(oldState: CreateAdvertState) = oldState.copy(photoState = state)
 }
+
+data class ChangeIntervalTypesReducer(private val intervalTypes: List<IntervalType>) : CreateAdvertReducer() {
+    override fun reduce(oldState: CreateAdvertState) = oldState.copy(intervalTypes = intervalTypes)
+}
+
+data class ChangeSelectedIntervalTypeReducer(private val selectedIntervalType : SpinnerData) : CreateAdvertReducer() {
+    override fun reduce(oldState: CreateAdvertState) = oldState.copy(selectedIntervalType = selectedIntervalType)
+}
+
+data class ChangeButtonStateReducer(private val buttonState : SubmitButtonState) : CreateAdvertReducer() {
+    override fun reduce(oldState: CreateAdvertState) = oldState.copy(buttonState = buttonState)
+}
+

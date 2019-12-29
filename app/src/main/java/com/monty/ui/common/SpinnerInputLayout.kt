@@ -20,7 +20,7 @@ class SpinnerInputLayout @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    val onItemSelected: PublishSubject<Int> = PublishSubject.create<Int>()
+    val onItemSelected: PublishSubject<SpinnerData> = PublishSubject.create<SpinnerData>()
 
     private var activeArea: View
     private var spinner: Spinner
@@ -93,7 +93,7 @@ class SpinnerInputLayout @JvmOverloads constructor(
         spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (items.isNotEmpty()) {
-                    onItemSelected.onNext(items[position].id)
+                    onItemSelected.onNext(items[position])
                 }
             }
 
