@@ -143,7 +143,7 @@ class CreateAdvertReactor @Inject constructor(
                     Advert(
                         id = LocalDateTime.now().nano,
                         title = it.title,
-                        image = "https://i.picsum.photos/500/300.jpg",
+                        image = "https://source.unsplash.com/random",
                         description = it.description,
                         createdAt = LocalDateTime.now(),
                         price = Price.EMPTY.copy(
