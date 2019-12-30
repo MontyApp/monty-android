@@ -132,7 +132,7 @@ class CreateAdvertReactor @Inject constructor(
             ),
             dataMessage = messages(
                 { ChangePhotoStateReducer(SubmitState.SUCCESS) },
-                { ChangePhotoUuidReducer(it.uuid) }
+                { ChangeImageReducer("https://source.unsplash.com/random") }
             )
         ).bindToView()
 
@@ -143,7 +143,7 @@ class CreateAdvertReactor @Inject constructor(
                     Advert(
                         id = LocalDateTime.now().nano,
                         title = it.title,
-                        image = "https://source.unsplash.com/random",
+                        image = it.image,
                         description = it.description,
                         createdAt = LocalDateTime.now(),
                         price = Price.EMPTY.copy(

@@ -102,24 +102,21 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
     }
 
     override fun bindToState(stateObservable: Observable<CreateAdvertState>) {
-        stateObservable.getChange { Pair(it.photo, it.photoState) }
-            .filter { it.second == SubmitState.SUCCESS }
-            .observeState { (photo, _) ->
-                photo?.let {
-                    Picasso.with(this)
-                        .load(photo)
-                        .fit()
-                        .centerCrop()
-                        .into(create_advert_image, object : com.squareup.picasso.Callback {
-                            override fun onSuccess() {
-                                create_advert_image.visible()
-                                create_advert_progress.gone()
-                                create_advert_placeholder.gone()
-                            }
+        stateObservable.getChange { it.image }
+            .filter { it.isNotEmpty() }
+            .observeState { image ->
+                create_advert_image.visible()
+                Picasso.with(this)
+                    .load(image)
+                    .fit()
+                    .centerCrop()
+                    .into(create_advert_image, object : com.squareup.picasso.Callback {
+                        override fun onSuccess() {
+                            create_advert_progress.gone()
+                        }
 
-                            override fun onError() {}
-                        })
-                }
+                        override fun onError() {}
+                    })
             }
 
         stateObservable.getChange { it.intervalTypes }
@@ -137,9 +134,10 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
             .observeState { create_advert_interval.selectedItem = it }
 
         stateObservable.getChange { it.photoState }
-            .observeState { create_advert_progress.visible(it == SubmitState.PROGRESS) }
+            .filter { it == SubmitState.PROGRESS }
+            .observeState { create_advert_progress.visible() }
 
-        stateObservable.getTrue { it.photoState == SubmitState.PROGRESS }
+        stateObservable.getTrue { it.photoState != SubmitState.IDLE }
             .observeState { create_advert_placeholder.gone() }
 
         stateObservable.getTrue { it.photo == null && it.photoState != SubmitState.PROGRESS }

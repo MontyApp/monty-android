@@ -12,5 +12,6 @@
 
         <attr name="sffr_label_idle" format="string"/>
         <attr name="sffr_label_disabled" format="string"/>
+        <attr name="sffr_label_success" format="string"/>
     </declare-styleable>
 </resources>

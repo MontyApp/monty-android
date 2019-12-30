@@ -27,7 +27,7 @@
                 android:id="@+id/create_advert_progress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/dark_grey"
+                android:background="@color/light_grey"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone"
@@ -35,7 +35,7 @@
 
                 <com.pnikosis.materialishprogress.ProgressWheel
                     android:id="@+id/business_profile_edit_avatar_progress"
-                    style="@style/ProgressWheel.Small"
+                    style="@style/ProgressWheel.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -47,7 +47,7 @@
                 android:id="@+id/create_advert_placeholder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/dark_grey"
+                android:background="@color/light_grey"
                 android:foreground="@drawable/bg_selected"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -59,10 +59,10 @@
                     android:layout_height="48dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_add_photo"
-                    android:tint="@color/white" />
+                    android:tint="@color/red" />
 
                 <TextView
-                    style="@style/TextRegular.White.14"
+                    style="@style/TextRegular.Red.14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/d2"
@@ -237,7 +237,7 @@
                     android:layout_marginRight="@dimen/d4"
                     android:layout_marginTop="@dimen/d2"
                     android:background="@color/light_grey"
-                    app:cardCornerRadius="@dimen/advert_radius"
+                    app:cardCornerRadius="@dimen/monty_radius"
                     app:cardElevation="@dimen/d1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -270,6 +270,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/create_advert_address_card"
                     app:sffr_label_disabled="@string/create_advert_add"
+                    app:sffr_label_success="@string/create_advert_add_success"
                     app:sffr_label_idle="@string/create_advert_add" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

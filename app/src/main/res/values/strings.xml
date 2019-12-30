@@ -40,6 +40,7 @@
     <string name="create_advert_add_photo">Pridať fotku</string>
     <string name="create_advert_interval">Obdobie</string>
     <string name="create_advert_add">Pridať inzerát</string>
+    <string name="create_advert_add_success">Inzerát pridaný</string>
 
     <!-- Get photo dialog -->
     <string name="get_photo_dialog_camera">Vyfotit</string>

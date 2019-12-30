@@ -29,8 +29,8 @@ data class ChangePhotoFileReducer(private val photo: File) : CreateAdvertReducer
     override fun reduce(oldState: CreateAdvertState) = oldState.copy(photo = photo)
 }
 
-data class ChangePhotoUuidReducer(private val uuid: String) : CreateAdvertReducer() {
-    override fun reduce(oldState: CreateAdvertState) = oldState.copy(photoUuid = uuid)
+data class ChangeImageReducer(private val image: String) : CreateAdvertReducer() {
+    override fun reduce(oldState: CreateAdvertState) = oldState.copy(image = image)
 }
 
 data class ChangePhotoStateReducer(private val state: SubmitState) : CreateAdvertReducer() {

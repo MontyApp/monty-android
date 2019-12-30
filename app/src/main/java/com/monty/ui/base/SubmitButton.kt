@@ -36,6 +36,12 @@ class SubmitButton @JvmOverloads constructor(
             submit_form_field_label.text = value
         }
 
+    var labelTextSuccess: String = ""
+        set(value) {
+            field = value
+            submit_form_field_label.text = value
+        }
+
     var buttonState: SubmitButtonState = SubmitButtonState.IDLE
         set(value) {
             field = value
@@ -61,8 +67,10 @@ class SubmitButton @JvmOverloads constructor(
                 backgroundColorBase = ta.getResourceId(R.styleable.SubmitFormFieldRounded_sffr_background_color_base,
                     R.drawable.sffr_background_color_base)
 
+
                 labelTextIdle = ta.getString(R.styleable.SubmitFormFieldRounded_sffr_label_idle) ?: ""
                 labelTextDisabled = ta.getString(R.styleable.SubmitFormFieldRounded_sffr_label_disabled) ?: ""
+                labelTextSuccess = ta.getString(R.styleable.SubmitFormFieldRounded_sffr_label_success) ?: ""
             } finally {
                 ta.recycle()
             }
@@ -80,9 +88,8 @@ class SubmitButton @JvmOverloads constructor(
     }
 
     private fun setState(value: SubmitButtonState) {
-        listOf(submit_form_field_label, submit_form_field_progress, submit_form_field_success).map {
-            it.gone()
-        }
+        submit_form_field_label.gone()
+        submit_form_field_progress.gone()
 
         when (value) {
             SubmitButtonState.DISABLED -> {
@@ -106,8 +113,12 @@ class SubmitButton @JvmOverloads constructor(
                 submit_form_field_progress.visible()
             }
             SubmitButtonState.SUCCESS -> {
+                submit_form_field_label.apply {
+                    setTextColor(textColorEnabled)
+                    text = labelTextSuccess
+                    visible()
+                }
                 submit_form_field_root.setBackgroundResource(R.drawable.bg_green_button)
-                submit_form_field_success.visible()
             }
         }
     }
