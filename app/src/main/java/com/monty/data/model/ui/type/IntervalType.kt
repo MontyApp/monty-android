@@ -5,3 +5,11 @@ enum class IntervalType(val value: String) {
     WEEK("week"),
     MONTH("month")
 }
+
+object Intervals {
+    val list = listOf(
+        IntervalType.DAY,
+        IntervalType.WEEK,
+        IntervalType.MONTH
+    )
+}

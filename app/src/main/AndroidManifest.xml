@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.monty">
 
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".App"
@@ -27,8 +29,13 @@
         <activity
             android:name=".ui.detail.AdvertDetailActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.photo.ShowPhotoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.create.CreateAdvertActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

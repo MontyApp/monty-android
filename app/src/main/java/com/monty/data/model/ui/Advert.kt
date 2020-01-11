@@ -5,8 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.monty.R
-import com.monty.data.model.ui.type.IntervalType
+import com.monty.data.model.ui.mapper.IntervalMapper
 import com.monty.tool.currency.CurrencyFormatter
 import org.threeten.bp.LocalDateTime
 
@@ -64,11 +63,6 @@ data class Advert(
     }
 
     fun getInterval(resources: Resources): String {
-        return when (price.interval.name) {
-            IntervalType.DAY.value -> resources.getString(R.string.interval_day)
-            IntervalType.WEEK.value -> resources.getString(R.string.interval_week)
-            IntervalType.MONTH.value -> resources.getString(R.string.interval_month)
-            else -> ""
-        }
+        return IntervalMapper.getInterval(resources, price.interval.name)
     }
 }

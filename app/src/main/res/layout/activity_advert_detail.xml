@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="@dimen/d4"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -180,7 +180,7 @@
                     android:layout_marginTop="@dimen/d2"
                     android:layout_marginRight="@dimen/d4"
                     android:foreground="@drawable/bg_selected_with_radius"
-                    app:cardCornerRadius="@dimen/advert_radius"
+                    app:cardCornerRadius="@dimen/monty_radius"
                     app:cardElevation="@dimen/d1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -224,7 +224,7 @@
                     android:layout_marginLeft="@dimen/d4"
                     android:layout_marginTop="@dimen/d2"
                     android:layout_marginRight="@dimen/d4"
-                    app:cardCornerRadius="@dimen/advert_radius"
+                    app:cardCornerRadius="@dimen/monty_radius"
                     app:cardElevation="@dimen/d1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

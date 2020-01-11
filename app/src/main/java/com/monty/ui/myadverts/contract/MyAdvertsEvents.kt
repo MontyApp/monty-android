@@ -7,3 +7,5 @@ sealed class MyAdvertsEvent : MviEvent<MyAdvertsState>()
 data class ErrorEvent(val message: String) : MyAdvertsEvent()
 
 data class NavigateToAdvertDetailEvent(val advertId: Int) : MyAdvertsEvent()
+
+object NavigateToCreateAdvertEvent : MyAdvertsEvent()

@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -50,9 +50,50 @@
         <item name="matProg_progressIndeterminate">true</item>
     </style>
 
+    <style name="ProgressWheel.Small">
+        <item name="android:layout_width">@dimen/d6</item>
+        <item name="android:layout_height">@dimen/d6</item>
+    </style>
+
+    <style name="ProgressWheel.Medium">
+        <item name="android:layout_width">@dimen/d8</item>
+        <item name="android:layout_height">@dimen/d8</item>
+    </style>
+
     <style name="ProgressWheel.Large">
         <item name="android:layout_width">@dimen/d12</item>
         <item name="android:layout_height">@dimen/d12</item>
+    </style>
+
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="hintEnabled">true</item>
+        <item name="hintTextAppearance">@style/TextInputHint</item>
+        <item name="hintTextColor">@color/text_input_hint_color</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/monty_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/monty_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/monty_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/monty_radius</item>
+        <item name="boxStrokeColor">@color/text_input_color</item>
+        <item name="boxBackgroundColor">@color/light_grey</item>
+        <item name="errorEnabled">true</item>
+    </style>
+
+    <style name="TextInputEditText">
+        <item name="android:textAppearance">@style/EditTextInputHint</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BaseBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialogTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
 </resources>

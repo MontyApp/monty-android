@@ -11,6 +11,11 @@ interface Constant {
         const val PHOTO_ADDRESS_TYPE = "photo_address_type"
     }
 
+    object Intent {
+        const val TAKE_PHOTO_REQUEST = 1
+        const val PICK_IMAGE = 2
+    }
+
     object Formatter {
         val YEAR_MONTH_DAY: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val HOUR_MINUTE: DateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
