@@ -19,6 +19,9 @@
     <!-- Profile -->
     <string name="profile_title">Profil</string>
 
+    <!-- Categories -->
+    <string name="categories_title">Kategórie</string>
+
     <!-- Advert Detail -->
     <string name="adverts_deposit_title">Kaucia</string>
     <string name="adverts_deposit_info">Nič sa neboj. Kaucia sa ti na konci vráti.</string>
@@ -29,6 +32,7 @@
     <string name="interval_day">za deň</string>
     <string name="interval_week">za týždeň</string>
     <string name="interval_month">za mesiac</string>
+    <string name="interval_total">celkovo</string>
 
     <!-- Create Advert -->
     <string name="create_advert_info">Názov a popis</string>
@@ -36,6 +40,7 @@
     <string name="create_advert_description">Popis</string>
     <string name="create_advert_price">Cena</string>
     <string name="create_advert_deposit">Kaucia</string>
+    <string name="create_advert_category">Kategória</string>
     <string name="create_advert_address">Kde to bude dostupné?</string>
     <string name="create_advert_add_photo">Pridať fotku</string>
     <string name="create_advert_interval">Obdobie</string>

@@ -1,6 +1,7 @@
 package com.monty.ui.create.contract
 
 import android.net.Uri
+import com.monty.data.model.ui.Category
 import com.monty.data.model.ui.SpinnerData
 import com.sumera.koreactor.reactor.data.MviAction
 
@@ -27,3 +28,7 @@ object OnAddImageClickAction : CreateAdvertAction()
 object OnBackAction : CreateAdvertAction()
 
 object OnAddAdvertAction : CreateAdvertAction()
+
+object OnCategoryClickAction : CreateAdvertAction()
+
+data class OnSelectCategoryAction(val category: Category) : CreateAdvertAction()

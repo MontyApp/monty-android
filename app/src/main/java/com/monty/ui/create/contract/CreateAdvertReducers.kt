@@ -1,5 +1,6 @@
 package com.monty.ui.create.contract
 
+import com.monty.data.model.ui.Category
 import com.monty.data.model.ui.SpinnerData
 import com.monty.data.model.ui.type.IntervalType
 import com.monty.ui.base.SubmitButtonState
@@ -49,3 +50,10 @@ data class ChangeButtonStateReducer(private val buttonState : SubmitButtonState)
     override fun reduce(oldState: CreateAdvertState) = oldState.copy(buttonState = buttonState)
 }
 
+data class ChangeSelectedCategoryReducer(private val selectedCategory : Category) : CreateAdvertReducer() {
+    override fun reduce(oldState: CreateAdvertState) = oldState.copy(selectedCategory = selectedCategory)
+}
+
+data class ChangeCategoriesReducer(private val categories : List<Category>) : CreateAdvertReducer() {
+    override fun reduce(oldState: CreateAdvertState) = oldState.copy(categories = categories)
+}

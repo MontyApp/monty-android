@@ -38,13 +38,16 @@ class AdvertView @JvmOverloads constructor(
         advert_distance.text = "800 m"
         advert_interval.text = advert.getInterval(resources)
 
-        Picasso.with(context)
-            .load(advert.image)
-            // TODO add placeholder
-            //.placeholder(R.drawable.ic_search)
-            .fit()
-            .centerCrop()
-            .into(advert_image)
+
+        if(advert.image.isNotEmpty()) {
+            Picasso.with(context)
+                .load(advert.image)
+                // TODO add placeholder
+                //.placeholder(R.drawable.ic_search)
+                .fit()
+                .centerCrop()
+                .into(advert_image)
+        }
 
         advert_favourite.setImageDrawable(
             if (advert.isFavourite) {

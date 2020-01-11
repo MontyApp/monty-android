@@ -202,10 +202,10 @@
                     style="@style/TextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="16dp"
                     android:hint="@string/create_advert_deposit"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/price_guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/create_advert_price">
 
@@ -217,6 +217,36 @@
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/create_advert_category"
+                    style="@style/TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="8dp"
+                    android:hint="@string/create_advert_category"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/price_guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/create_advert_price">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/create_advert_categoryEditText"
+                        style="@style/TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/create_advert_category_click_area"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="@+id/create_advert_category"
+                    app:layout_constraintStart_toStartOf="@+id/create_advert_category"
+                    app:layout_constraintBottom_toBottomOf="@+id/create_advert_category"
+                    app:layout_constraintTop_toTopOf="@+id/create_advert_category"/>
 
                 <TextView
                     android:id="@+id/create_advert_address_title"

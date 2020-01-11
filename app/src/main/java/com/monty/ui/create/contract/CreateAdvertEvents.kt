@@ -8,6 +8,8 @@ data class ErrorEvent(val message: String) : CreateAdvertEvent()
 
 object ShowGetPhotoDialogEvent : CreateAdvertEvent()
 
+object ShowCategoriesEvent : CreateAdvertEvent()
+
 object OpenCameraEvent : CreateAdvertEvent()
 
 object OpenGalleryEvent : CreateAdvertEvent()
