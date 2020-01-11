@@ -3,26 +3,30 @@ package com.monty.ui.adverts
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
 import com.monty.tool.extensions.titleTypeface
-import com.monty.ui.adverts.contract.AdvertsState
-import com.monty.ui.adverts.contract.NavigateToAdvertDetailEvent
-import com.monty.ui.adverts.contract.OnAdvertClickAction
-import com.monty.ui.adverts.contract.OnFavouriteClickAction
+import com.monty.ui.adverts.contract.*
+import com.monty.ui.base.BaseBottomSheetFragment
 import com.monty.ui.base.BaseFragment
 import com.monty.ui.common.AdvertsAdapter
+import com.monty.ui.common.category.CategoriesAdapter
+import com.monty.ui.common.category.CategoriesDialogFragment
 import com.monty.ui.detail.AdvertDetailActivity
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviEvent
 import com.sumera.koreactor.util.extension.getChange
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_adverts.*
+import kotlinx.android.synthetic.main.view_categories_button.*
 import javax.inject.Inject
 
 class AdvertsFragment : BaseFragment<AdvertsState>() {
 
     @Inject lateinit var reactorFactory: AdvertsReactorFactory
-    @Inject lateinit var adapter: AdvertsAdapter
+    @Inject lateinit var advertsAdapter: AdvertsAdapter
+    @Inject lateinit var categoriesAdapter: CategoriesAdapter
+    private var categoriesDialog: CategoriesDialogFragment? = null
 
     companion object {
         fun newInstance() = AdvertsFragment()
@@ -39,23 +43,38 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
         adverts_toolbar_layout.titleTypeface()
 
         adverts_recycler.layoutManager = LinearLayoutManager(context)
-        adverts_recycler.adapter = adapter
+        adverts_recycler.adapter = advertsAdapter
 
-        adapter.onItemClick
+        if (savedInstanceState != null) {
+            categoriesDialog =
+                requireFragmentManager().findFragmentByTag(BaseBottomSheetFragment.TAG) as? CategoriesDialogFragment
+            bindDialogToReactor()
+        }
+
+        advertsAdapter.onItemClick
             .map { OnAdvertClickAction(it) }
             .bindToReactor()
 
-        adapter.onFavouriteClick
+        advertsAdapter.onFavouriteClick
             .map { OnFavouriteClickAction(it) }
+            .bindToReactor()
+
+        category_button.clicks()
+            .map { OnCategoriesClickAction }
             .bindToReactor()
     }
 
     override fun bindToState(stateObservable: Observable<AdvertsState>) {
         stateObservable.getChange { it.adverts }
-            .observeState { adapter.updateData(it) }
+            .observeState { advertsAdapter.updateData(it) }
 
         stateObservable.getChange { it.layoutState }
             .observeState { adverts_stateLayout.setState(it) }
+
+        stateObservable.getChange { Pair(it.categories, it.selectedCategory) }
+            .observeState { (categories, selected) ->
+                categoriesAdapter.updateData(categories, selected)
+            }
     }
 
     override fun bindToEvent(eventsObservable: Observable<MviEvent<AdvertsState>>) {
@@ -64,7 +83,18 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                 is NavigateToAdvertDetailEvent -> {
                     startActivity(AdvertDetailActivity.getStartIntent(requireContext(), event.advertId))
                 }
+                is AdvertsEvent -> showCategoriesDialog()
             }
         }
+    }
+
+    private fun bindDialogToReactor() {
+        categoriesDialog?.setAdapter(categoriesAdapter)
+    }
+
+    private fun showCategoriesDialog() {
+        categoriesDialog = CategoriesDialogFragment()
+        categoriesDialog?.show(requireFragmentManager())
+        bindDialogToReactor()
     }
 }

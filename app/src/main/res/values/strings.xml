@@ -19,6 +19,9 @@
     <!-- Profile -->
     <string name="profile_title">Profil</string>
 
+    <!-- Categories -->
+    <string name="categories_title">Kategórie</string>
+
     <!-- Advert Detail -->
     <string name="adverts_deposit_title">Kaucia</string>
     <string name="adverts_deposit_info">Nič sa neboj. Kaucia sa ti na konci vráti.</string>
