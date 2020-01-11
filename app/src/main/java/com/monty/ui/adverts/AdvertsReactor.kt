@@ -1,5 +1,6 @@
 package com.monty.ui.adverts
 
+import com.monty.data.model.ui.Category
 import com.monty.domain.GetCategoriesSingler
 import com.monty.domain.advert.GetAdvertsObservabler
 import com.monty.domain.favourite.AddFavouriteAdvertCompletabler
@@ -23,9 +24,21 @@ class AdvertsReactor @Inject constructor(
         val onAdvertClickAction = actions.ofActionType<OnAdvertClickAction>()
         val onFavouriteClickAction = actions.ofActionType<OnFavouriteClickAction>()
         val onCategoriesClickAction = actions.ofActionType<OnCategoriesClickAction>()
+        val onCategoryClickAction = actions.ofActionType<OnCategoryClickAction>()
+        val onAddAdvertClickAction = actions.ofActionType<OnAddAdvertClickAction>()
 
         onAdvertClickAction.map { NavigateToAdvertDetailEvent(it.advert.id) }.bindToView()
+        onAddAdvertClickAction.map { NavigateToCreateAdvertEvent }.bindToView()
         onCategoriesClickAction.map { ShowCategoriesDialogEvent }.bindToView()
+
+        onCategoryClickAction
+            .flatMapSingle { action ->
+                stateSingle.map { state ->
+                    ChangeSelectedCategoryReducer(
+                        if (state.selectedCategory == action.category) Category.EMPTY else action.category
+                    )
+                }
+            }.bindToView()
 
         onFavouriteClickAction
             .flatMapCompletable {

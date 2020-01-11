@@ -19,7 +19,20 @@
                 android:id="@+id/adverts_toolbar"
                 style="@style/Toolbar"
                 android:titleTextAppearance="@style/ToolbarTitle"
-                app:title="@string/adverts_title" />
+                app:title="@string/adverts_title">
+
+                <ImageView
+                    android:id="@+id/adverts_toolbar_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center_vertical"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:gravity="end|center_vertical"
+                    android:paddingEnd="@dimen/d4"
+                    android:paddingStart="@dimen/d4"
+                    app:srcCompat="@drawable/bg_add"/>
+
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -45,12 +58,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <include
-                        layout="@layout/view_categories_button"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
                         android:layout_marginStart="@dimen/d2"
                         android:layout_marginTop="@dimen/d1"
-                        android:layout_height="wrap_content"/>
+                        android:orientation="horizontal">
+
+                        <include
+                            layout="@layout/view_categories_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <include
+                            android:id="@+id/adverts_selected_category"
+                            android:visibility="gone"
+                            layout="@layout/view_selected_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/d2" />
+
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/adverts_recycler"

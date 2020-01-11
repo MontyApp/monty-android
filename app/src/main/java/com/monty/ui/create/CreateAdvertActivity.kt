@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.content.FileProvider
 import com.jakewharton.rxbinding2.support.v7.widget.navigationClicks
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.monty.R
+import com.monty.data.model.ui.Category
 import com.monty.data.model.ui.IntervalData
 import com.monty.data.model.ui.mapper.IntervalMapper
 import com.monty.tool.constant.Constant
@@ -21,6 +23,8 @@ import com.monty.tool.intent.Navigation
 import com.monty.ui.base.BaseActivity
 import com.monty.ui.base.BaseBottomSheetFragment
 import com.monty.ui.base.SubmitState
+import com.monty.ui.common.category.CategoriesAdapter
+import com.monty.ui.common.category.CategoriesDialogFragment
 import com.monty.ui.common.dialog.GetPhotoDialogFragment
 import com.monty.ui.create.contract.*
 import com.squareup.picasso.Picasso
@@ -37,10 +41,10 @@ import javax.inject.Inject
 
 class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
 
+    @Inject lateinit var categoriesAdapter: CategoriesAdapter
+    @Inject lateinit var reactorFactory: CreateAdvertReactorFactory
     private var getPhotoDialogFragment: GetPhotoDialogFragment? = null
-
-    @Inject
-    lateinit var reactorFactory: CreateAdvertReactorFactory
+    private var categoriesDialog: CategoriesDialogFragment? = null
 
     companion object {
         fun getStartIntent(context: Context, advertId: Int? = null): Intent {
@@ -66,6 +70,10 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
             getPhotoDialogFragment = supportFragmentManager
                 ?.findFragmentByTag(BaseBottomSheetFragment.TAG) as? GetPhotoDialogFragment
             bindGetPhotoDialogToReactor()
+
+            categoriesDialog = supportFragmentManager
+                ?.findFragmentByTag(BaseBottomSheetFragment.TAG) as? CategoriesDialogFragment
+            bindCategoriesDialogToReactor()
         }
 
         create_advert_titleEditText.textChanges()
@@ -99,6 +107,16 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
         create_advert_button.onIdleButtonClickSubject
             .map { OnAddAdvertAction }
             .bindToReactor()
+
+        create_advert_category_click_area.clicks()
+            .map { OnCategoryClickAction }
+            .bindToReactor()
+
+        categoriesAdapter.onItemClick
+            .map {
+                categoriesDialog?.dismiss()
+                OnSelectCategoryAction(it)
+            }.bindToReactor()
     }
 
     override fun bindToState(stateObservable: Observable<CreateAdvertState>) {
@@ -145,6 +163,15 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
 
         stateObservable.getChange { it.buttonState }
             .observeState { create_advert_button.buttonState = it }
+
+        stateObservable.getChange { it.selectedCategory }
+            .filter { it != Category.EMPTY }
+            .observeState { create_advert_categoryEditText.setText(it.name, TextView.BufferType.NORMAL) }
+
+        stateObservable.getChange { Pair(it.categories, it.selectedCategory) }
+            .observeState { (categories, selectedCategory) ->
+                categoriesAdapter.updateData(categories, selectedCategory)
+            }
     }
 
     override fun bindToEvent(eventsObservable: Observable<MviEvent<CreateAdvertState>>) {
@@ -155,6 +182,7 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
                 OpenGalleryEvent -> openGallery()
                 BackEvent -> finish()
                 SuccessEvent -> finish()
+                ShowCategoriesEvent -> showCategoriesDialog()
             }
         }
     }
@@ -203,5 +231,15 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
             getPhotoDialogFragment?.show(it)
             bindGetPhotoDialogToReactor()
         }
+    }
+
+    private fun bindCategoriesDialogToReactor() {
+        categoriesDialog?.setAdapter(categoriesAdapter)
+    }
+
+    private fun showCategoriesDialog() {
+        categoriesDialog = CategoriesDialogFragment()
+        categoriesDialog?.show(supportFragmentManager)
+        bindCategoriesDialogToReactor()
     }
 }

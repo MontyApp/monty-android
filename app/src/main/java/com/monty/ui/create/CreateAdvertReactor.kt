@@ -1,10 +1,8 @@
 package com.monty.ui.create
 
 import com.monty.data.model.response.FileResponse
-import com.monty.data.model.ui.Address
-import com.monty.data.model.ui.Advert
-import com.monty.data.model.ui.Interval
-import com.monty.data.model.ui.Price
+import com.monty.data.model.ui.*
+import com.monty.domain.GetCategoriesSingler
 import com.monty.domain.advert.AddAdvertCompletabler
 import com.monty.domain.advert.GetPriceIntervalsSingler
 import com.monty.domain.behavior.LoadingCompletableBehavior
@@ -21,6 +19,7 @@ import com.sumera.koreactor.behaviour.single
 import com.sumera.koreactor.behaviour.triggers
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviAction
+import com.sumera.koreactor.util.extension.getChange
 import com.sumera.koreactor.util.extension.getTrue
 import io.reactivex.Observable
 import org.threeten.bp.LocalDateTime
@@ -31,6 +30,7 @@ import javax.inject.Inject
 class CreateAdvertReactor @Inject constructor(
     private val getGalleryAttachmentFileSingler: GetGalleryAttachmentFileSingler,
     private val getPriceIntervalsSingler: GetPriceIntervalsSingler,
+    private val getCategoriesSingler: GetCategoriesSingler,
     private val addAdvertCompletabler: AddAdvertCompletabler,
     private val uploadPhotoSingler: UploadPhotoSingler
 ) : MviReactor<CreateAdvertState>() {
@@ -49,12 +49,16 @@ class CreateAdvertReactor @Inject constructor(
         val onSelectedIntervalAction = actions.ofActionType<OnSelectedIntervalAction>()
         val onBackAction = actions.ofActionType<OnBackAction>()
         val onAddAdvertAction = actions.ofActionType<OnAddAdvertAction>()
+        val onCategoryClickAction = actions.ofActionType<OnCategoryClickAction>()
+        val onSelectCategoryAction = actions.ofActionType<OnSelectCategoryAction>()
 
         onTitleChangeAction.map { ChangeTitleReducer(it.title) }.bindToView()
         onDescriptionChangeAction.map { ChangeDescriptionReducer(it.description) }.bindToView()
+        onSelectCategoryAction.map { ChangeSelectedCategoryReducer(it.category) }.bindToView()
         onAddImageClickAction.map { ShowGetPhotoDialogEvent }.bindToView()
         onGetPhotoFromGalleryActio.map { OpenGalleryEvent }.bindToView()
         onGetPhotoFromCameraAction.map { OpenCameraEvent }.bindToView()
+        onCategoryClickAction.map { ShowCategoriesEvent }.bindToView()
         onBackAction.map { BackEvent }.bindToView()
 
         val validTitle = onTitleChangeAction
@@ -77,6 +81,16 @@ class CreateAdvertReactor @Inject constructor(
             .startWith(false)
             .share()
 
+        val validCategory = onSelectCategoryAction
+            .map { it.category != Category.EMPTY }
+            .startWith(false)
+            .share()
+
+        val validImage = stateObservable.getChange { it.image }
+            .map { it.isNotEmpty() }
+            .startWith(false)
+            .share()
+
         onPriceChangeAction
             .filter { it.price.isNotEmpty() }
             .map { ChangePriceReducer(it.price.toFloat()) }
@@ -96,15 +110,22 @@ class CreateAdvertReactor @Inject constructor(
             .map { ChangeIntervalTypesReducer(it) }
             .bindToView()
 
+        attachLifecycleObservable
+            .flatMapSingle { getCategoriesSingler.execute() }
+            .map { ChangeCategoriesReducer(it) }
+            .bindToView()
+
         stateObservable
             .flatMap {
-                Rx.observableCombineLatestTriple(
+                Rx.observableCombineLatestSixfold(
                     validTitle,
                     validDescription,
                     validPrice,
-                    validDeposit
+                    validDeposit,
+                    validCategory,
+                    validImage
                 ).map {
-                    val isValid = it.first && it.second && it.third && it.fourth
+                    val isValid = it.first && it.second && it.third && it.fourth && it.fifth &&it.sixth
                     ChangeButtonStateReducer(
                         if (isValid) {
                             SubmitButtonState.IDLE
@@ -146,6 +167,7 @@ class CreateAdvertReactor @Inject constructor(
                         image = it.image,
                         description = it.description,
                         createdAt = LocalDateTime.now(),
+                        categoryId = it.selectedCategory.id,
                         price = Price.EMPTY.copy(
                             value = it.price,
                             interval = Interval(it.selectedIntervalType?.id ?: "")

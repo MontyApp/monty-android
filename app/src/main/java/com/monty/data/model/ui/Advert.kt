@@ -30,6 +30,9 @@ data class Advert(
     @Embedded(prefix = "price_")
     val price: Price,
 
+    @ColumnInfo(name = "category_id")
+    val categoryId: Int,
+
     @Embedded(prefix = "deposit_")
     val deposit: Price,
 
@@ -46,6 +49,7 @@ data class Advert(
             title = "",
             image = "",
             description = "",
+            categoryId = -1,
             createdAt = LocalDateTime.MIN,
             price = Price.EMPTY,
             deposit = Price.EMPTY,

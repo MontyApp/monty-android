@@ -1,6 +1,7 @@
 package com.monty.ui.create.contract
 
 import com.monty.data.model.ui.Advert
+import com.monty.data.model.ui.Category
 import com.monty.data.model.ui.SpinnerData
 import com.monty.data.model.ui.type.IntervalType
 import com.monty.ui.base.SubmitButtonState
@@ -19,7 +20,9 @@ data class CreateAdvertState(
     val photoState: SubmitState,
     val buttonState: SubmitButtonState,
     val intervalTypes: List<IntervalType>,
-    val selectedIntervalType: SpinnerData?
+    val selectedIntervalType: SpinnerData?,
+    val selectedCategory: Category,
+    val categories: List<Category>
     ) : MviState {
 
     companion object {
@@ -34,7 +37,9 @@ data class CreateAdvertState(
             photoState = SubmitState.IDLE,
             buttonState = SubmitButtonState.IDLE,
             intervalTypes = emptyList(),
-            selectedIntervalType = null
+            selectedIntervalType = null,
+            selectedCategory = Category.EMPTY,
+            categories = listOf()
         )
     }
 }

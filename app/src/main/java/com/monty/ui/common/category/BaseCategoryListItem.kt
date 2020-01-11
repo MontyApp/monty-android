@@ -12,7 +12,7 @@ sealed class CategoryListItem {
 }
 
 data class CategoryItem(
-    var isSelected: Boolean?,
+    var isSelected: Boolean,
     var category: Category,
     override val type: Int = TYPE_CATEGORY
 ) : CategoryListItem()

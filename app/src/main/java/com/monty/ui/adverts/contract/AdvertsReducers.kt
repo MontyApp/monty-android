@@ -31,3 +31,7 @@ data class ChangeLayoutStateReducer(private val partialLayoutState: PartialLayou
 data class ChangeCategoriesReducer(private val categories: List<Category>) : AdvertsReducer() {
     override fun reduce(oldState: AdvertsState) = oldState.copy(categories = categories)
 }
+
+data class ChangeSelectedCategoryReducer(private val selectedCategory: Category) : AdvertsReducer() {
+    override fun reduce(oldState: AdvertsState) = oldState.copy(selectedCategory = selectedCategory)
+}

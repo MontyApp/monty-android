@@ -10,6 +10,7 @@ object IntervalMapper {
             IntervalType.DAY.value -> resources.getString(R.string.interval_day)
             IntervalType.WEEK.value -> resources.getString(R.string.interval_week)
             IntervalType.MONTH.value -> resources.getString(R.string.interval_month)
+            IntervalType.TOTAL.value -> resources.getString(R.string.interval_total)
             else -> ""
         }
     }
