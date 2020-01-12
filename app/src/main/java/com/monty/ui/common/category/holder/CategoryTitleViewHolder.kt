@@ -4,7 +4,7 @@ import android.view.View
 import com.monty.ui.common.category.CategoriesAdapter
 import com.monty.ui.common.category.CategoryListItem
 import com.monty.ui.common.category.TitleItem
-import kotlinx.android.synthetic.main.item_category_title.view.*
+import kotlinx.android.synthetic.main.item_title.view.*
 
 class CategoryTitleViewHolder(
     itemView: View
@@ -17,6 +17,6 @@ class CategoryTitleViewHolder(
     }
 
     private fun View.bindView(name: String) {
-        category_title_name.text = name
+        title_name.text = name
     }
 }

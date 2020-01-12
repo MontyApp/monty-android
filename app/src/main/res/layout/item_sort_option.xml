@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sort_option_background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/d2"
+    android:layout_marginRight="@dimen/d2"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_selected">
+
+    <TextView
+        android:id="@+id/sort_option_name"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_selected"
+        android:padding="@dimen/d4"
+        android:text="@string/sort_advert_by_newest"
+        android:textAppearance="@style/TextRegular.Blueish.16"/>
+
+    <ImageView
+        android:id="@+id/sort_option_check"
+        android:layout_width="@dimen/d6"
+        android:layout_height="@dimen/d6"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/d2"
+        android:src="@drawable/ic_check"
+        android:tint="@color/red"
+        android:visibility="gone" />
+</LinearLayout>

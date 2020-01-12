@@ -41,7 +41,7 @@ val adverts = listOf(
         image = "https://images-na.ssl-images-amazon.com/images/I/91RqROIuniL._SL1500_.jpg",
         address = address,
         isFavourite = false,
-        categoryId = 1
+        categoryId = 2
     ),
     Advert(
         id = 2,
@@ -89,7 +89,7 @@ val adverts = listOf(
         address = address,
         image = "https://images-na.ssl-images-amazon.com/images/I/91RqROIuniL._SL1500_.jpg",
         isFavourite = false,
-        categoryId = 1
+        categoryId = 2
     ),
     Advert(
         id = 6,
