@@ -26,7 +26,7 @@ data class ChangeDepositReducer(private val deposit: Float) : CreateAdvertReduce
     override fun reduce(oldState: CreateAdvertState) = oldState.copy(deposit = deposit)
 }
 
-data class ChangePhotoFileReducer(private val photo: File) : CreateAdvertReducer() {
+data class ChangePhotoFileReducer(private val photo: File?) : CreateAdvertReducer() {
     override fun reduce(oldState: CreateAdvertState) = oldState.copy(photo = photo)
 }
 

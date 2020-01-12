@@ -13,6 +13,7 @@ import com.monty.ui.adverts.contract.*
 import com.monty.ui.base.BaseBottomSheetFragment
 import com.monty.ui.base.BaseFragment
 import com.monty.ui.common.AdvertsAdapter
+import com.monty.ui.common.AdvertsSkeleton
 import com.monty.ui.common.category.CategoriesAdapter
 import com.monty.ui.common.category.CategoriesDialogFragment
 import com.monty.ui.create.CreateAdvertActivity
@@ -31,6 +32,7 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
     @Inject lateinit var reactorFactory: AdvertsReactorFactory
     @Inject lateinit var advertsAdapter: AdvertsAdapter
     @Inject lateinit var categoriesAdapter: CategoriesAdapter
+    @Inject lateinit var advertsSkeleton: AdvertsSkeleton
     private var categoriesDialog: CategoriesDialogFragment? = null
 
     companion object {
@@ -49,6 +51,9 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
 
         adverts_recycler.layoutManager = LinearLayoutManager(context)
         adverts_recycler.adapter = advertsAdapter
+
+        advertsSkeleton.init(adverts_recycler, advertsAdapter)
+        advertsSkeleton.show()
 
         if (savedInstanceState != null) {
             categoriesDialog =
@@ -85,6 +90,7 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
 
     override fun bindToState(stateObservable: Observable<AdvertsState>) {
         stateObservable.getChange { Pair(it.adverts, it.selectedCategory) }
+            .filter { it.first.isNotEmpty() }
             .map { (adverts, selectedCategory) ->
                 if (selectedCategory != Category.EMPTY) {
                     adverts.filter { it.categoryId == selectedCategory.id }
@@ -92,7 +98,10 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                     adverts
                 }
             }
-            .observeState { advertsAdapter.updateData(it) }
+            .observeState {
+                advertsAdapter.updateData(it)
+                advertsSkeleton.hide()
+            }
 
         stateObservable.getChange { it.layoutState }
             .observeState { adverts_stateLayout.setState(it) }

@@ -7,6 +7,7 @@ import com.monty.R
 import com.monty.tool.extensions.titleTypeface
 import com.monty.ui.base.BaseFragment
 import com.monty.ui.common.AdvertsAdapter
+import com.monty.ui.common.AdvertsSkeleton
 import com.monty.ui.detail.AdvertDetailActivity
 import com.monty.ui.favourite.contract.FavouriteAdvertsState
 import com.monty.ui.favourite.contract.NavigateToAdvertDetailEvent
@@ -23,6 +24,7 @@ class FavouriteAdvertsFragment : BaseFragment<FavouriteAdvertsState>() {
 
     @Inject lateinit var reactorFactory: FavouriteAdvertsReactorFactory
     @Inject lateinit var adapter: AdvertsAdapter
+    @Inject lateinit var advertsSkeleton: AdvertsSkeleton
 
     companion object {
         fun newInstance() = FavouriteAdvertsFragment()
@@ -41,6 +43,9 @@ class FavouriteAdvertsFragment : BaseFragment<FavouriteAdvertsState>() {
         favourite_adverts_recycler.layoutManager = LinearLayoutManager(context)
         favourite_adverts_recycler.adapter = adapter
 
+        advertsSkeleton.init(favourite_adverts_recycler, adapter)
+        advertsSkeleton.show()
+
         adapter.onItemClick
             .map { OnAdvertClickAction(it) }
             .bindToReactor()
@@ -52,7 +57,11 @@ class FavouriteAdvertsFragment : BaseFragment<FavouriteAdvertsState>() {
 
     override fun bindToState(stateObservable: Observable<FavouriteAdvertsState>) {
         stateObservable.getChange { it.favouriteAdverts }
-            .observeState { adapter.updateData(it) }
+            .filter { it.isNotEmpty() }
+            .observeState {
+                advertsSkeleton.hide()
+                adapter.updateData(it)
+            }
 
         stateObservable.getChange { it.layoutState }
             .observeState { favourite_adverts_stateLayout.setState(it) }

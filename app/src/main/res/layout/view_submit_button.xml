@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/submit_form_field_root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/submit_form_field_root"
     android:layout_width="match_parent"
     android:layout_height="48dp"
+    android:animateLayoutChanges="true"
     android:background="@drawable/bg_submit_button">
 
     <TextView
@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:textAppearance="@style/SubmitButton"
         android:visibility="gone"
-        tools:text="Submit"/>
+        tools:text="Submit" />
 
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/submit_form_field_progress"
@@ -25,6 +25,6 @@
         android:visibility="gone"
         wheel:matProg_barColor="@color/white"
         wheel:matProg_barWidth="2dp"
-        wheel:matProg_progressIndeterminate="true"/>
+        wheel:matProg_progressIndeterminate="true" />
 
 </FrameLayout>

@@ -9,6 +9,7 @@ import com.monty.ui.adverts.contract.*
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviAction
 import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class AdvertsReactor @Inject constructor(
@@ -51,6 +52,7 @@ class AdvertsReactor @Inject constructor(
             .bindTo()
 
         attachLifecycleObservable
+            .delay(1500, TimeUnit.MILLISECONDS)
             .flatMap { getAdvertsObservabler.execute() }
             .map { UpdateAdvertsReducer(it) }
             .bindToView()
