@@ -12,6 +12,9 @@ import com.monty.tool.extensions.visible
 import com.monty.ui.adverts.contract.*
 import com.monty.ui.base.BaseBottomSheetFragment
 import com.monty.ui.base.BaseFragment
+import com.monty.ui.base.placeholder.PlaceholderLayoutState
+import com.monty.ui.base.placeholder.PullState
+import com.monty.ui.base.placeholder.ViewState
 import com.monty.ui.common.AdvertsAdapter
 import com.monty.ui.common.AdvertsSkeleton
 import com.monty.ui.common.category.CategoriesAdapter
@@ -99,7 +102,11 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                 }
             }
             .observeState {
-                advertsAdapter.updateData(it)
+                if(it.isEmpty()) {
+                    adverts_stateLayout.setState(PlaceholderLayoutState(ViewState.EMPTY,PullState.IDLE))
+                } else {
+                    advertsAdapter.updateData(it)
+                }
                 advertsSkeleton.hide()
             }
 

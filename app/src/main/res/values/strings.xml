@@ -9,12 +9,15 @@
 
     <!-- Adverts -->
     <string name="adverts_title">Inzeráty</string>
+    <string name="adverts_empty">Tu zatiaľ nič nemáme.\nPomôžeš nám s tým?</string>
 
     <!-- My Adverts -->
     <string name="my_adverts_title">Moje inzeráty</string>
+    <string name="my_adverts_empty">Tu zatiaľ nič nemáš.\nChceš niečo pridať?</string>
 
     <!-- Favourite Adverts -->
     <string name="favourite_adverts_title">Obľúbené</string>
+    <string name="favourite_adverts_empty">Ak sa ti niečo páči, tu si to neskôr nájdeš.</string>
 
     <!-- Profile -->
     <string name="profile_title">Profil</string>
