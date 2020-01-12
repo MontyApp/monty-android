@@ -1,15 +1,11 @@
 package com.monty.ui.myadverts
 
 import com.monty.domain.advert.GetAdvertsObservabler
-import com.monty.ui.myadverts.contract.MyAdvertsState
-import com.monty.ui.myadverts.contract.NavigateToAdvertDetailEvent
-import com.monty.ui.myadverts.contract.NavigateToCreateAdvertEvent
-import com.monty.ui.myadverts.contract.OnAddAdvertAction
-import com.monty.ui.myadverts.contract.OnAdvertClickAction
-import com.monty.ui.myadverts.contract.UpdateMyAdvertsReducer
+import com.monty.ui.myadverts.contract.*
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviAction
 import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MyAdvertsReactor @Inject constructor(
@@ -31,6 +27,7 @@ class MyAdvertsReactor @Inject constructor(
             .bindToView()
 
         attachLifecycleObservable
+            .delay(1500, TimeUnit.MILLISECONDS)
             .flatMap { getAdvertsObservabler.execute() }
             .map { UpdateMyAdvertsReducer(it.sortedByDescending { it.id }) }
             .bindToView()

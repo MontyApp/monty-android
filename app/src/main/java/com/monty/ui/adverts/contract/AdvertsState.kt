@@ -9,6 +9,7 @@ data class AdvertsState(
     val adverts: List<Advert>,
     val categories: List<Category>,
     val selectedCategory: Category,
+    val showSkeleton: Boolean,
     val layoutState: PlaceholderLayoutState
 ) : MviState {
 
@@ -16,6 +17,7 @@ data class AdvertsState(
         val INITIAL = AdvertsState(
             adverts = listOf(),
             categories = listOf(),
+            showSkeleton = false,
             selectedCategory = Category.EMPTY,
             layoutState = PlaceholderLayoutState.DEFAULT
         )

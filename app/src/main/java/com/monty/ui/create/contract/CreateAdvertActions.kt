@@ -31,4 +31,6 @@ object OnAddAdvertAction : CreateAdvertAction()
 
 object OnCategoryClickAction : CreateAdvertAction()
 
+object OnDeleteImageClickAction : CreateAdvertAction()
+
 data class OnSelectCategoryAction(val category: Category) : CreateAdvertAction()

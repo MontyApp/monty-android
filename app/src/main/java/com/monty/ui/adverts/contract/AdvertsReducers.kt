@@ -13,11 +13,13 @@ data class UpdateAdvertsReducer(private val items: List<Advert>) : AdvertsReduce
         return if (items.isEmpty()) {
             oldState.copy(
                 adverts = items,
+                showSkeleton = false,
                 layoutState = PartialLayoutState(ViewState.EMPTY).toFull(oldState.layoutState)
             )
         } else {
             oldState.copy(
                 adverts = items,
+                showSkeleton = false,
                 layoutState = PartialLayoutState(ViewState.CONTENT).toFull(oldState.layoutState)
             )
         }
@@ -34,4 +36,8 @@ data class ChangeCategoriesReducer(private val categories: List<Category>) : Adv
 
 data class ChangeSelectedCategoryReducer(private val selectedCategory: Category) : AdvertsReducer() {
     override fun reduce(oldState: AdvertsState) = oldState.copy(selectedCategory = selectedCategory)
+}
+
+data class ChangeShowSkeletonReducer(private val showSkeleton: Boolean) : AdvertsReducer() {
+    override fun reduce(oldState: AdvertsState) = oldState.copy(showSkeleton = showSkeleton)
 }

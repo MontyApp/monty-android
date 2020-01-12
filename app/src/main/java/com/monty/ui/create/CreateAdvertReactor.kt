@@ -51,6 +51,7 @@ class CreateAdvertReactor @Inject constructor(
         val onAddAdvertAction = actions.ofActionType<OnAddAdvertAction>()
         val onCategoryClickAction = actions.ofActionType<OnCategoryClickAction>()
         val onSelectCategoryAction = actions.ofActionType<OnSelectCategoryAction>()
+        val onDeleteImageClickAction = actions.ofActionType<OnDeleteImageClickAction>()
 
         onTitleChangeAction.map { ChangeTitleReducer(it.title) }.bindToView()
         onDescriptionChangeAction.map { ChangeDescriptionReducer(it.description) }.bindToView()
@@ -60,6 +61,10 @@ class CreateAdvertReactor @Inject constructor(
         onGetPhotoFromCameraAction.map { OpenCameraEvent }.bindToView()
         onCategoryClickAction.map { ShowCategoriesEvent }.bindToView()
         onBackAction.map { BackEvent }.bindToView()
+
+        onDeleteImageClickAction.map { ChangeImageReducer("") }.bindToView()
+        onDeleteImageClickAction.map { ChangePhotoStateReducer(SubmitState.IDLE) }.bindToView()
+        onDeleteImageClickAction.map { ChangePhotoFileReducer(null) }.bindToView()
 
         val validTitle = onTitleChangeAction
             .map { it.title.isNotEmpty() }

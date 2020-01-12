@@ -15,6 +15,7 @@
     <color name="blueish_grey">#20363D</color>
     <color name="dark_grey">#7A7A7A</color>
     <color name="light_grey">#F2F2F2</color>
+    <color name="skeleton_grey">#DBDBDB</color>
     <color name="red">#EB5757</color>
     <color name="light_red">#25EB5757</color>
 </resources>

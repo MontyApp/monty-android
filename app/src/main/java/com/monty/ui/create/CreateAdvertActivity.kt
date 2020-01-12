@@ -10,7 +10,6 @@ import androidx.core.content.FileProvider
 import com.jakewharton.rxbinding2.support.v7.widget.navigationClicks
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
-import com.monty.R
 import com.monty.data.model.ui.Category
 import com.monty.data.model.ui.IntervalData
 import com.monty.data.model.ui.mapper.IntervalMapper
@@ -39,6 +38,8 @@ import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_create_advert.*
 import javax.inject.Inject
 
+
+
 class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
 
     @Inject lateinit var categoriesAdapter: CategoriesAdapter
@@ -60,7 +61,7 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
         return getReactor(reactorFactory, CreateAdvertReactor::class.java)
     }
 
-    override val layoutRes: Int = R.layout.activity_create_advert
+    override val layoutRes: Int = com.monty.R.layout.activity_create_advert
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,6 +113,10 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
             .map { OnCategoryClickAction }
             .bindToReactor()
 
+        create_advert_image_delete.clicks()
+            .map { OnDeleteImageClickAction }
+            .bindToReactor()
+
         categoriesAdapter.onItemClick
             .map {
                 categoriesDialog?.dismiss()
@@ -123,7 +128,8 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
         stateObservable.getChange { it.image }
             .filter { it.isNotEmpty() }
             .observeState { image ->
-                create_advert_image.visible()
+                create_advert_image_delete.gone()
+                create_advert_image_layout.visible()
                 Picasso.with(this)
                     .load(image)
                     .fit()
@@ -131,6 +137,7 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
                     .into(create_advert_image, object : com.squareup.picasso.Callback {
                         override fun onSuccess() {
                             create_advert_progress.gone()
+                            create_advert_image_delete.visible()
                         }
 
                         override fun onError() {}

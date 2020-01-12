@@ -15,6 +15,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/advert_detail_toolbar_layout"
             style="@style/CollapsingToolbar"
+            app:scrimVisibleHeightTrigger="60dp"
             app:contentScrim="@color/white">
 
             <ImageView
@@ -123,7 +124,7 @@
                     android:layout_marginLeft="@dimen/d4"
                     android:layout_marginTop="@dimen/d4"
                     android:layout_marginRight="@dimen/d4"
-                    android:text="@string/adverts_deposit_title"
+                    android:text="@string/advert_detail_deposit_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/advert_detail_description_separator" />
 
@@ -146,7 +147,7 @@
                     android:layout_marginLeft="@dimen/d4"
                     android:layout_marginTop="@dimen/d1"
                     android:layout_marginRight="@dimen/d4"
-                    android:text="@string/adverts_deposit_info"
+                    android:text="@string/advert_detail_deposit_info"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_title" />
 
@@ -168,7 +169,7 @@
                     android:layout_marginLeft="@dimen/d4"
                     android:layout_marginTop="@dimen/d4"
                     android:layout_marginRight="@dimen/d4"
-                    android:text="@string/adverts_address_title"
+                    android:text="@string/advert_detail_address_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_separator" />
 
@@ -213,7 +214,7 @@
                     android:layout_marginLeft="@dimen/d4"
                     android:layout_marginTop="@dimen/d4"
                     android:layout_marginRight="@dimen/d4"
-                    android:text="@string/adverts_user_title"
+                    android:text="@string/advert_detail_user_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_separator" />
 
@@ -237,10 +238,20 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <com.monty.ui.base.SubmitButton
+                    android:id="@+id/advert_detail_contact"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/d4"
+                    android:layout_height="wrap_content"
+                    app:sffr_label_disabled="@string/advert_detail_contact"
+                    app:sffr_label_idle="@string/advert_detail_contact"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_card" />
+
                 <Space
                     android:layout_width="match_parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_card"
-                    android:layout_height="@dimen/d4"/>
+                    android:layout_margin="@dimen/d4"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_contact"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
