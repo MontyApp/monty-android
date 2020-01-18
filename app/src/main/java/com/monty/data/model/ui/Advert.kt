@@ -5,8 +5,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.monty.data.model.response.ApiAdvert
 import com.monty.data.model.ui.mapper.IntervalMapper
 import com.monty.tool.currency.CurrencyFormatter
+import com.monty.tool.extensions.toLocalDateTime
 import org.threeten.bp.LocalDateTime
 
 @Entity(tableName = "advert")
@@ -55,6 +57,26 @@ data class Advert(
             deposit = Price.EMPTY,
             address = Address.EMPTY,
             isFavourite = false
+        )
+
+        fun fromApi(apiAdvert: ApiAdvert) = Advert(
+            title = apiAdvert.title,
+            description = apiAdvert.description,
+            image = apiAdvert.image,
+            createdAt = apiAdvert.createdAt.toLocalDateTime(),
+            address = Address.fromApi(apiAdvert.address),
+            price = Price(
+                currency = Currency(code = apiAdvert.currency, sign = "kč"),
+                value = apiAdvert.price,
+                interval = Interval(apiAdvert.interval)
+            ),
+            deposit = Price(
+                currency = Currency(code = apiAdvert.currency, sign = "kč"),
+                value = apiAdvert.deposit,
+                interval = Interval(apiAdvert.interval)
+            ),
+            categoryId = apiAdvert.categoryId,
+            id = 1
         )
     }
 

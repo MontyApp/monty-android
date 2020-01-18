@@ -26,7 +26,7 @@ abstract class AdvertDao {
     abstract fun deleteAll()
 
     @Transaction
-    open fun deleteAll(adverts: List<Advert>) {
+    open fun replaceAll(adverts: List<Advert>) {
         deleteAll()
         insert(adverts)
     }

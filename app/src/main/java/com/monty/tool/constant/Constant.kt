@@ -4,6 +4,10 @@ import org.threeten.bp.format.DateTimeFormatter
 
 interface Constant {
 
+    object Database {
+        const val ADVERTS = "adverts"
+    }
+
     object Bundle {
         const val TAB_ID = "tab_id"
         const val ADVERT_ID = "advert_id"

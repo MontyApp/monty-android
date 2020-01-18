@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -60,8 +61,12 @@ dependencies {
     final PHOTO_VIEW = '2.0.0'
     final MATERIALISH_PROGRESS = '1.7'
     final GOOGLE_GCM = '17.0.0'
+    final FIREBASE = '21.3.1'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //Firebase
+    implementation "com.google.firebase:firebase-firestore-ktx:$FIREBASE"
 
     // Support
     implementation "com.google.android.material:material:$MATERIAL"
