@@ -15,7 +15,11 @@ import com.monty.data.model.ui.User
 import com.monty.tool.constant.Constant
 import com.monty.tool.currency.CurrencyFormatter
 import com.monty.tool.extensions.configureMap
+import com.monty.tool.extensions.drawable
+import com.monty.tool.intent.Navigation
 import com.monty.ui.base.BaseActivity
+import com.monty.ui.base.BaseBottomSheetFragment
+import com.monty.ui.common.dialog.ContactDialog
 import com.monty.ui.detail.contract.*
 import com.monty.ui.photo.ShowPhotoActivity
 import com.squareup.picasso.Picasso
@@ -29,11 +33,12 @@ import javax.inject.Inject
 class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
 
     @Inject lateinit var reactorFactory: AdvertDetailReactorFactory
-
     @Inject lateinit var currencyFormatter: CurrencyFormatter
 
+    private var contactDialog: ContactDialog? = null
+
     companion object {
-        fun getStartIntent(context: Context, advertId: Int): Intent {
+        fun getStartIntent(context: Context, advertId: String): Intent {
             return Intent(context, AdvertDetailActivity::class.java).apply {
                 putExtra(Constant.Bundle.ADVERT_ID, advertId)
             }
@@ -49,12 +54,30 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (savedInstanceState != null) {
+            contactDialog =
+                supportFragmentManager.findFragmentByTag(BaseBottomSheetFragment.TAG) as? ContactDialog
+            bindDialogToReactor()
+        }
+        
         advert_detail_toolbar.navigationClicks()
             .map { OnBackAction }
             .bindToReactor()
 
         advert_detail_image.clicks()
             .map { OnPhotoClick }
+            .bindToReactor()
+
+        advert_detail_contact.onIdleButtonClickSubject
+            .map { OnContactAction }
+            .bindToReactor()
+
+        advert_detail_map_click.clicks()
+            .map { OnMapAction }
+            .bindToReactor()
+
+        advert_detail_toolbar_favourite.clicks()
+            .map { OnFavouriteAction }
             .bindToReactor()
     }
 
@@ -67,12 +90,18 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 advert_detail_price.text = it.getPrice(currencyFormatter)
                 advert_detail_price_interval.text = it.getInterval(resources)
                 advert_detail_deposit_price.text = it.getDeposit(currencyFormatter)
-                advert_detail_user.init(
-                    User(
-                        name = "Hanka Nováková",
-                        photo = "https://www.midlandsderm.com/wp-content/uploads/2019/04/Rachel-R.-Person-760x760.jpg"
-                    )
-                )
+
+                if(it.isFavourite) {
+                    advert_detail_toolbar_favourite.setImageDrawable(drawable(R.drawable.bg_favourite_active))
+                } else {
+                    advert_detail_toolbar_favourite.setImageDrawable(drawable(R.drawable.bg_favourite_inactive))
+                }
+            }
+
+        stateObservable.getChange { it.user }
+            .filter { it != User.EMPTY }
+            .observeState { user ->
+                advert_detail_user.init(user)
             }
 
         stateObservable.getChange { it.advert.image }
@@ -85,13 +114,14 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                     .into(advert_detail_image)
             }
 
-        stateObservable.getChange { it.advert.address }
-            .filter { it != Address.EMPTY }
-            .observeState { address ->
+        stateObservable.getChange { Pair(it.advert.address, it.myLocation) }
+            .filter { it.first != Address.EMPTY }
+            .observeState { (address, myLocation) ->
                 val addressLatLon = LatLng(address.latitude, address.longitude)
-                val mapFragment = supportFragmentManager.findFragmentById(R.id.advert_detail_map) as SupportMapFragment
+                val mapFragment =
+                    supportFragmentManager.findFragmentById(R.id.advert_detail_map) as SupportMapFragment
                 val callback = OnMapReadyCallback { googleMap ->
-                    googleMap.configureMap(this, addressLatLon)
+                    googleMap.configureMap(this, addressLatLon, myLocation)
                 }
                 mapFragment.getMapAsync(callback)
             }
@@ -106,8 +136,28 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 is NavigateToShowPhotoEvent -> {
                     startActivity(ShowPhotoActivity.getStartIntent(this, event.url))
                 }
+                is ShowContactDialog -> showContactDialog(event.name)
+                is NavigateToPhoneEvent -> startActivity(Navigation.callPhone(event.phone))
+                is NavigateToEmailEvent -> startActivity(Navigation.sendEmail(event.email, event.title))
+                is NavigateToMapEvent -> startActivity(Navigation.showOnMap(event.lat, event.lon, this))
                 BackEvent -> finish()
             }
         }
+    }
+
+    private fun bindDialogToReactor() {
+        contactDialog?.onPhoneClick
+            ?.map { OnContactPhoneAction }
+            ?.bindToReactor()
+
+        contactDialog?.onEmailClick
+            ?.map { OnContactEmailAction }
+            ?.bindToReactor()
+    }
+
+    private fun showContactDialog(name: String) {
+        contactDialog = ContactDialog.newInstance()
+        contactDialog?.init(name)?.show(supportFragmentManager)
+        bindDialogToReactor()
     }
 }

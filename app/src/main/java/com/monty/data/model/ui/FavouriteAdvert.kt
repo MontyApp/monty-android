@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey
 data class FavouriteAdvert(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int
+    val id: String
 ) {
 
     companion object {
-        val EMPTY = FavouriteAdvert(id = -1)
+        val EMPTY = FavouriteAdvert(id = "")
     }
 }

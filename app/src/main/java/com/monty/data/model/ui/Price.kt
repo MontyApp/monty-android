@@ -22,5 +22,11 @@ data class Price(
             interval = Interval.EMPTY,
             value = 0f
         )
+
+        fun fromApi(currency: String, interval: String, price: Float) = Price(
+            currency = Currency(code = currency, sign = if(currency == "czk") "kč" else "€"),
+            interval = Interval(interval),
+            value = price
+        )
     }
 }

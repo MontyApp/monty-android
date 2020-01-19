@@ -1,11 +1,14 @@
 package com.monty.ui.adverts
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
 import com.monty.data.model.ui.Category
+import com.monty.tool.constant.Constant
 import com.monty.tool.extensions.gone
 import com.monty.tool.extensions.titleTypeface
 import com.monty.tool.extensions.visible
@@ -102,13 +105,21 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                 }
             }
             .observeState {
-                if(it.isEmpty()) {
-                    adverts_stateLayout.setState(PlaceholderLayoutState(ViewState.EMPTY,PullState.IDLE))
+                if (it.isEmpty()) {
+                    adverts_stateLayout.setState(
+                        PlaceholderLayoutState(
+                            ViewState.EMPTY,
+                            PullState.IDLE
+                        )
+                    )
                 } else {
                     advertsAdapter.updateData(it)
                 }
                 advertsSkeleton.hide()
             }
+
+        stateObservable.getChange { it.myLocation }
+            .observeState { advertsAdapter.updateLocation(it) }
 
         stateObservable.getChange { it.layoutState }
             .observeState { adverts_stateLayout.setState(it) }
@@ -140,10 +151,11 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                         )
                     )
                 }
-                is AdvertsEvent -> showCategoriesDialog()
+                is ShowCategoriesDialogEvent -> showCategoriesDialog()
                 is NavigateToCreateAdvertEvent -> {
                     startActivity(CreateAdvertActivity.getStartIntent(requireContext()))
                 }
+                is RequestLocationPermissionEvent -> requestLocationPermission()
             }
         }
     }
@@ -156,5 +168,24 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
         categoriesDialog = CategoriesDialogFragment()
         categoriesDialog?.show(requireFragmentManager())
         bindDialogToReactor()
+    }
+
+    private fun requestLocationPermission() {
+        requestPermissions(
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            Constant.Intent.LOCATION_PERMISSION_REQUEST
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == Constant.Intent.LOCATION_PERMISSION_REQUEST) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                sendAction(OnAllowLocationAction)
+            }
+        }
     }
 }

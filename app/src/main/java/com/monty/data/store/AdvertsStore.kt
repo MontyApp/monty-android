@@ -37,7 +37,7 @@ class AdvertsStore @Inject constructor(
         return database.advertDao().getAll().toObservable()
     }
 
-    fun getAdvert(advertId: Int): Observable<Advert> {
+    fun getAdvert(advertId: String): Observable<Advert> {
         return database.advertDao()
             .getAdvertByIdFlowable(advertId)
             .defaultIfEmpty(Advert.EMPTY)

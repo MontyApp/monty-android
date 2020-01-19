@@ -12,5 +12,6 @@ data class ApiAdvert(
     val deposit: Float = 0f,
     val categoryId: Int = 0,
     val createdAt: String = "",
-    val address: GeoPoint = GeoPoint(0.0, 0.0)
+    val address: GeoPoint = GeoPoint(0.0, 0.0),
+    val userId: String = ""
 )

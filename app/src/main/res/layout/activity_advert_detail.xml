@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,49 +7,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_layout"
-        style="@style/AppBar"
-        android:layout_height="230dp">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/advert_detail_toolbar"
+        style="@style/Toolbar"
+        android:titleTextAppearance="@style/ToolbarTitle"
+        app:navigationIcon="@drawable/ic_back">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/advert_detail_toolbar_layout"
-            style="@style/CollapsingToolbar"
-            app:scrimVisibleHeightTrigger="60dp"
-            app:contentScrim="@color/white">
+        <ImageView
+            android:id="@+id/advert_detail_toolbar_favourite"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center_vertical"
+            android:background="?selectableItemBackgroundBorderless"
+            android:gravity="end|center_vertical"
+            android:paddingStart="@dimen/d4"
+            android:paddingEnd="@dimen/d4"
+            app:srcCompat="@drawable/bg_favourite_inactive" />
 
-            <ImageView
-                android:id="@+id/advert_detail_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_collapseMode="parallax" />
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/advert_detail_toolbar"
-                style="@style/Toolbar"
-                android:titleTextAppearance="@style/ToolbarTitle"
-                app:navigationIcon="@drawable/ic_back" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <com.monty.ui.base.placeholder.PlaceholderLayoutView
         android:id="@+id/advert_detail_stateLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/state_content"
             android:layout_width="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/d4"
             android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/d4">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/advert_detail_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    app:layout_collapseMode="parallax"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/advert_detail_title"
@@ -61,12 +61,12 @@
                     android:layout_marginRight="@dimen/d4"
                     app:layout_constraintEnd_toStartOf="@+id/advert_detail_price_barrier"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_image"
                     tools:text="Kolo na víkend" />
 
                 <TextView
                     android:id="@+id/advert_detail_price"
-                    style="@style/PriceDark"
+                    style="@style/TitleDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/d4"
@@ -173,28 +173,39 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_separator" />
 
-                <androidx.cardview.widget.CardView
+                <FrameLayout
                     android:id="@+id/advert_detail_map_card"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="@dimen/d4"
                     android:layout_marginTop="@dimen/d2"
                     android:layout_marginRight="@dimen/d4"
-                    android:foreground="@drawable/bg_selected_with_radius"
-                    app:cardCornerRadius="@dimen/monty_radius"
-                    app:cardElevation="@dimen/d1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/advert_detail_address_title">
 
-                    <fragment
-                        android:id="@+id/advert_detail_map"
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        map:mapType="normal" />
+                        app:cardCornerRadius="@dimen/monty_radius"
+                        app:cardElevation="0dp">
 
-                </androidx.cardview.widget.CardView>
+                        <fragment
+                            android:id="@+id/advert_detail_map"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            map:mapType="normal" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:id="@+id/advert_detail_map_click"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_selected_with_radius" />
+
+                </FrameLayout>
 
                 <View
                     android:id="@+id/advert_detail_user_separator"
@@ -241,17 +252,11 @@
                 <com.monty.ui.base.SubmitButton
                     android:id="@+id/advert_detail_contact"
                     android:layout_width="match_parent"
-                    android:layout_margin="@dimen/d4"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/d4"
+                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_card"
                     app:sffr_label_disabled="@string/advert_detail_contact"
-                    app:sffr_label_idle="@string/advert_detail_contact"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_card" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_margin="@dimen/d4"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_contact"/>
+                    app:sffr_label_idle="@string/advert_detail_contact" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
@@ -282,6 +287,6 @@
 
         </LinearLayout>
     </com.monty.ui.base.placeholder.PlaceholderLayoutView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
 
 

@@ -6,6 +6,7 @@ interface Constant {
 
     object Database {
         const val ADVERTS = "adverts"
+        const val USERS = "users"
     }
 
     object Bundle {
@@ -18,6 +19,7 @@ interface Constant {
     object Intent {
         const val TAKE_PHOTO_REQUEST = 1
         const val PICK_IMAGE = 2
+        const val LOCATION_PERMISSION_REQUEST = 3
     }
 
     object Formatter {

@@ -22,5 +22,5 @@ abstract class FavouriteAdvertDao {
     abstract fun getAllSingle(): Single<List<Advert>>
 
     @Query("DELETE FROM favourite_advert WHERE id = :advertId")
-    abstract fun delete(advertId: Int)
+    abstract fun delete(advertId: String)
 }

@@ -63,6 +63,9 @@ class FavouriteAdvertsFragment : BaseFragment<FavouriteAdvertsState>() {
                 adapter.updateData(it)
             }
 
+        stateObservable.getChange { it.myLocation }
+            .observeState { adapter.updateLocation(it) }
+
         stateObservable.getChange { it.layoutState }
             .observeState { favourite_adverts_stateLayout.setState(it) }
     }

@@ -15,7 +15,7 @@ import org.threeten.bp.LocalDateTime
 data class Advert(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: String,
 
     @ColumnInfo(name = "title")
     val title: String,
@@ -35,6 +35,9 @@ data class Advert(
     @ColumnInfo(name = "category_id")
     val categoryId: Int,
 
+    @ColumnInfo(name = "user_id")
+    val userId: String,
+
     @Embedded(prefix = "deposit_")
     val deposit: Price,
 
@@ -47,7 +50,7 @@ data class Advert(
 
     companion object {
         val EMPTY = Advert(
-            id = -1,
+            id = "",
             title = "",
             image = "",
             description = "",
@@ -56,27 +59,21 @@ data class Advert(
             price = Price.EMPTY,
             deposit = Price.EMPTY,
             address = Address.EMPTY,
-            isFavourite = false
+            isFavourite = false,
+            userId = ""
         )
 
-        fun fromApi(apiAdvert: ApiAdvert) = Advert(
+        fun fromApi(apiAdvert: ApiAdvert, id: String) = Advert(
+            id = id,
             title = apiAdvert.title,
             description = apiAdvert.description,
             image = apiAdvert.image,
             createdAt = apiAdvert.createdAt.toLocalDateTime(),
             address = Address.fromApi(apiAdvert.address),
-            price = Price(
-                currency = Currency(code = apiAdvert.currency, sign = "kč"),
-                value = apiAdvert.price,
-                interval = Interval(apiAdvert.interval)
-            ),
-            deposit = Price(
-                currency = Currency(code = apiAdvert.currency, sign = "kč"),
-                value = apiAdvert.deposit,
-                interval = Interval(apiAdvert.interval)
-            ),
+            price = Price.fromApi(apiAdvert.currency, apiAdvert.interval, apiAdvert.price),
+            deposit = Price.fromApi(apiAdvert.currency, apiAdvert.interval, apiAdvert.deposit),
             categoryId = apiAdvert.categoryId,
-            id = 1
+            userId = apiAdvert.userId
         )
     }
 

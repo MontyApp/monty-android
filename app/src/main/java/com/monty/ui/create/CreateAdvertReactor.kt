@@ -167,7 +167,7 @@ class CreateAdvertReactor @Inject constructor(
             worker = completable {
                 addAdvertCompletabler.init(
                     Advert(
-                        id = LocalDateTime.now().nano,
+                        id = LocalDateTime.now().nano.toString(),
                         title = it.title,
                         image = it.image,
                         description = it.description,
@@ -179,7 +179,8 @@ class CreateAdvertReactor @Inject constructor(
                         ),
                         deposit = Price.EMPTY.copy(value = it.deposit),
                         address = Address.EMPTY,
-                        isFavourite = false
+                        isFavourite = false,
+                        userId = ""
                     )
                 ).execute()
             },

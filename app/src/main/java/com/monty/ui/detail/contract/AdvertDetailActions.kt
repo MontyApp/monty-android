@@ -8,4 +8,14 @@ object OnRefreshAction : AdvertDetailAction()
 
 object OnBackAction : AdvertDetailAction()
 
+object OnMapAction : AdvertDetailAction()
+
+object OnFavouriteAction : AdvertDetailAction()
+
+object OnContactAction : AdvertDetailAction()
+
+object OnContactPhoneAction : AdvertDetailAction()
+
+object OnContactEmailAction : AdvertDetailAction()
+
 object OnPhotoClick: AdvertDetailAction()

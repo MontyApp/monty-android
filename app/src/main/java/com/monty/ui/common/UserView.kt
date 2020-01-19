@@ -27,10 +27,10 @@ class UserView @JvmOverloads constructor(
 
     private fun View.initAdvert() {
         user_name.text = user.name
-        user_adverts_count.text = "5 inzerátov"
 
         Picasso.with(context)
-            .load(user.photo)
+            .load(user.avatar)
+            .placeholder(R.drawable.bg_person)
             .transform(CircleTransform())
             .into(user_photo)
     }

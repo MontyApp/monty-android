@@ -1,5 +1,6 @@
 package com.monty.ui.common
 
+import android.location.Location
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,13 @@ class AdvertsAdapter @Inject constructor(
 
     private val items = ArrayList<Advert>()
 
+    private var myLocation: Location = Location("")
+
     override fun getItemCount(): Int = items.size
+
+    fun updateLocation(myLocation: Location) {
+        this.myLocation = myLocation
+    }
 
     fun updateData(adverts: List<Advert>) {
         this.items.clear()
@@ -49,7 +56,7 @@ class AdvertsAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.apply {
-            advert.init(items[position], currencyFormatter)
+            advert.init(items[position], currencyFormatter, myLocation)
         }
     }
 

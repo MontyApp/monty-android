@@ -6,4 +6,4 @@ sealed class FavouriteAdvertsEvent : MviEvent<FavouriteAdvertsState>()
 
 data class ErrorEvent(val message: String) : FavouriteAdvertsEvent()
 
-data class NavigateToAdvertDetailEvent(val advertId: Int) : FavouriteAdvertsEvent()
+data class NavigateToAdvertDetailEvent(val advertId: String) : FavouriteAdvertsEvent()

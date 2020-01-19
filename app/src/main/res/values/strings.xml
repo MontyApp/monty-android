@@ -51,9 +51,12 @@
     <string name="create_advert_add">Pridať inzerát</string>
     <string name="create_advert_add_success">Inzerát pridaný</string>
 
-    <!-- Get photo dialog -->
+    <!-- Get avatar dialog -->
     <string name="get_photo_dialog_camera">Vyfotit</string>
     <string name="get_photo_dialog_gallery">Vybrat fotku z galerie</string>
     <string name="toast_photo_too_large">Nelze nahrát fotku větší než %s MB</string>
     <string name="toast_cant_load_photo">Nepodařilo se načíst fotku</string>
+
+    <string name="contact_dialog_phone">Zavolať</string>
+    <string name="contact_dialog_email">Napísať email</string>
 </resources>

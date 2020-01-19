@@ -1,5 +1,6 @@
 package com.monty.data.model.ui
 
+import android.location.Location
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.google.firebase.firestore.GeoPoint
@@ -28,5 +29,10 @@ data class Address(
             latitude = apiAddress.latitude,
             longitude = apiAddress.longitude
         )
+    }
+
+    fun toLocation() = Location("").apply {
+        latitude = this@Address.latitude
+        longitude = this@Address.longitude
     }
 }
