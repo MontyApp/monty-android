@@ -27,10 +27,12 @@ class AdvertsStore @Inject constructor(
             }
     }
 
-    fun addAdvert(advert: Advert): Completable {
-        return Completable.fromAction {
-            database.advertDao().insert(advert)
-        }
+    fun addAdvert(data: Map<String, Any>): Completable {
+        return montyFirebase.addAdvert(data).andThen(syncAdverts())
+    }
+
+    fun editAdvert(data: Map<String, Any>, id: String): Completable {
+        return montyFirebase.editAdvert(data, id).andThen(syncAdverts())
     }
 
     fun getAdverts(): Observable<List<Advert>> {

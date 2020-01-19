@@ -40,7 +40,7 @@ class FavouriteAdvertsReactor @Inject constructor(
         attachLifecycleObservable
             .delay(1500, TimeUnit.MILLISECONDS)
             .flatMap { getFavouriteAdvertsObservabler.execute() }
-            .map { UpdateFavouriteAdvertsReducer(it) }
+            .map { UpdateFavouriteAdvertsReducer(it.sortedByDescending { it.createdAt }) }
             .bindToView()
     }
 }

@@ -13,16 +13,36 @@
         android:titleTextAppearance="@style/ToolbarTitle"
         app:navigationIcon="@drawable/ic_back">
 
-        <ImageView
-            android:id="@+id/advert_detail_toolbar_favourite"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end|center_vertical"
-            android:background="?selectableItemBackgroundBorderless"
-            android:gravity="end|center_vertical"
-            android:paddingStart="@dimen/d4"
-            android:paddingEnd="@dimen/d4"
-            app:srcCompat="@drawable/bg_favourite_inactive" />
+            android:layout_height="?actionBarSize"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/advert_detail_toolbar_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center_vertical"
+                android:background="?selectableItemBackgroundBorderless"
+                android:gravity="end|center_vertical"
+                android:paddingStart="@dimen/d2"
+                android:paddingEnd="@dimen/d2"
+                app:srcCompat="@drawable/bg_edit" />
+
+            <ImageView
+                android:id="@+id/advert_detail_toolbar_favourite"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center_vertical"
+                android:background="?selectableItemBackgroundBorderless"
+                android:gravity="end|center_vertical"
+                android:paddingStart="@dimen/d2"
+                android:paddingEnd="@dimen/d4"
+                app:srcCompat="@drawable/bg_favourite_inactive" />
+
+        </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
 

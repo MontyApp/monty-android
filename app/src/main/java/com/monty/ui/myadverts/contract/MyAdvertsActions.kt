@@ -10,3 +10,5 @@ object OnRefreshAction : MyAdvertsAction()
 data class OnAdvertClickAction(val advert: Advert) : MyAdvertsAction()
 
 object OnAddAdvertAction : MyAdvertsAction()
+
+data class OnFavouriteAction(val advert: Advert) : MyAdvertsAction()

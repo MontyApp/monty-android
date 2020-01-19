@@ -1,13 +1,17 @@
 package com.monty.ui.create
 
+import android.content.Context
 import com.monty.data.model.response.FileResponse
-import com.monty.data.model.ui.*
+import com.monty.data.model.ui.Advert
+import com.monty.data.model.ui.Category
 import com.monty.domain.GetCategoriesSingler
 import com.monty.domain.advert.AddAdvertCompletabler
+import com.monty.domain.advert.GetAdvertObservabler
 import com.monty.domain.advert.GetPriceIntervalsSingler
 import com.monty.domain.behavior.LoadingCompletableBehavior
 import com.monty.domain.file.GetGalleryAttachmentFileSingler
 import com.monty.domain.file.UploadPhotoSingler
+import com.monty.injection.ApplicationContext
 import com.monty.tool.rx.Rx
 import com.monty.ui.base.SubmitButtonState
 import com.monty.ui.base.SubmitState
@@ -22,17 +26,19 @@ import com.sumera.koreactor.reactor.data.MviAction
 import com.sumera.koreactor.util.extension.getChange
 import com.sumera.koreactor.util.extension.getTrue
 import io.reactivex.Observable
-import org.threeten.bp.LocalDateTime
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class CreateAdvertReactor @Inject constructor(
     private val getGalleryAttachmentFileSingler: GetGalleryAttachmentFileSingler,
+    private val getAdvertObservabler: GetAdvertObservabler,
     private val getPriceIntervalsSingler: GetPriceIntervalsSingler,
     private val getCategoriesSingler: GetCategoriesSingler,
     private val addAdvertCompletabler: AddAdvertCompletabler,
-    private val uploadPhotoSingler: UploadPhotoSingler
+    private val uploadPhotoSingler: UploadPhotoSingler,
+    private val advertId: String,
+    @ApplicationContext val context: Context
 ) : MviReactor<CreateAdvertState>() {
 
     override fun createInitialState() = CreateAdvertState.INITIAL
@@ -52,6 +58,23 @@ class CreateAdvertReactor @Inject constructor(
         val onCategoryClickAction = actions.ofActionType<OnCategoryClickAction>()
         val onSelectCategoryAction = actions.ofActionType<OnSelectCategoryAction>()
         val onDeleteImageClickAction = actions.ofActionType<OnDeleteImageClickAction>()
+
+        attachLifecycleObservable
+            .flatMapSingle { getPriceIntervalsSingler.execute() }
+            .map { ChangeIntervalTypesReducer(it) }
+            .bindToView()
+
+        attachLifecycleObservable
+            .flatMapSingle { getCategoriesSingler.execute() }
+            .map { ChangeCategoriesReducer(it) }
+            .bindToView()
+
+        if (advertId.isNotEmpty()) {
+            attachLifecycleObservable
+                .flatMapSingle { getAdvertObservabler.init(advertId).execute().first(Advert.EMPTY) }
+                .map { ChangeAdvertReducer(it, context) }
+                .bindToView()
+        }
 
         onTitleChangeAction.map { ChangeTitleReducer(it.title) }.bindToView()
         onDescriptionChangeAction.map { ChangeDescriptionReducer(it.description) }.bindToView()
@@ -86,8 +109,8 @@ class CreateAdvertReactor @Inject constructor(
             .startWith(false)
             .share()
 
-        val validCategory = onSelectCategoryAction
-            .map { it.category != Category.EMPTY }
+        val validCategory = stateObservable.getChange { it.selectedCategory }
+            .map { it != Category.EMPTY }
             .startWith(false)
             .share()
 
@@ -110,16 +133,6 @@ class CreateAdvertReactor @Inject constructor(
             .map { ChangeSelectedIntervalTypeReducer(it.data) }
             .bindToView()
 
-        attachLifecycleObservable
-            .flatMapSingle { getPriceIntervalsSingler.execute() }
-            .map { ChangeIntervalTypesReducer(it) }
-            .bindToView()
-
-        attachLifecycleObservable
-            .flatMapSingle { getCategoriesSingler.execute() }
-            .map { ChangeCategoriesReducer(it) }
-            .bindToView()
-
         stateObservable
             .flatMap {
                 Rx.observableCombineLatestSixfold(
@@ -130,7 +143,8 @@ class CreateAdvertReactor @Inject constructor(
                     validCategory,
                     validImage
                 ).map {
-                    val isValid = it.first && it.second && it.third && it.fourth && it.fifth &&it.sixth
+                    val isValid =
+                        it.first && it.second && it.third && it.fourth && it.fifth && it.sixth
                     ChangeButtonStateReducer(
                         if (isValid) {
                             SubmitButtonState.IDLE
@@ -166,22 +180,14 @@ class CreateAdvertReactor @Inject constructor(
             triggers = triggers(onAddAdvertAction.flatMapSingle { stateSingle }),
             worker = completable {
                 addAdvertCompletabler.init(
-                    Advert(
-                        id = LocalDateTime.now().nano.toString(),
-                        title = it.title,
-                        image = it.image,
-                        description = it.description,
-                        createdAt = LocalDateTime.now(),
-                        categoryId = it.selectedCategory.id,
-                        price = Price.EMPTY.copy(
-                            value = it.price,
-                            interval = Interval(it.selectedIntervalType?.id ?: "")
-                        ),
-                        deposit = Price.EMPTY.copy(value = it.deposit),
-                        address = Address.EMPTY,
-                        isFavourite = false,
-                        userId = ""
-                    )
+                    title = it.title,
+                    description = it.description,
+                    image = it.image,
+                    price = it.price,
+                    deposit = it.deposit,
+                    interval = it.selectedIntervalType?.id ?: "",
+                    categoryId = it.selectedCategory.id,
+                    advertId = advertId
                 ).execute()
             },
             cancelPrevious = true,
@@ -198,7 +204,7 @@ class CreateAdvertReactor @Inject constructor(
 
         val delaySuccessButtonStateObservable = stateObservable
             .getTrue { it.buttonState == SubmitButtonState.SUCCESS }
-            .delay(300L, TimeUnit.MILLISECONDS)
+            .delay(1000L, TimeUnit.MILLISECONDS)
             .share()
 
         delaySuccessButtonStateObservable

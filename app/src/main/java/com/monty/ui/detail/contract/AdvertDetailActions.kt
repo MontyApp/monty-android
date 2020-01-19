@@ -12,6 +12,8 @@ object OnMapAction : AdvertDetailAction()
 
 object OnFavouriteAction : AdvertDetailAction()
 
+object OnEditAction : AdvertDetailAction()
+
 object OnContactAction : AdvertDetailAction()
 
 object OnContactPhoneAction : AdvertDetailAction()

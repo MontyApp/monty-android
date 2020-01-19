@@ -31,3 +31,11 @@ data class AdvertsState(
         )
     }
 }
+
+data class AdvertsListData(
+    val adverts: List<Advert>,
+    val selectedCategory: Category,
+    val selectedSortOption: SortOption,
+    val myLocation: Location,
+    val isLocationAllowed: Boolean
+)

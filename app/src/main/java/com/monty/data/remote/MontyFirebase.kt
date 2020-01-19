@@ -7,6 +7,7 @@ import com.monty.data.model.response.ApiUser
 import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.User
 import com.monty.tool.constant.Constant
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -42,6 +43,26 @@ data class MontyFirebase @Inject constructor(
             }.addOnFailureListener {
                 //TODO parse error
                 singler.onError(it)
+            }
+    }.observeOn(Schedulers.io())
+
+    fun addAdvert(data: Map<String, Any>) = Completable.create { completabler ->
+        firestore.collection(Constant.Database.ADVERTS).add(data)
+            .addOnSuccessListener {
+                completabler.onComplete()
+            }.addOnFailureListener {
+                //TODO parse error
+                completabler.onError(it)
+            }
+    }.observeOn(Schedulers.io())
+
+    fun editAdvert(data: Map<String, Any>, id: String) = Completable.create { completabler ->
+        firestore.collection(Constant.Database.ADVERTS).document(id).update(data)
+            .addOnSuccessListener {
+                completabler.onComplete()
+            }.addOnFailureListener {
+                //TODO parse error
+                completabler.onError(it)
             }
     }.observeOn(Schedulers.io())
 }

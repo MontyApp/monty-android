@@ -9,6 +9,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
 import com.monty.data.model.ui.Category
 import com.monty.tool.constant.Constant
+import com.monty.tool.extensions.getDistanceInMeters
 import com.monty.tool.extensions.gone
 import com.monty.tool.extensions.titleTypeface
 import com.monty.tool.extensions.visible
@@ -19,6 +20,7 @@ import com.monty.ui.common.AdvertsAdapter
 import com.monty.ui.common.AdvertsSkeleton
 import com.monty.ui.common.category.CategoriesAdapter
 import com.monty.ui.common.category.CategoriesDialogFragment
+import com.monty.ui.common.sort.SortOption
 import com.monty.ui.common.sort.SortOptionDialogFragment
 import com.monty.ui.common.sort.SortOptionsAdapter
 import com.monty.ui.create.CreateAdvertActivity
@@ -114,13 +116,28 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
     }
 
     override fun bindToState(stateObservable: Observable<AdvertsState>) {
-        stateObservable.getChange { Pair(it.adverts, it.selectedCategory) }
-            .filter { it.first.isNotEmpty() }
-            .map { (adverts, selectedCategory) ->
-                if (selectedCategory != Category.EMPTY) {
-                    adverts.filter { it.categoryId == selectedCategory.id }
+        stateObservable.getChange {
+            AdvertsListData(
+                adverts = it.adverts,
+                selectedCategory = it.selectedCategory,
+                selectedSortOption = it.selectedSortOption,
+                myLocation = it.myLocation,
+                isLocationAllowed = it.isLocationAllowed
+            )
+        }
+            .filter { it.adverts.isNotEmpty() }
+            .map { data ->
+                val ads = if (data.selectedCategory != Category.EMPTY) {
+                    data.adverts.filter { it.categoryId == data.selectedCategory.id }
                 } else {
-                    adverts
+                    data.adverts
+                }
+                when {
+                    data.selectedSortOption == SortOption.NEWEST ->
+                        ads.sortedByDescending { it.createdAt }
+                    data.selectedSortOption == SortOption.NEAREST && data.isLocationAllowed ->
+                        ads.sortedBy { data.myLocation.getDistanceInMeters(it.address) }
+                    else -> ads
                 }
             }
             .observeState {

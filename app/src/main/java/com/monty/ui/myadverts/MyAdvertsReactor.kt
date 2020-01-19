@@ -1,6 +1,8 @@
 package com.monty.ui.myadverts
 
 import com.monty.domain.advert.GetAdvertsObservabler
+import com.monty.domain.favourite.AddFavouriteAdvertCompletabler
+import com.monty.domain.favourite.RemoveFavouriteAdvertCompletabler
 import com.monty.domain.location.GetMyLocationObservabler
 import com.monty.ui.myadverts.contract.*
 import com.sumera.koreactor.reactor.MviReactor
@@ -11,7 +13,9 @@ import javax.inject.Inject
 
 class MyAdvertsReactor @Inject constructor(
     private val getAdvertsObservabler: GetAdvertsObservabler,
-    private val getMyLocationObservabler: GetMyLocationObservabler
+    private val getMyLocationObservabler: GetMyLocationObservabler,
+    private val addFavouriteAdvertCompletabler: AddFavouriteAdvertCompletabler,
+    private val removeFavouriteAdvertCompletabler: RemoveFavouriteAdvertCompletabler
 ) : MviReactor<MyAdvertsState>() {
 
     override fun createInitialState() = MyAdvertsState.INITIAL
@@ -20,6 +24,7 @@ class MyAdvertsReactor @Inject constructor(
         val onAdvertClickAction = actions.ofActionType<OnAdvertClickAction>()
         val onAddAdvertAction = actions.ofActionType<OnAddAdvertAction>()
         val onRefreshAction = actions.ofActionType<OnRefreshAction>()
+        val onFavouriteAction = actions.ofActionType<OnFavouriteAction>()
 
         onAdvertClickAction
             .map { NavigateToAdvertDetailEvent(it.advert.id) }
@@ -29,6 +34,16 @@ class MyAdvertsReactor @Inject constructor(
             .map { NavigateToCreateAdvertEvent }
             .bindToView()
 
+        onFavouriteAction
+            .flatMapCompletable {
+                if (it.advert.isFavourite) {
+                    removeFavouriteAdvertCompletabler.init(it.advert.id).execute()
+                } else {
+                    addFavouriteAdvertCompletabler.init(it.advert.id).execute()
+                }
+            }.toObservable<Unit>()
+            .bindTo()
+
         Observable.merge(resumeLifecycleObservable, onRefreshAction)
             .flatMap { getMyLocationObservabler.execute() }
             .map { ChangeMyLocationReducer(it) }
@@ -37,7 +52,7 @@ class MyAdvertsReactor @Inject constructor(
         attachLifecycleObservable
             .delay(1500, TimeUnit.MILLISECONDS)
             .flatMap { getAdvertsObservabler.execute() }
-            .map { UpdateMyAdvertsReducer(it.sortedByDescending { it.id }) }
+            .map { UpdateMyAdvertsReducer(it.sortedByDescending { it.createdAt }) }
             .bindToView()
     }
 }

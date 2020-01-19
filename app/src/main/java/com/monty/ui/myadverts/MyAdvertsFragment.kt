@@ -49,6 +49,10 @@ class MyAdvertsFragment : BaseFragment<MyAdvertsState>() {
             .map { OnAdvertClickAction(it) }
             .bindToReactor()
 
+        adapter.onFavouriteClick
+            .map { OnFavouriteAction(it) }
+            .bindToReactor()
+
         my_adverts_add.clicks()
             .map { OnAddAdvertAction }
             .bindToReactor()

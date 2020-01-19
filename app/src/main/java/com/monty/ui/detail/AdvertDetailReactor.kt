@@ -35,8 +35,10 @@ class AdvertDetailReactor @Inject constructor(
         val onContactEmailAction = actions.ofActionType<OnContactEmailAction>()
         val onMapAction = actions.ofActionType<OnMapAction>()
         val onFavouriteAction = actions.ofActionType<OnFavouriteAction>()
+        val onEditAction = actions.ofActionType<OnEditAction>()
 
         onBackAction.map { BackEvent }.bindToView()
+        onEditAction.map { NavigateToEditEvent(advertId) }.bindToView()
 
         onFavouriteAction
             .flatMapSingle { stateSingle }

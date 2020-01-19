@@ -20,6 +20,7 @@ import com.monty.tool.intent.Navigation
 import com.monty.ui.base.BaseActivity
 import com.monty.ui.base.BaseBottomSheetFragment
 import com.monty.ui.common.dialog.ContactDialog
+import com.monty.ui.create.CreateAdvertActivity
 import com.monty.ui.detail.contract.*
 import com.monty.ui.photo.ShowPhotoActivity
 import com.squareup.picasso.Picasso
@@ -59,7 +60,9 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 supportFragmentManager.findFragmentByTag(BaseBottomSheetFragment.TAG) as? ContactDialog
             bindDialogToReactor()
         }
-        
+
+        advert_detail_stateLayout.onRefresh.map { OnRefreshAction }.bindToReactor()
+
         advert_detail_toolbar.navigationClicks()
             .map { OnBackAction }
             .bindToReactor()
@@ -78,6 +81,10 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
 
         advert_detail_toolbar_favourite.clicks()
             .map { OnFavouriteAction }
+            .bindToReactor()
+
+        advert_detail_toolbar_edit.clicks()
+            .map { OnEditAction }
             .bindToReactor()
     }
 
@@ -140,6 +147,7 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 is NavigateToPhoneEvent -> startActivity(Navigation.callPhone(event.phone))
                 is NavigateToEmailEvent -> startActivity(Navigation.sendEmail(event.email, event.title))
                 is NavigateToMapEvent -> startActivity(Navigation.showOnMap(event.lat, event.lon, this))
+                is NavigateToEditEvent -> startActivity(CreateAdvertActivity.getStartIntent(this, advertId = event.advertId))
                 BackEvent -> finish()
             }
         }
