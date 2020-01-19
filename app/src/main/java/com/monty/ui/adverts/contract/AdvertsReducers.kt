@@ -1,5 +1,6 @@
 package com.monty.ui.adverts.contract
 
+import android.location.Location
 import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.Category
 import com.monty.ui.base.placeholder.PartialLayoutState
@@ -45,4 +46,12 @@ data class ChangeShowSkeletonReducer(private val showSkeleton: Boolean) : Advert
 
 data class ChangeSelectedSortOptionReducer(private val selectedSortOption: SortOption) : AdvertsReducer() {
     override fun reduce(oldState: AdvertsState) = oldState.copy(selectedSortOption = selectedSortOption)
+}
+
+data class ChangeMyLocationReducer(private val myLocation: Location) : AdvertsReducer() {
+    override fun reduce(oldState: AdvertsState) = oldState.copy(myLocation = myLocation)
+}
+
+data class ChangeIsLocationAllowedRecuder(private val isLocationAllowed: Boolean) : AdvertsReducer() {
+    override fun reduce(oldState: AdvertsState) = oldState.copy(isLocationAllowed = isLocationAllowed)
 }

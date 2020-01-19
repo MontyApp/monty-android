@@ -1,5 +1,6 @@
 package com.monty.ui.favourite.contract
 
+import android.location.Location
 import com.monty.data.model.ui.Advert
 import com.monty.ui.base.placeholder.PartialLayoutState
 import com.monty.ui.base.placeholder.ViewState
@@ -27,4 +28,8 @@ data class ChangeLayoutStateReducer(private val partialLayoutState: PartialLayou
     override fun reduce(oldState: FavouriteAdvertsState): FavouriteAdvertsState {
         return oldState.copy(layoutState = partialLayoutState.toFull(oldState.layoutState))
     }
+}
+
+data class ChangeMyLocationReducer(private val myLocation: Location) : FavouriteAdvertsReducer() {
+    override fun reduce(oldState: FavouriteAdvertsState) = oldState.copy(myLocation = myLocation)
 }

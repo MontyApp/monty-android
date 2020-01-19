@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -21,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -38,6 +43,7 @@ dependencies {
     final RX_RELAY = '2.0.0'
     final RX_BINDING = '2.1.1'
     final RX_PERMISSIONS = '0.9.5@aar'
+    final RX_LOCATION = '1.0.5'
 
     final RETROFIT = '2.3.0'
     final RETROFIT_MOSHI_CONVERTER = '2.3.0'
@@ -60,8 +66,12 @@ dependencies {
     final PHOTO_VIEW = '2.0.0'
     final MATERIALISH_PROGRESS = '1.7'
     final GOOGLE_GCM = '17.0.0'
+    final FIREBASE = '21.3.1'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //Firebase
+    implementation "com.google.firebase:firebase-firestore-ktx:$FIREBASE"
 
     // Support
     implementation "com.google.android.material:material:$MATERIAL"
@@ -100,6 +110,9 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$RX_BINDING"
     implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$RX_BINDING"
     implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$RX_BINDING"
+
+    // Location
+    implementation "com.patloew.rxlocation:rxlocation:$RX_LOCATION"
 
     // Permissions
     implementation "com.tbruyelle.rxpermissions2:rxpermissions:$RX_PERMISSIONS"

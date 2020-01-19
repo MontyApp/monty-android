@@ -1,11 +1,15 @@
 package com.monty.ui.adverts
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
 import com.monty.data.model.ui.Category
+import com.monty.tool.constant.Constant
+import com.monty.tool.extensions.getDistanceInMeters
 import com.monty.tool.extensions.gone
 import com.monty.tool.extensions.titleTypeface
 import com.monty.tool.extensions.visible
@@ -16,6 +20,7 @@ import com.monty.ui.common.AdvertsAdapter
 import com.monty.ui.common.AdvertsSkeleton
 import com.monty.ui.common.category.CategoriesAdapter
 import com.monty.ui.common.category.CategoriesDialogFragment
+import com.monty.ui.common.sort.SortOption
 import com.monty.ui.common.sort.SortOptionDialogFragment
 import com.monty.ui.common.sort.SortOptionsAdapter
 import com.monty.ui.create.CreateAdvertActivity
@@ -111,13 +116,28 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
     }
 
     override fun bindToState(stateObservable: Observable<AdvertsState>) {
-        stateObservable.getChange { Pair(it.adverts, it.selectedCategory) }
-            .filter { it.first.isNotEmpty() }
-            .map { (adverts, selectedCategory) ->
-                if (selectedCategory != Category.EMPTY) {
-                    adverts.filter { it.categoryId == selectedCategory.id }
+        stateObservable.getChange {
+            AdvertsListData(
+                adverts = it.adverts,
+                selectedCategory = it.selectedCategory,
+                selectedSortOption = it.selectedSortOption,
+                myLocation = it.myLocation,
+                isLocationAllowed = it.isLocationAllowed
+            )
+        }
+            .filter { it.adverts.isNotEmpty() }
+            .map { data ->
+                val ads = if (data.selectedCategory != Category.EMPTY) {
+                    data.adverts.filter { it.categoryId == data.selectedCategory.id }
                 } else {
-                    adverts
+                    data.adverts
+                }
+                when {
+                    data.selectedSortOption == SortOption.NEWEST ->
+                        ads.sortedByDescending { it.createdAt }
+                    data.selectedSortOption == SortOption.NEAREST && data.isLocationAllowed ->
+                        ads.sortedBy { data.myLocation.getDistanceInMeters(it.address) }
+                    else -> ads
                 }
             }
             .observeState {
@@ -126,6 +146,9 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                 advertsAdapter.updateData(it)
                 advertsSkeleton.hide()
             }
+
+        stateObservable.getChange { it.myLocation }
+            .observeState { advertsAdapter.updateLocation(it) }
 
         stateObservable.getChange { it.layoutState }
             .observeState { adverts_stateLayout.setState(it) }
@@ -162,9 +185,11 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                 }
                 is ShowCategoriesDialogEvent -> showCategoriesDialog()
                 is ShowSortOptionsDialogEvent -> showSortOptionsDialog()
+                is ShowCategoriesDialogEvent -> showCategoriesDialog()
                 is NavigateToCreateAdvertEvent -> {
                     startActivity(CreateAdvertActivity.getStartIntent(requireContext()))
                 }
+                is RequestLocationPermissionEvent -> requestLocationPermission()
             }
         }
     }
@@ -178,6 +203,25 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
         categoriesDialog = CategoriesDialogFragment()
         categoriesDialog?.show(requireFragmentManager())
         bindDialogToReactor()
+    }
+
+    private fun requestLocationPermission() {
+        requestPermissions(
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            Constant.Intent.LOCATION_PERMISSION_REQUEST
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == Constant.Intent.LOCATION_PERMISSION_REQUEST) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                sendAction(OnAllowLocationAction)
+            }
+        }
     }
 
     private fun showSortOptionsDialog() {

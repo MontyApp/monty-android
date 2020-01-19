@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "144477900907",
+    "firebase_url": "https://monty-261511.firebaseio.com",
+    "project_id": "monty-261511",
+    "storage_bucket": "monty-261511.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144477900907:android:35a098962f0b17b982212e",
+        "android_client_info": {
+          "package_name": "com.monty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144477900907-t0eg1atcs3lid83h7bjgg8q4ag7t6qe8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monty",
+            "certificate_hash": "87eb2fbab14aa9a568d47d98e41137f8741deee5"
+          }
+        },
+        {
+          "client_id": "144477900907-b24p2enbbj4nh5836jus26cbcj6e0g9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monty",
+            "certificate_hash": "b92d52e9feae9ecc0f308376a561167609be88c7"
+          }
+        },
+        {
+          "client_id": "144477900907-eebbi9g5icj295eo24ltios8pqu90lbb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz60mAGojTbVu7XEq34gRaI2ljbs16O3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144477900907-eebbi9g5icj295eo24ltios8pqu90lbb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

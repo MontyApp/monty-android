@@ -8,5 +8,5 @@ import dagger.Provides
 class AdvertDetailActivityModule {
 
     @Provides
-    fun advertId(activity: AdvertDetailActivity) = activity.intent.getIntExtra(Constant.Bundle.ADVERT_ID, -1)
+    fun advertId(activity: AdvertDetailActivity) = activity.intent.getStringExtra(Constant.Bundle.ADVERT_ID) ?: ""
 }

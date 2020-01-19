@@ -10,6 +10,7 @@
     <ImageView
         android:id="@+id/user_photo"
         android:layout_width="68dp"
+        android:src="@drawable/bg_person"
         android:layout_height="68dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +36,7 @@
         <TextView
             android:id="@+id/user_adverts_count"
             style="@style/SmallDescriptionDark"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="5 inzerátov" />

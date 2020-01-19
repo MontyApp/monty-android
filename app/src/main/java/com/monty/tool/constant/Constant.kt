@@ -4,6 +4,11 @@ import org.threeten.bp.format.DateTimeFormatter
 
 interface Constant {
 
+    object Database {
+        const val ADVERTS = "adverts"
+        const val USERS = "users"
+    }
+
     object Bundle {
         const val TAB_ID = "tab_id"
         const val ADVERT_ID = "advert_id"
@@ -14,6 +19,7 @@ interface Constant {
     object Intent {
         const val TAKE_PHOTO_REQUEST = 1
         const val PICK_IMAGE = 2
+        const val LOCATION_PERMISSION_REQUEST = 3
     }
 
     object Formatter {

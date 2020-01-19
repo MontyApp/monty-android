@@ -10,9 +10,9 @@ class GetAdvertObservabler @Inject constructor(
     private val advertsStore: AdvertsStore
 ) : BaseObservabler<Advert>() {
 
-    private var advertId: Int = -1
+    private var advertId: String = ""
 
-    fun init(advertId: Int) = apply {
+    fun init(advertId: String) = apply {
         this.advertId = advertId
     }
 

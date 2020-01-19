@@ -1,5 +1,6 @@
 package com.monty.ui.adverts.contract
 
+import android.location.Location
 import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.Category
 import com.monty.ui.base.placeholder.PlaceholderLayoutState
@@ -12,6 +13,8 @@ data class AdvertsState(
     val selectedCategory: Category,
     val selectedSortOption: SortOption,
     val showSkeleton: Boolean,
+    val myLocation: Location,
+    val isLocationAllowed: Boolean,
     val layoutState: PlaceholderLayoutState
 ) : MviState {
 
@@ -20,9 +23,19 @@ data class AdvertsState(
             adverts = listOf(),
             categories = listOf(),
             showSkeleton = false,
+            isLocationAllowed = false,
+            myLocation = Location(""),
             selectedCategory = Category.EMPTY,
             selectedSortOption = SortOption.IDLE,
             layoutState = PlaceholderLayoutState.DEFAULT
         )
     }
 }
+
+data class AdvertsListData(
+    val adverts: List<Advert>,
+    val selectedCategory: Category,
+    val selectedSortOption: SortOption,
+    val myLocation: Location,
+    val isLocationAllowed: Boolean
+)

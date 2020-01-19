@@ -5,15 +5,17 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.monty.data.model.response.ApiAdvert
 import com.monty.data.model.ui.mapper.IntervalMapper
 import com.monty.tool.currency.CurrencyFormatter
+import com.monty.tool.extensions.toLocalDateTime
 import org.threeten.bp.LocalDateTime
 
 @Entity(tableName = "advert")
 data class Advert(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: String,
 
     @ColumnInfo(name = "title")
     val title: String,
@@ -33,6 +35,9 @@ data class Advert(
     @ColumnInfo(name = "category_id")
     val categoryId: Int,
 
+    @ColumnInfo(name = "user_id")
+    val userId: String,
+
     @Embedded(prefix = "deposit_")
     val deposit: Price,
 
@@ -45,7 +50,7 @@ data class Advert(
 
     companion object {
         val EMPTY = Advert(
-            id = -1,
+            id = "",
             title = "",
             image = "",
             description = "",
@@ -54,7 +59,21 @@ data class Advert(
             price = Price.EMPTY,
             deposit = Price.EMPTY,
             address = Address.EMPTY,
-            isFavourite = false
+            isFavourite = false,
+            userId = ""
+        )
+
+        fun fromApi(apiAdvert: ApiAdvert, id: String) = Advert(
+            id = id,
+            title = apiAdvert.title,
+            description = apiAdvert.description,
+            image = apiAdvert.image,
+            createdAt = apiAdvert.createdAt.toLocalDateTime(),
+            address = Address.fromApi(apiAdvert.address),
+            price = Price.fromApi(apiAdvert.currency, apiAdvert.interval, apiAdvert.price),
+            deposit = Price.fromApi(apiAdvert.currency, apiAdvert.interval, apiAdvert.deposit),
+            categoryId = apiAdvert.categoryId,
+            userId = apiAdvert.userId
         )
     }
 

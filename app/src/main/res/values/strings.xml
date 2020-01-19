@@ -49,7 +49,9 @@
     <string name="create_advert_add_photo">Pridať fotku</string>
     <string name="create_advert_interval">Obdobie</string>
     <string name="create_advert_add">Pridať inzerát</string>
-    <string name="create_advert_add_success">Inzerát pridaný</string>
+    <string name="create_advert_edit">Upraviť inzerát</string>
+    <string name="create_advert_add_success">Inzerát bol pridaný</string>
+    <string name="create_advert_edit_success">Inzerát bol upravený</string>
 
     <!-- Sort adverts dialog -->
     <string name="sort_advert_title">Radenie</string>
@@ -61,4 +63,8 @@
     <string name="get_photo_dialog_gallery">Vybrat fotku z galerie</string>
     <string name="toast_photo_too_large">Nelze nahrát fotku větší než %s MB</string>
     <string name="toast_cant_load_photo">Nepodařilo se načíst fotku</string>
+
+    <!-- Contact dialog -->
+    <string name="contact_dialog_phone">Zavolať</string>
+    <string name="contact_dialog_email">Napísať email</string>
 </resources>

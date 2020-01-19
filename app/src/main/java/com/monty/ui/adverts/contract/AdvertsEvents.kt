@@ -8,8 +8,10 @@ object NavigateToCreateAdvertEvent : MviEvent<AdvertsState>()
 
 data class ErrorEvent(val message: String) : AdvertsEvent()
 
-data class NavigateToAdvertDetailEvent(val advertId: Int) : AdvertsEvent()
+data class NavigateToAdvertDetailEvent(val advertId: String) : AdvertsEvent()
 
 object ShowCategoriesDialogEvent : AdvertsEvent()
 
 object ShowSortOptionsDialogEvent : AdvertsEvent()
+
+object RequestLocationPermissionEvent : AdvertsEvent()

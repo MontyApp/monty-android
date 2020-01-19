@@ -49,6 +49,10 @@ class MyAdvertsFragment : BaseFragment<MyAdvertsState>() {
             .map { OnAdvertClickAction(it) }
             .bindToReactor()
 
+        adapter.onFavouriteClick
+            .map { OnFavouriteAction(it) }
+            .bindToReactor()
+
         my_adverts_add.clicks()
             .map { OnAddAdvertAction }
             .bindToReactor()
@@ -61,6 +65,9 @@ class MyAdvertsFragment : BaseFragment<MyAdvertsState>() {
                 advertsSkeleton.hide()
                 adapter.updateData(it)
             }
+
+        stateObservable.getChange { it.myLocation }
+            .observeState { adapter.updateLocation(it) }
 
         stateObservable.getChange { it.layoutState }
             .observeState { my_adverts_stateLayout.setState(it) }

@@ -10,12 +10,13 @@ import androidx.core.content.FileProvider
 import com.jakewharton.rxbinding2.support.v7.widget.navigationClicks
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
+import com.monty.R
+import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.Category
 import com.monty.data.model.ui.IntervalData
 import com.monty.data.model.ui.mapper.IntervalMapper
 import com.monty.tool.constant.Constant
 import com.monty.tool.extensions.gone
-import com.monty.tool.extensions.titleTypeface
 import com.monty.tool.extensions.visible
 import com.monty.tool.helper.FileHelper
 import com.monty.tool.intent.Navigation
@@ -38,17 +39,17 @@ import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_create_advert.*
 import javax.inject.Inject
 
-
-
 class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
 
-    @Inject lateinit var categoriesAdapter: CategoriesAdapter
-    @Inject lateinit var reactorFactory: CreateAdvertReactorFactory
+    @Inject
+    lateinit var categoriesAdapter: CategoriesAdapter
+    @Inject
+    lateinit var reactorFactory: CreateAdvertReactorFactory
     private var getPhotoDialogFragment: GetPhotoDialogFragment? = null
     private var categoriesDialog: CategoriesDialogFragment? = null
 
     companion object {
-        fun getStartIntent(context: Context, advertId: Int? = null): Intent {
+        fun getStartIntent(context: Context, advertId: String? = ""): Intent {
             return Intent(context, CreateAdvertActivity::class.java).apply {
                 putExtra(Constant.Bundle.ADVERT_ID, advertId)
             }
@@ -65,15 +66,14 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        create_advert_toolbar_layout.titleTypeface()
 
         if (savedInstanceState != null) {
             getPhotoDialogFragment = supportFragmentManager
-                ?.findFragmentByTag(BaseBottomSheetFragment.TAG) as? GetPhotoDialogFragment
+                .findFragmentByTag(BaseBottomSheetFragment.TAG) as? GetPhotoDialogFragment
             bindGetPhotoDialogToReactor()
 
             categoriesDialog = supportFragmentManager
-                ?.findFragmentByTag(BaseBottomSheetFragment.TAG) as? CategoriesDialogFragment
+                .findFragmentByTag(BaseBottomSheetFragment.TAG) as? CategoriesDialogFragment
             bindCategoriesDialogToReactor()
         }
 
@@ -125,6 +125,23 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
     }
 
     override fun bindToState(stateObservable: Observable<CreateAdvertState>) {
+
+        stateObservable.getChange { it.advert }
+            .filter { it != Advert.EMPTY }
+            .observeState {
+                create_advert_button.labelTextIdle = getString(R.string.create_advert_edit)
+                create_advert_button.labelTextSuccess =
+                    getString(R.string.create_advert_edit_success)
+            }
+        stateObservable.getChange { it.advert }
+            .filter { it != Advert.EMPTY }
+            .observeState { advert ->
+                create_advert_titleEditText.setText(advert.title)
+                create_advert_descriptionEditText.setText(advert.description)
+                create_advert_priceEditText.setText(advert.price.value.toInt().toString())
+                create_advert_depositEditText.setText(advert.deposit.value.toInt().toString())
+            }
+
         stateObservable.getChange { it.image }
             .filter { it.isNotEmpty() }
             .observeState { image ->
@@ -144,6 +161,19 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
                     })
             }
 
+        stateObservable.getChange { it.photoState }
+            .filter { it == SubmitState.PROGRESS }
+            .observeState { create_advert_progress.visible() }
+
+        stateObservable.getTrue { it.photoState != SubmitState.IDLE }
+            .observeState { create_advert_placeholder.gone() }
+
+        stateObservable.getTrue { it.photo == null && it.photoState != SubmitState.PROGRESS && it.image.isEmpty() }
+            .observeState {
+                create_advert_image_layout.gone()
+                create_advert_placeholder.visible()
+            }
+
         stateObservable.getChange { it.intervalTypes }
             .filter { it.isNotEmpty() }
             .observeState {
@@ -158,22 +188,17 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
         stateObservable.getNotNull { Optional(it.selectedIntervalType) }
             .observeState { create_advert_interval.selectedItem = it }
 
-        stateObservable.getChange { it.photoState }
-            .filter { it == SubmitState.PROGRESS }
-            .observeState { create_advert_progress.visible() }
-
-        stateObservable.getTrue { it.photoState != SubmitState.IDLE }
-            .observeState { create_advert_placeholder.gone() }
-
-        stateObservable.getTrue { it.photo == null && it.photoState != SubmitState.PROGRESS }
-            .observeState { create_advert_placeholder.visible() }
-
         stateObservable.getChange { it.buttonState }
             .observeState { create_advert_button.buttonState = it }
 
         stateObservable.getChange { it.selectedCategory }
             .filter { it != Category.EMPTY }
-            .observeState { create_advert_categoryEditText.setText(it.name, TextView.BufferType.NORMAL) }
+            .observeState {
+                create_advert_categoryEditText.setText(
+                    it.name,
+                    TextView.BufferType.NORMAL
+                )
+            }
 
         stateObservable.getChange { Pair(it.categories, it.selectedCategory) }
             .observeState { (categories, selectedCategory) ->

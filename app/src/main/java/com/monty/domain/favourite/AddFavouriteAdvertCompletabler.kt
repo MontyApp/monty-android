@@ -9,9 +9,9 @@ class AddFavouriteAdvertCompletabler @Inject constructor(
     private val favouriteAdvertsStore: FavouriteAdvertsStore
 ) : BaseCompletabler() {
 
-    private var advertId: Int = -1
+    private var advertId: String = ""
 
-    fun init(advertId: Int) = apply {
+    fun init(advertId: String) = apply {
         this.advertId = advertId
     }
 

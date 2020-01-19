@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_marginLeft="@dimen/d2"
         android:layout_marginTop="@dimen/d2"
         android:layout_marginRight="@dimen/d2"
@@ -18,24 +18,13 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <FrameLayout
-            android:layout_width="36dp"
-            android:layout_height="36dp">
-
-            <ImageView
-                android:id="@+id/category_icon_background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/bg_grey_circle" />
-
-            <ImageView
-                android:id="@+id/category_icon"
-                android:layout_width="@dimen/d6"
-                android:layout_height="@dimen/d6"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_person" />
-
-        </FrameLayout>
+        <ImageView
+            android:id="@+id/category_icon"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="@dimen/d2"
+            android:src="@drawable/bg_circle"
+            android:tint="@color/blueish_grey" />
 
         <TextView
             android:id="@+id/category_name"

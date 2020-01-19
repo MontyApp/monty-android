@@ -32,6 +32,7 @@
     <TextView
         android:id="@+id/advert_location"
         style="@style/Location"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/d2"
@@ -43,6 +44,7 @@
     <View
         android:id="@+id/advert_location_dot"
         android:layout_width="@dimen/d1"
+        android:visibility="gone"
         android:layout_height="@dimen/d1"
         android:layout_marginStart="@dimen/d2"
         android:background="@drawable/bg_circle"

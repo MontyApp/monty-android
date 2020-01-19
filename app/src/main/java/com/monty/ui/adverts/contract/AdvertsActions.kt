@@ -9,6 +9,8 @@ sealed class AdvertsAction : MviAction<AdvertsState>
 
 object OnRefreshAction : AdvertsAction()
 
+object OnAllowLocationAction : AdvertsAction()
+
 object OnCategoriesClickAction : AdvertsAction()
 
 object OnAddAdvertClickAction : AdvertsAction()
