@@ -27,10 +27,14 @@ class AdvertsReactor @Inject constructor(
         val onCategoriesClickAction = actions.ofActionType<OnCategoriesClickAction>()
         val onCategoryClickAction = actions.ofActionType<OnCategoryClickAction>()
         val onAddAdvertClickAction = actions.ofActionType<OnAddAdvertClickAction>()
+        val onSortClickAction = actions.ofActionType<OnSortClickAction>()
+        val onSortOptionClickAction = actions.ofActionType<OnSortOptionClickAction>()
 
         onAdvertClickAction.map { NavigateToAdvertDetailEvent(it.advert.id) }.bindToView()
         onAddAdvertClickAction.map { NavigateToCreateAdvertEvent }.bindToView()
         onCategoriesClickAction.map { ShowCategoriesDialogEvent }.bindToView()
+        onSortClickAction.map { ShowSortOptionsDialogEvent }.bindToView()
+        onSortOptionClickAction.map { ChangeSelectedSortOptionReducer(it.sortOption) }.bindToView()
 
         onCategoryClickAction
             .flatMapSingle { action ->
