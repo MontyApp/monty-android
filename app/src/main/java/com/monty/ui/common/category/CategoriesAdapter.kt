@@ -65,7 +65,7 @@ class CategoriesAdapter @Inject constructor() :
                 }
             }
             else -> {
-                val layout = R.layout.item_category_title
+                val layout = R.layout.item_title
                 view = LayoutInflater.from(viewGroup.context).inflate(layout, viewGroup, false)
                 CategoryTitleViewHolder(view)
             }

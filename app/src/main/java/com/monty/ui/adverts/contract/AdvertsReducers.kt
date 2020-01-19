@@ -5,6 +5,7 @@ import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.Category
 import com.monty.ui.base.placeholder.PartialLayoutState
 import com.monty.ui.base.placeholder.ViewState
+import com.monty.ui.common.sort.SortOption
 import com.sumera.koreactor.reactor.data.MviStateReducer
 
 sealed class AdvertsReducer : MviStateReducer<AdvertsState>
@@ -41,6 +42,10 @@ data class ChangeSelectedCategoryReducer(private val selectedCategory: Category)
 
 data class ChangeShowSkeletonReducer(private val showSkeleton: Boolean) : AdvertsReducer() {
     override fun reduce(oldState: AdvertsState) = oldState.copy(showSkeleton = showSkeleton)
+}
+
+data class ChangeSelectedSortOptionReducer(private val selectedSortOption: SortOption) : AdvertsReducer() {
+    override fun reduce(oldState: AdvertsState) = oldState.copy(selectedSortOption = selectedSortOption)
 }
 
 data class ChangeMyLocationReducer(private val myLocation: Location) : AdvertsReducer() {

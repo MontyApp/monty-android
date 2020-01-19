@@ -32,12 +32,16 @@ class AdvertsReactor @Inject constructor(
         val onCategoriesClickAction = actions.ofActionType<OnCategoriesClickAction>()
         val onCategoryClickAction = actions.ofActionType<OnCategoryClickAction>()
         val onAddAdvertClickAction = actions.ofActionType<OnAddAdvertClickAction>()
+        val onSortClickAction = actions.ofActionType<OnSortClickAction>()
+        val onSortOptionClickAction = actions.ofActionType<OnSortOptionClickAction>()
         val onRefreshAction = actions.ofActionType<OnRefreshAction>()
         val onAllowLocationAction = actions.ofActionType<OnAllowLocationAction>()
 
         onAdvertClickAction.map { NavigateToAdvertDetailEvent(it.advert.id) }.bindToView()
         onAddAdvertClickAction.map { NavigateToCreateAdvertEvent }.bindToView()
         onCategoriesClickAction.map { ShowCategoriesDialogEvent }.bindToView()
+        onSortClickAction.map { ShowSortOptionsDialogEvent }.bindToView()
+        onSortOptionClickAction.map { ChangeSelectedSortOptionReducer(it.sortOption) }.bindToView()
         onAllowLocationAction.map { ChangeIsLocationAllowedRecuder(true) }.bindToView()
 
         onCategoryClickAction

@@ -12,4 +12,6 @@ data class NavigateToAdvertDetailEvent(val advertId: String) : AdvertsEvent()
 
 object ShowCategoriesDialogEvent : AdvertsEvent()
 
+object ShowSortOptionsDialogEvent : AdvertsEvent()
+
 object RequestLocationPermissionEvent : AdvertsEvent()

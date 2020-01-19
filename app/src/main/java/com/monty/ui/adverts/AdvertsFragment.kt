@@ -15,13 +15,12 @@ import com.monty.tool.extensions.visible
 import com.monty.ui.adverts.contract.*
 import com.monty.ui.base.BaseBottomSheetFragment
 import com.monty.ui.base.BaseFragment
-import com.monty.ui.base.placeholder.PlaceholderLayoutState
-import com.monty.ui.base.placeholder.PullState
-import com.monty.ui.base.placeholder.ViewState
 import com.monty.ui.common.AdvertsAdapter
 import com.monty.ui.common.AdvertsSkeleton
 import com.monty.ui.common.category.CategoriesAdapter
 import com.monty.ui.common.category.CategoriesDialogFragment
+import com.monty.ui.common.sort.SortOptionDialogFragment
+import com.monty.ui.common.sort.SortOptionsAdapter
 import com.monty.ui.create.CreateAdvertActivity
 import com.monty.ui.detail.AdvertDetailActivity
 import com.sumera.koreactor.reactor.MviReactor
@@ -35,11 +34,18 @@ import javax.inject.Inject
 
 class AdvertsFragment : BaseFragment<AdvertsState>() {
 
-    @Inject lateinit var reactorFactory: AdvertsReactorFactory
-    @Inject lateinit var advertsAdapter: AdvertsAdapter
-    @Inject lateinit var categoriesAdapter: CategoriesAdapter
-    @Inject lateinit var advertsSkeleton: AdvertsSkeleton
+    @Inject
+    lateinit var reactorFactory: AdvertsReactorFactory
+    @Inject
+    lateinit var advertsAdapter: AdvertsAdapter
+    @Inject
+    lateinit var categoriesAdapter: CategoriesAdapter
+    @Inject
+    lateinit var sortOptionsAdapter: SortOptionsAdapter
+    @Inject
+    lateinit var advertsSkeleton: AdvertsSkeleton
     private var categoriesDialog: CategoriesDialogFragment? = null
+    private var sortOptionsDialog: SortOptionDialogFragment? = null
 
     companion object {
         fun newInstance() = AdvertsFragment()
@@ -54,6 +60,7 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adverts_toolbar_layout.titleTypeface()
+        setHasOptionsMenu(true)
 
         adverts_recycler.layoutManager = LinearLayoutManager(context)
         adverts_recycler.adapter = advertsAdapter
@@ -64,6 +71,8 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
         if (savedInstanceState != null) {
             categoriesDialog =
                 requireFragmentManager().findFragmentByTag(BaseBottomSheetFragment.TAG) as? CategoriesDialogFragment
+            sortOptionsDialog =
+                requireFragmentManager().findFragmentByTag(BaseBottomSheetFragment.TAG) as? SortOptionDialogFragment
             bindDialogToReactor()
         }
 
@@ -81,12 +90,22 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                 OnCategoryClickAction(it)
             }.bindToReactor()
 
+        sortOptionsAdapter.onItemClick
+            .map {
+                sortOptionsDialog?.dismiss()
+                OnSortOptionClickAction(it)
+            }.bindToReactor()
+
         category_button.clicks()
             .map { OnCategoriesClickAction }
             .bindToReactor()
 
         selected_category_close.clicks()
             .map { OnCategoryClickAction(Category.EMPTY) }
+            .bindToReactor()
+
+        adverts_toolbar_sort.clicks()
+            .map { OnSortClickAction }
             .bindToReactor()
 
         adverts_toolbar_plus.clicks()
@@ -105,16 +124,9 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                 }
             }
             .observeState {
-                if (it.isEmpty()) {
-                    adverts_stateLayout.setState(
-                        PlaceholderLayoutState(
-                            ViewState.EMPTY,
-                            PullState.IDLE
-                        )
-                    )
-                } else {
-                    advertsAdapter.updateData(it)
-                }
+                adverts_recycler.visible(it.isNotEmpty())
+                adverts_filter_empty.visible(it.isEmpty())
+                advertsAdapter.updateData(it)
                 advertsSkeleton.hide()
             }
 
@@ -138,6 +150,9 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                     adverts_selected_category.gone()
                 }
             }
+
+        stateObservable.getChange { it.selectedSortOption }
+            .observeState { sortOptionsAdapter.updateData(it) }
     }
 
     override fun bindToEvent(eventsObservable: Observable<MviEvent<AdvertsState>>) {
@@ -152,6 +167,8 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                     )
                 }
                 is ShowCategoriesDialogEvent -> showCategoriesDialog()
+                is ShowSortOptionsDialogEvent -> showSortOptionsDialog()
+                is ShowCategoriesDialogEvent -> showCategoriesDialog()
                 is NavigateToCreateAdvertEvent -> {
                     startActivity(CreateAdvertActivity.getStartIntent(requireContext()))
                 }
@@ -162,6 +179,7 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
 
     private fun bindDialogToReactor() {
         categoriesDialog?.setAdapter(categoriesAdapter)
+        sortOptionsDialog?.setAdapter(sortOptionsAdapter)
     }
 
     private fun showCategoriesDialog() {
@@ -187,5 +205,11 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                 sendAction(OnAllowLocationAction)
             }
         }
+    }
+
+    private fun showSortOptionsDialog() {
+        sortOptionsDialog = SortOptionDialogFragment()
+        sortOptionsDialog?.show(requireFragmentManager())
+        bindDialogToReactor()
     }
 }
