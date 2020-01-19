@@ -67,4 +67,10 @@
     <!-- Contact dialog -->
     <string name="contact_dialog_phone">Zavolať</string>
     <string name="contact_dialog_email">Napísať email</string>
+
+    <!-- Delete advert dialog -->
+    <string name="delete_advert_title">Vymazať inzerát</string>
+    <string name="delete_advert_content">Ste si istý? Vymazanie nie je možné vrátiť späť.</string>
+    <string name="delete_advert_positivie">Zmazať</string>
+    <string name="delete_advert_negative">Zrušiť</string>
 </resources>

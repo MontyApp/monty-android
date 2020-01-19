@@ -21,6 +21,17 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/advert_detail_toolbar_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center_vertical"
+                android:background="?selectableItemBackgroundBorderless"
+                android:gravity="end|center_vertical"
+                android:paddingStart="@dimen/d2"
+                android:paddingEnd="@dimen/d2"
+                app:srcCompat="@drawable/bg_delete" />
+
+            <ImageView
                 android:id="@+id/advert_detail_toolbar_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

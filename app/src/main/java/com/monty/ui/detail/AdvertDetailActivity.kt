@@ -20,6 +20,7 @@ import com.monty.tool.intent.Navigation
 import com.monty.ui.base.BaseActivity
 import com.monty.ui.base.BaseBottomSheetFragment
 import com.monty.ui.common.dialog.ContactDialog
+import com.monty.ui.common.dialog.DeleteAdvertDialog
 import com.monty.ui.create.CreateAdvertActivity
 import com.monty.ui.detail.contract.*
 import com.monty.ui.photo.ShowPhotoActivity
@@ -36,6 +37,7 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
     @Inject lateinit var reactorFactory: AdvertDetailReactorFactory
     @Inject lateinit var currencyFormatter: CurrencyFormatter
 
+    private var deleteAdvertDialog: DeleteAdvertDialog? = null
     private var contactDialog: ContactDialog? = null
 
     companion object {
@@ -58,6 +60,8 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
         if (savedInstanceState != null) {
             contactDialog =
                 supportFragmentManager.findFragmentByTag(BaseBottomSheetFragment.TAG) as? ContactDialog
+            deleteAdvertDialog =
+                supportFragmentManager.findFragmentByTag(DeleteAdvertDialog.TAG) as? DeleteAdvertDialog
             bindDialogToReactor()
         }
 
@@ -85,6 +89,14 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
 
         advert_detail_toolbar_edit.clicks()
             .map { OnEditAction }
+            .bindToReactor()
+
+        advert_detail_stateLayout.onRefresh
+            .map { OnRefreshAction }
+            .bindToReactor()
+
+        advert_detail_toolbar_delete.clicks()
+            .map { OnDeleteAction }
             .bindToReactor()
     }
 
@@ -160,6 +172,10 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
 
         contactDialog?.onEmailClick
             ?.map { OnContactEmailAction }
+            ?.bindToReactor()
+
+        deleteAdvertDialog?.onPositiveClick
+            ?.map { OnDeletePositiveAction }
             ?.bindToReactor()
     }
 
