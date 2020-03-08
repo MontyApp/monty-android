@@ -113,6 +113,10 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
         adverts_toolbar_plus.clicks()
             .map { OnAddAdvertClickAction }
             .bindToReactor()
+
+        adverts_stateLayout.onRefresh
+            .map { OnRefreshAction }
+            .bindToReactor()
     }
 
     override fun bindToState(stateObservable: Observable<AdvertsState>) {

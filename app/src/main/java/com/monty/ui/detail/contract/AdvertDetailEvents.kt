@@ -8,6 +8,8 @@ data class ErrorEvent(val message: String) : AdvertDetailEvent()
 
 object BackEvent : AdvertDetailEvent()
 
+object ShowDeleteDialogEvent : AdvertDetailEvent()
+
 data class ShowContactDialog(val name: String) : AdvertDetailEvent()
 
 data class NavigateToPhoneEvent(val phone: String) : AdvertDetailEvent()

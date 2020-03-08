@@ -6,6 +6,10 @@ sealed class AdvertDetailAction : MviAction<AdvertDetailState>
 
 object OnRefreshAction : AdvertDetailAction()
 
+object OnDeleteAction : AdvertDetailAction()
+
+object OnDeletePositiveAction : AdvertDetailAction()
+
 object OnBackAction : AdvertDetailAction()
 
 object OnMapAction : AdvertDetailAction()

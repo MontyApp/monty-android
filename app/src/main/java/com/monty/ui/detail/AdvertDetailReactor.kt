@@ -1,13 +1,20 @@
 package com.monty.ui.detail
 
 import com.monty.data.model.ui.User
+import com.monty.domain.advert.DeleteAdvertCompletabler
 import com.monty.domain.advert.GetAdvertObservabler
+import com.monty.domain.behavior.LoadingCompletableBehavior
 import com.monty.domain.favourite.AddFavouriteAdvertCompletabler
 import com.monty.domain.favourite.RemoveFavouriteAdvertCompletabler
 import com.monty.domain.location.GetMyLocationObservabler
 import com.monty.domain.user.GetUserObservabler
 import com.monty.domain.user.SyncUserCompletabler
+import com.monty.ui.base.placeholder.PartialLayoutState
+import com.monty.ui.base.placeholder.PullState
 import com.monty.ui.detail.contract.*
+import com.sumera.koreactor.behaviour.completable
+import com.sumera.koreactor.behaviour.messages
+import com.sumera.koreactor.behaviour.triggers
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviAction
 import com.sumera.koreactor.util.extension.getChange
@@ -16,6 +23,7 @@ import javax.inject.Inject
 
 class AdvertDetailReactor @Inject constructor(
     private val getAdvertObservabler: GetAdvertObservabler,
+    private val deleteAdvertCompletabler: DeleteAdvertCompletabler,
     private val syncUserCompletabler: SyncUserCompletabler,
     private val getUserObservabler: GetUserObservabler,
     private val getMyLocationObservabler: GetMyLocationObservabler,
@@ -36,9 +44,12 @@ class AdvertDetailReactor @Inject constructor(
         val onMapAction = actions.ofActionType<OnMapAction>()
         val onFavouriteAction = actions.ofActionType<OnFavouriteAction>()
         val onEditAction = actions.ofActionType<OnEditAction>()
+        val onDeletePositiveAction = actions.ofActionType<OnDeletePositiveAction>()
+        val onDeleteAction = actions.ofActionType<OnDeleteAction>()
 
         onBackAction.map { BackEvent }.bindToView()
         onEditAction.map { NavigateToEditEvent(advertId) }.bindToView()
+        onDeleteAction.map { ShowDeleteDialogEvent }.bindToView()
 
         onFavouriteAction
             .flatMapSingle { stateSingle }
@@ -103,5 +114,14 @@ class AdvertDetailReactor @Inject constructor(
             .flatMap { getUserObservabler.init(it).execute() }
             .map { ChangeUserReducer(it) }
             .bindToView()
+
+        LoadingCompletableBehavior<OnDeletePositiveAction, AdvertDetailState>(
+            triggers = triggers(onDeletePositiveAction),
+            cancelPrevious = true,
+            worker = completable { deleteAdvertCompletabler.init(advertId).execute() },
+            onStart = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.REFRESHING)) },
+            onError = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.IDLE)) },
+            onComplete = messages { BackEvent }
+        ).bindToView()
     }
 }

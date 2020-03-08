@@ -1,108 +1,91 @@
 package com.monty.domain
 
-import com.monty.data.model.ui.Address
-import com.monty.data.model.ui.Currency
-import com.monty.data.model.ui.Interval
-import com.monty.data.model.ui.Price
-import com.monty.data.model.ui.type.IntervalType
-
-val priceX = Price(
-    currency = Currency(code = "eur", sign = "€"),
-    interval = Interval(IntervalType.WEEK.value),
-    value = 100f
-)
-
-val priceY = Price(
-    currency = Currency(code = "eur", sign = "€"),
-    interval = Interval(IntervalType.MONTH.value),
-    value = 50f
-)
-
-val priceZ = Price(
-    currency = Currency(code = "eur", sign = "€"),
-    interval = Interval(IntervalType.DAY.value),
-    value = 75f
-)
-
-val address = Address(
-    name = "Brno",
-    latitude = 49.195061,
-    longitude = 16.606836
-)
+import com.google.firebase.firestore.GeoPoint
+import org.threeten.bp.LocalDateTime
 
 val description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
 
-//val adverts = listOf(
-//    Advert(
-//        id = 1,
-//        title = "Nosič THULE",
-//        description = description,
-//        createdAt = LocalDateTime.MIN,
-//        price = priceX,
-//        deposit = priceX,
-//        image = "https://images-na.ssl-images-amazon.com/images/I/91RqROIuniL._SL1500_.jpg",
-//        address = address,
-//        isFavourite = false,
-//        categoryId = 1
-//    ),
-//    Advert(
-//        id = 2,
-//        title = "Súprava BOSH - vŕtačka",
-//        description = description,
-//        createdAt = LocalDateTime.MIN,
-//        price = priceY,
-//        deposit = priceX,
-//        address = address,
-//        image = "https://assets.bosch.com/media/global/products_and_solutions/industry_and_trade/power-tools-for-professionals_res_800x450.jpg",
-//        isFavourite = false,
-//        categoryId = 2
-//    ),
-//    Advert(
-//        id = 3,
-//        title = "Gitara Les Paul",
-//        description = description,
-//        createdAt = LocalDateTime.MIN,
-//        price = priceZ,
-//        deposit = priceY,
-//        address = address,
-//        image = "https://www.eastgatemusic.com.au/wp-content/uploads/2018/08/Gibson-Les-Paul-Classic-2018-Ebony-Electric-Guitar-in-case.jpg",
-//        isFavourite = false,
-//        categoryId = 2
-//    ),
-//    Advert(
-//        id = 4,
-//        title = "Bicykel na víkend",
-//        description = description,
-//        createdAt = LocalDateTime.MIN,
-//        price = priceX,
-//        deposit = priceZ,
-//        address = address,
-//        image = "https://www.batchbicycles.com/media/wysiwyg/home-slide/batch-fitness-homepage.jpg",
-//        isFavourite = false,
-//        categoryId = 1
-//    ),
-//    Advert(
-//        id = 5,
-//        title = "Nosič THULE",
-//        description = description,
-//        createdAt = LocalDateTime.MIN,
-//        price = priceZ,
-//        deposit = priceX,
-//        address = address,
-//        image = "https://images-na.ssl-images-amazon.com/images/I/91RqROIuniL._SL1500_.jpg",
-//        isFavourite = false,
-//        categoryId = 1
-//    ),
-//    Advert(
-//        id = 6,
-//        title = "Súprava BOSH - vŕtačka",
-//        description = description,
-//        createdAt = LocalDateTime.MIN,
-//        price = priceY,
-//        deposit = priceZ,
-//        address = address,
-//        image = "https://assets.bosch.com/media/global/products_and_solutions/industry_and_trade/power-tools-for-professionals_res_800x450.jpg",
-//        isFavourite = false,
-//        categoryId = 2
-//    )
-//)
+val data1 = hashMapOf(
+    "title" to "Súprava BOSH - vŕtačka",
+    "description" to description,
+    "image" to "https://assets.bosch.com/media/global/products_and_solutions/industry_and_trade/power-tools-for-professionals_res_800x450.jpg",
+    "interval" to "month",
+    "deposit" to 500,
+    "price" to 350,
+    "categoryId" to 2,
+    "address" to GeoPoint(50.08804, 14.42076),
+    "currency" to "czk",
+    "createdAt" to LocalDateTime.now().minusDays(1).toString(),
+    "userId" to "sQy4wqzggp1HuSgM8mJF"
+)
+
+val data2 = hashMapOf(
+    "title" to "Gitara Les Paul",
+    "description" to description,
+    "image" to "https://www.eastgatemusic.com.au/wp-content/uploads/2018/08/Gibson-Les-Paul-Classic-2018-Ebony-Electric-Guitar-in-case.jpg",
+    "interval" to "week",
+    "deposit" to 600,
+    "price" to 500,
+    "categoryId" to 2,
+    "address" to GeoPoint(49.195061, 16.606836),
+    "currency" to "czk",
+    "createdAt" to LocalDateTime.now().minusDays(2).toString(),
+    "userId" to "sQy4wqzggp1HuSgM8mJF"
+)
+
+val data3 = hashMapOf(
+    "title" to "Instax Fotoaparát",
+    "description" to description,
+    "image" to "https://cnet1.cbsistatic.com/img/DAAL51pLvY3EWLV63iPfHG3VSGE=/1200x675/2017/09/18/00cd9dd9-7fa6-4d94-ba2b-65cdd9317eb6/fujifilm-instax-square-sq10-120.jpg",
+    "interval" to "day",
+    "deposit" to 200,
+    "price" to 300,
+    "categoryId" to 2,
+    "address" to GeoPoint(50.08804, 14.42076),
+    "currency" to "czk",
+    "createdAt" to LocalDateTime.now().minusDays(3).toString(),
+    "userId" to "sQy4wqzggp1HuSgM8mJF"
+)
+
+val data4 = hashMapOf(
+    "title" to "Dron DJI Mavic",
+    "description" to description,
+    "image" to "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8_xFBsUTEU2NCQOpARASEWQ1EkRkWS2aSmpVmxzLAjy0Rh-zX&s",
+    "interval" to "day",
+    "deposit" to 200,
+    "price" to 300,
+    "categoryId" to 2,
+    "address" to GeoPoint(49.195061, 16.606836),
+    "currency" to "czk",
+    "createdAt" to LocalDateTime.now().minusDays(4).toString(),
+    "userId" to "sQy4wqzggp1HuSgM8mJF"
+)
+
+val data5 = hashMapOf(
+    "title" to "Kellys bicykel",
+    "description" to description,
+    "image" to "https://i.ytimg.com/vi/SRw-q1a4tS8/maxresdefault.jpg",
+    "interval" to "day",
+    "deposit" to 200,
+    "price" to 300,
+    "categoryId" to 1,
+    "address" to GeoPoint(50.08804, 14.42076),
+    "currency" to "czk",
+    "createdAt" to LocalDateTime.now().minusDays(5).toString(),
+    "userId" to "sQy4wqzggp1HuSgM8mJF"
+)
+
+
+val data6 = hashMapOf(
+    "title" to "Liberta retro kolo",
+    "description" to description,
+    "image" to "http://images.mtbiker.sk/bazar/big/IMG_20180507_114254_5af02c482aa92.jpg",
+    "interval" to "day",
+    "deposit" to 300,
+    "price" to 400,
+    "categoryId" to 1,
+    "address" to GeoPoint(49.195061, 16.606836),
+    "currency" to "czk",
+    "createdAt" to LocalDateTime.now().minusDays(6).toString(),
+    "userId" to "sQy4wqzggp1HuSgM8mJF"
+)

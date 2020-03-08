@@ -35,6 +35,10 @@ class AdvertsStore @Inject constructor(
         return montyFirebase.editAdvert(data, id).andThen(syncAdverts())
     }
 
+    fun deleteAdvert(id: String): Completable {
+        return montyFirebase.deleteAdvert(id).andThen(syncAdverts())
+    }
+
     fun getAdverts(): Observable<List<Advert>> {
         return database.advertDao().getAll().toObservable()
     }

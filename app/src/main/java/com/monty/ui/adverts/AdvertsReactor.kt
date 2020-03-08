@@ -44,7 +44,7 @@ class AdvertsReactor @Inject constructor(
         val onAddAdvertClickAction = actions.ofActionType<OnAddAdvertClickAction>()
         val onSortClickAction = actions.ofActionType<OnSortClickAction>()
         val onSortOptionClickAction = actions.ofActionType<OnSortOptionClickAction>()
-        val onRefreshAction = actions.ofActionType<OnRefreshAction>()
+        val onRefreshAction = actions.ofActionType<OnRefreshAction>().share()
         val onAllowLocationAction = actions.ofActionType<OnAllowLocationAction>()
 
         onAdvertClickAction.map { NavigateToAdvertDetailEvent(it.advert.id) }.bindToView()
@@ -84,12 +84,6 @@ class AdvertsReactor @Inject constructor(
             .map { ChangeMyLocationReducer(it) }
             .bindToView()
 
-        Observable.merge(attachLifecycleObservable, onRefreshAction)
-            .flatMapCompletable { syncAdvertsCompletabler.execute() }
-            .onErrorComplete()
-            .toObservable<Unit>()
-            .bindTo()
-
         LoadingCompletableBehavior<AttachState, AdvertsState>(
             triggers = triggers(attachLifecycleObservable),
             cancelPrevious = true,
@@ -97,7 +91,8 @@ class AdvertsReactor @Inject constructor(
             onStart = messages(),
             onError = messages { ErrorEvent(it.message.toString()) },
             onComplete = messages()
-        )
+        ).bindToView()
+
         LoadingCompletableBehavior<OnRefreshAction, AdvertsState>(
             triggers = triggers(onRefreshAction),
             cancelPrevious = true,
@@ -105,7 +100,7 @@ class AdvertsReactor @Inject constructor(
             onStart = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.REFRESHING)) },
             onError = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.IDLE)) },
             onComplete = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.IDLE)) }
-        )
+        ).bindToView()
 
         resumeLifecycleObservable
             .flatMapSingle { Single.just(locationPermission.isEnabled()) }

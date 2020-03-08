@@ -65,4 +65,14 @@ data class MontyFirebase @Inject constructor(
                 completabler.onError(it)
             }
     }.observeOn(Schedulers.io())
+
+    fun deleteAdvert(id: String) = Completable.create { completabler ->
+        firestore.collection(Constant.Database.ADVERTS).document(id).delete()
+            .addOnSuccessListener {
+                completabler.onComplete()
+            }.addOnFailureListener {
+                //TODO parse error
+                completabler.onError(it)
+            }
+    }.observeOn(Schedulers.io())
 }
