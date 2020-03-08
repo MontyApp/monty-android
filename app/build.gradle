@@ -157,6 +157,10 @@ dependencies {
     // Koreactor
     implementation "com.github.SumeraMartin:koreactor:$KOREACTOR"
 
+    // Auth
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+
     implementation 'androidx.core:core-ktx:1.1.0'
 
     testImplementation 'junit:junit:4.12'

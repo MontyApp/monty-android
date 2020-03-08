@@ -2,13 +2,15 @@ package com.monty.domain.advert
 
 import com.google.firebase.firestore.GeoPoint
 import com.monty.data.store.AdvertsStore
+import com.monty.data.store.AuthStore
 import com.monty.domain.base.BaseCompletabler
 import io.reactivex.Completable
 import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 
 class AddAdvertCompletabler @Inject constructor(
-    private val advertsStore: AdvertsStore
+    private val advertsStore: AdvertsStore,
+    private val authStore: AuthStore
 ) : BaseCompletabler() {
 
     private var advertId: String = ""
@@ -41,23 +43,26 @@ class AddAdvertCompletabler @Inject constructor(
     }
 
     override fun create(): Completable {
-        val data = hashMapOf(
-            "title" to title,
-            "description" to description,
-            "image" to image,
-            "interval" to interval,
-            "deposit" to deposit,
-            "price" to price,
-            "categoryId" to categoryId,
-            "address" to GeoPoint(49.195061, 16.606836),
-            "currency" to "czk",
-            "createdAt" to LocalDateTime.now().toString(),
-            "userId" to "sQy4wqzggp1HuSgM8mJF"
-        )
-        return if (advertId.isNotEmpty()) {
-            advertsStore.editAdvert(data, advertId)
-        } else {
-            advertsStore.addAdvert(data)
-        }
+        return authStore.getUser()
+            .flatMapCompletable { profile ->
+                val data = hashMapOf(
+                    "title" to title,
+                    "description" to description,
+                    "image" to image,
+                    "interval" to interval,
+                    "deposit" to deposit,
+                    "price" to price,
+                    "categoryId" to categoryId,
+                    "address" to GeoPoint(49.195061, 16.606836),
+                    "currency" to "czk",
+                    "createdAt" to LocalDateTime.now().toString(),
+                    "userId" to profile.id
+                )
+                if (advertId.isNotEmpty()) {
+                    advertsStore.editAdvert(data, advertId)
+                } else {
+                    advertsStore.addAdvert(data)
+                }
+            }
     }
 }

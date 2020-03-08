@@ -21,6 +21,14 @@
 
     <!-- Profile -->
     <string name="profile_title">Profil</string>
+    <string name="profile_first_name">Meno</string>
+    <string name="profile_last_name">Priezvisko</string>
+    <string name="profile_email">E-mail</string>
+    <string name="profile_phone">Telefónne číslo</string>
+    <string name="profile_save">Uložit</string>
+    <string name="profile_save_success">Uloženo</string>
+    <string name="profile_sign_in">Prihlásiť sa pomocou Google</string>
+    <string name="profile_sign_in_info">Aplikácia Monty prináša revolučný spôsob prenájmu vašich vecí.\n\n Ak chcete využívať aplikáciu Monty naplno, prehlidať a pridávať nové inzeráty, prihláste sa prosím.</string>
 
     <!-- Categories -->
     <string name="categories_title">Kategórie</string>
@@ -70,7 +78,7 @@
 
     <!-- Delete advert dialog -->
     <string name="delete_advert_title">Vymazať inzerát</string>
-    <string name="delete_advert_content">Ste si istý? Vymazanie nie je možné vrátiť späť.</string>
-    <string name="delete_advert_positivie">Zmazať</string>
+    <string name="delete_advert_content">Vymazanie nie je možné vrátiť späť.</string>
+    <string name="delete_advert_positivie">Vymazať</string>
     <string name="delete_advert_negative">Zrušiť</string>
 </resources>

@@ -2,6 +2,7 @@ package com.monty.injection.module
 
 import android.content.Context
 import androidx.room.Room
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.monty.App
 import com.monty.data.database.AppDatabase
@@ -21,6 +22,9 @@ class ApplicationModule {
 
     @Provides
     fun firebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    @Provides
+    fun firebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
     fun res(@ApplicationContext context: Context): TRes = TRes(context)

@@ -160,6 +160,7 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 is NavigateToEmailEvent -> startActivity(Navigation.sendEmail(event.email, event.title))
                 is NavigateToMapEvent -> startActivity(Navigation.showOnMap(event.lat, event.lon, this))
                 is NavigateToEditEvent -> startActivity(CreateAdvertActivity.getStartIntent(this, advertId = event.advertId))
+                is ShowDeleteDialogEvent -> showDeleteAdvertDialog()
                 BackEvent -> finish()
             }
         }
@@ -177,6 +178,12 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
         deleteAdvertDialog?.onPositiveClick
             ?.map { OnDeletePositiveAction }
             ?.bindToReactor()
+    }
+
+    private fun showDeleteAdvertDialog() {
+        deleteAdvertDialog = DeleteAdvertDialog()
+        deleteAdvertDialog?.show(supportFragmentManager)
+        bindDialogToReactor()
     }
 
     private fun showContactDialog(name: String) {

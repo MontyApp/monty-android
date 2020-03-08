@@ -46,6 +46,26 @@ data class MontyFirebase @Inject constructor(
             }
     }.observeOn(Schedulers.io())
 
+    fun editUser(data: Map<String, Any>, id: String) = Completable.create { completabler ->
+        firestore.collection(Constant.Database.USERS).document(id).update(data)
+            .addOnSuccessListener {
+                completabler.onComplete()
+            }.addOnFailureListener {
+                //TODO parse error
+                completabler.onError(it)
+            }
+    }.observeOn(Schedulers.io())
+
+    fun signInUser(data: Map<String, Any>) = Single.create<String> { singler ->
+        firestore.collection(Constant.Database.USERS).add(data)
+            .addOnSuccessListener {
+                singler.onSuccess(it.id)
+            }.addOnFailureListener {
+                //TODO parse error
+                singler.onError(it)
+            }
+    }.observeOn(Schedulers.io())
+
     fun addAdvert(data: Map<String, Any>) = Completable.create { completabler ->
         firestore.collection(Constant.Database.ADVERTS).add(data)
             .addOnSuccessListener {

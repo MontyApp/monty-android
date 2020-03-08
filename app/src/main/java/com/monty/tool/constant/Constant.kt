@@ -20,7 +20,14 @@ interface Constant {
         const val TAKE_PHOTO_REQUEST = 1
         const val PICK_IMAGE = 2
         const val LOCATION_PERMISSION_REQUEST = 3
+        const val SIGN_IN_REQUEST = 4
     }
+
+
+    object Persistence {
+        const val USER = "user"
+    }
+
 
     object Formatter {
         val YEAR_MONTH_DAY: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
