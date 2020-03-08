@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.monty.R
+import com.monty.data.model.ui.User
 import com.monty.tool.extensions.expandBottomSheet
+import com.monty.tool.extensions.visible
 import com.monty.ui.base.BaseBottomSheetFragment
 import com.thefuntasty.taste.keyboard.TKeyboard
 import io.reactivex.subjects.PublishSubject
@@ -20,10 +22,10 @@ class ContactDialog : BaseBottomSheetFragment() {
         fun newInstance(): ContactDialog = ContactDialog()
     }
 
-    private var name: String = ""
+    private var user: User = User.EMPTY
 
-    fun init(name: String) = apply {
-        this.name = name
+    fun init(user: User) = apply {
+        this.user = user
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +41,9 @@ class ContactDialog : BaseBottomSheetFragment() {
     ): View? {
         return inflater.inflate(R.layout.view_contact_dialog, container, false)
             .apply {
-                contact_name.text = name
+                contact_name.text = user.name
+
+                contact_phone_click.visible(user.phone.isNotEmpty())
 
                 contact_phone_click.setOnClickListener {
                     dismiss()

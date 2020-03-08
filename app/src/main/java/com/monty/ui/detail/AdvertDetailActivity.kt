@@ -16,6 +16,7 @@ import com.monty.tool.constant.Constant
 import com.monty.tool.currency.CurrencyFormatter
 import com.monty.tool.extensions.configureMap
 import com.monty.tool.extensions.drawable
+import com.monty.tool.extensions.visible
 import com.monty.tool.intent.Navigation
 import com.monty.ui.base.BaseActivity
 import com.monty.ui.base.BaseBottomSheetFragment
@@ -117,6 +118,13 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 }
             }
 
+        stateObservable.getChange { Pair(it.user, it.profile) }
+            .filter { it.first != User.EMPTY && it.second != User.EMPTY }
+            .observeState {
+                advert_detail_toolbar_delete.visible(it.first.id == it.second.id)
+                advert_detail_toolbar_edit.visible(it.first.id == it.second.id)
+            }
+
         stateObservable.getChange { it.user }
             .filter { it != User.EMPTY }
             .observeState { user ->
@@ -155,7 +163,7 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 is NavigateToShowPhotoEvent -> {
                     startActivity(ShowPhotoActivity.getStartIntent(this, event.url))
                 }
-                is ShowContactDialog -> showContactDialog(event.name)
+                is ShowContactDialog -> showContactDialog(event.user)
                 is NavigateToPhoneEvent -> startActivity(Navigation.callPhone(event.phone))
                 is NavigateToEmailEvent -> startActivity(Navigation.sendEmail(event.email, event.title))
                 is NavigateToMapEvent -> startActivity(Navigation.showOnMap(event.lat, event.lon, this))
@@ -186,9 +194,9 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
         bindDialogToReactor()
     }
 
-    private fun showContactDialog(name: String) {
+    private fun showContactDialog(user: User) {
         contactDialog = ContactDialog.newInstance()
-        contactDialog?.init(name)?.show(supportFragmentManager)
+        contactDialog?.init(user)?.show(supportFragmentManager)
         bindDialogToReactor()
     }
 }

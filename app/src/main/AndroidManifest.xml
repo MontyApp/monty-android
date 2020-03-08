@@ -38,6 +38,7 @@
 
         <activity
             android:name=".ui.create.CreateAdvertActivity"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
 
         <provider

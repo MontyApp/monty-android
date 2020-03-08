@@ -7,6 +7,7 @@ import com.monty.domain.behavior.LoadingCompletableBehavior
 import com.monty.domain.favourite.AddFavouriteAdvertCompletabler
 import com.monty.domain.favourite.RemoveFavouriteAdvertCompletabler
 import com.monty.domain.location.GetMyLocationObservabler
+import com.monty.domain.profile.GetProfileObservabler
 import com.monty.domain.user.GetUserObservabler
 import com.monty.domain.user.SyncUserCompletabler
 import com.monty.ui.base.placeholder.PartialLayoutState
@@ -29,6 +30,7 @@ class AdvertDetailReactor @Inject constructor(
     private val getMyLocationObservabler: GetMyLocationObservabler,
     private val addFavouriteAdvertCompletabler: AddFavouriteAdvertCompletabler,
     private val removeFavouriteAdvertCompletabler: RemoveFavouriteAdvertCompletabler,
+    private val getProfileObservabler: GetProfileObservabler,
     private val advertId: String
 ) : MviReactor<AdvertDetailState>() {
 
@@ -72,7 +74,7 @@ class AdvertDetailReactor @Inject constructor(
         onContactAction
             .flatMapSingle { stateSingle }
             .filter { it.user != User.EMPTY }
-            .map { ShowContactDialog(it.user.name) }
+            .map { ShowContactDialog(it.user) }
             .bindToView()
 
         onContactPhoneAction
@@ -113,6 +115,11 @@ class AdvertDetailReactor @Inject constructor(
             .filter { it.isNotEmpty() }
             .flatMap { getUserObservabler.init(it).execute() }
             .map { ChangeUserReducer(it) }
+            .bindToView()
+
+        attachLifecycleObservable
+            .flatMap { getProfileObservabler.execute() }
+            .map { ChangeProfileReducer(it) }
             .bindToView()
 
         LoadingCompletableBehavior<OnDeletePositiveAction, AdvertDetailState>(

@@ -16,6 +16,10 @@ data class ChangeUserReducer(private val user: User) : AdvertDetailReducer() {
     override fun reduce(oldState: AdvertDetailState) = oldState.copy(user = user)
 }
 
+data class ChangeProfileReducer(private val profile: User) : AdvertDetailReducer() {
+    override fun reduce(oldState: AdvertDetailState) = oldState.copy(profile = profile)
+}
+
 data class ChangeMyLocationReducer(private val myLocation: Location) : AdvertDetailReducer() {
     override fun reduce(oldState: AdvertDetailState) = oldState.copy(myLocation = myLocation)
 }

@@ -1,5 +1,6 @@
 package com.monty.ui.detail.contract
 
+import com.monty.data.model.ui.User
 import com.sumera.koreactor.reactor.data.MviEvent
 
 sealed class AdvertDetailEvent : MviEvent<AdvertDetailState>()
@@ -10,7 +11,7 @@ object BackEvent : AdvertDetailEvent()
 
 object ShowDeleteDialogEvent : AdvertDetailEvent()
 
-data class ShowContactDialog(val name: String) : AdvertDetailEvent()
+data class ShowContactDialog(val user: User) : AdvertDetailEvent()
 
 data class NavigateToPhoneEvent(val phone: String) : AdvertDetailEvent()
 

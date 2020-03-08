@@ -3,16 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/contact_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/d4"
-        android:layout_marginTop="@dimen/d4"
-        android:layout_marginEnd="@dimen/d4"
+        android:layout_margin="@dimen/d4"
         android:background="@drawable/bg_selected"
         android:textAppearance="@style/TitleDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +22,6 @@
         android:id="@+id/contact_phone_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/d4"
         android:background="@drawable/bg_selected"
         android:orientation="horizontal">
 
@@ -50,6 +47,7 @@
         android:id="@+id/contact_email_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/d4"
         android:background="@drawable/bg_selected"
         android:orientation="horizontal">
 

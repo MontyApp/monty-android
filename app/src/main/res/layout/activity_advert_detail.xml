@@ -27,6 +27,7 @@
                 android:layout_gravity="end|center_vertical"
                 android:background="?selectableItemBackgroundBorderless"
                 android:gravity="end|center_vertical"
+                android:visibility="gone"
                 android:paddingStart="@dimen/d2"
                 android:paddingEnd="@dimen/d2"
                 app:srcCompat="@drawable/bg_delete" />
@@ -38,6 +39,7 @@
                 android:layout_gravity="end|center_vertical"
                 android:background="?selectableItemBackgroundBorderless"
                 android:gravity="end|center_vertical"
+                android:visibility="gone"
                 android:paddingStart="@dimen/d2"
                 android:paddingEnd="@dimen/d2"
                 app:srcCompat="@drawable/bg_edit" />

@@ -9,6 +9,7 @@ import com.sumera.koreactor.reactor.data.MviState
 data class AdvertDetailState(
     val advert: Advert,
     val user: User,
+    val profile: User,
     val myLocation: Location,
     val layoutState: PlaceholderLayoutState
 ) : MviState {

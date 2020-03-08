@@ -1,6 +1,7 @@
 package com.monty.domain.advert
 
 import com.google.firebase.firestore.GeoPoint
+import com.monty.data.model.ui.User
 import com.monty.data.store.AdvertsStore
 import com.monty.data.store.AuthStore
 import com.monty.domain.base.BaseCompletabler
@@ -43,7 +44,7 @@ class AddAdvertCompletabler @Inject constructor(
     }
 
     override fun create(): Completable {
-        return authStore.getUser()
+        return authStore.getUser().first(User.EMPTY)
             .flatMapCompletable { profile ->
                 val data = hashMapOf(
                     "title" to title,
