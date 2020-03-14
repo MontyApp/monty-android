@@ -8,6 +8,7 @@ import com.monty.domain.behavior.LoadingCompletableBehavior
 import com.monty.domain.favourite.AddFavouriteAdvertCompletabler
 import com.monty.domain.favourite.RemoveFavouriteAdvertCompletabler
 import com.monty.domain.location.GetMyLocationObservabler
+import com.monty.domain.profile.GetProfileObservabler
 import com.monty.tool.permissions.LocationPermission
 import com.monty.ui.adverts.contract.*
 import com.monty.ui.base.placeholder.PartialLayoutState
@@ -30,6 +31,7 @@ class AdvertsReactor @Inject constructor(
     private val getCategoriesSingler: GetCategoriesSingler,
     private val locationPermission: LocationPermission,
     private val getMyLocationObservabler: GetMyLocationObservabler,
+    private val getProfileObservabler: GetProfileObservabler,
     private val addFavouriteAdvertCompletabler: AddFavouriteAdvertCompletabler,
     private val removeFavouriteAdvertCompletabler: RemoveFavouriteAdvertCompletabler
 ) : MviReactor<AdvertsState>() {
@@ -84,6 +86,11 @@ class AdvertsReactor @Inject constructor(
             .map { ChangeMyLocationReducer(it) }
             .bindToView()
 
+        attachLifecycleObservable
+            .flatMap { getProfileObservabler.execute() }
+            .map { ChangeProfileReducer(it) }
+            .bindToView()
+
         LoadingCompletableBehavior<AttachState, AdvertsState>(
             triggers = triggers(attachLifecycleObservable),
             cancelPrevious = true,
@@ -98,7 +105,10 @@ class AdvertsReactor @Inject constructor(
             cancelPrevious = true,
             worker = completable { syncAdvertsCompletabler.execute() },
             onStart = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.REFRESHING)) },
-            onError = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.IDLE)) },
+            onError = messages(
+                { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.IDLE)) },
+                { ErrorEvent(it.message.toString()) }
+            ),
             onComplete = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.IDLE)) }
         ).bindToView()
 

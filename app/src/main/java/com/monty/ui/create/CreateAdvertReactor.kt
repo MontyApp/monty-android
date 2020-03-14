@@ -2,6 +2,7 @@ package com.monty.ui.create
 
 import android.content.Context
 import com.monty.data.model.response.FileResponse
+import com.monty.data.model.ui.Address
 import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.Category
 import com.monty.domain.GetCategoriesSingler
@@ -58,6 +59,8 @@ class CreateAdvertReactor @Inject constructor(
         val onCategoryClickAction = actions.ofActionType<OnCategoryClickAction>()
         val onSelectCategoryAction = actions.ofActionType<OnSelectCategoryAction>()
         val onDeleteImageClickAction = actions.ofActionType<OnDeleteImageClickAction>()
+        val onAddressAction = actions.ofActionType<OnAddressAction>()
+        val onMapClickAction = actions.ofActionType<OnMapClickAction>()
 
         attachLifecycleObservable
             .flatMapSingle { getPriceIntervalsSingler.execute() }
@@ -84,6 +87,8 @@ class CreateAdvertReactor @Inject constructor(
         onGetPhotoFromCameraAction.map { OpenCameraEvent }.bindToView()
         onCategoryClickAction.map { ShowCategoriesEvent }.bindToView()
         onBackAction.map { BackEvent }.bindToView()
+        onMapClickAction.map { SearchMapEvent }.bindToView()
+        onAddressAction.map { ChangeAddressReducer(it.address) }.bindToView()
 
         onDeleteImageClickAction.map { ChangeImageReducer("") }.bindToView()
         onDeleteImageClickAction.map { ChangePhotoStateReducer(SubmitState.IDLE) }.bindToView()
@@ -119,6 +124,11 @@ class CreateAdvertReactor @Inject constructor(
             .startWith(false)
             .share()
 
+        val validAddress = stateObservable.getChange { it.address }
+            .map { it != Address.EMPTY }
+            .startWith(false)
+            .share()
+
         onPriceChangeAction
             .filter { it.price.isNotEmpty() }
             .map { ChangePriceReducer(it.price.toFloat()) }
@@ -135,16 +145,17 @@ class CreateAdvertReactor @Inject constructor(
 
         stateObservable
             .flatMap {
-                Rx.observableCombineLatestSixfold(
+                Rx.observableCombineLatestSevenfold(
                     validTitle,
                     validDescription,
                     validPrice,
                     validDeposit,
                     validCategory,
-                    validImage
+                    validImage,
+                    validAddress
                 ).map {
                     val isValid =
-                        it.first && it.second && it.third && it.fourth && it.fifth && it.sixth
+                        it.first && it.second && it.third && it.fourth && it.fifth && it.sixth && it.seventh
                     ChangeButtonStateReducer(
                         if (isValid) {
                             SubmitButtonState.IDLE
@@ -172,7 +183,7 @@ class CreateAdvertReactor @Inject constructor(
             ),
             dataMessage = messages(
                 { ChangePhotoStateReducer(SubmitState.SUCCESS) },
-                { ChangeImageReducer("https://source.unsplash.com/random") }
+                { ChangeImageReducer(it.url) }
             )
         ).bindToView()
 
@@ -187,16 +198,18 @@ class CreateAdvertReactor @Inject constructor(
                     deposit = it.deposit,
                     interval = it.selectedIntervalType?.id ?: "",
                     categoryId = it.selectedCategory.id,
-                    advertId = advertId
+                    advertId = advertId,
+                    address = it.address
                 ).execute()
             },
             cancelPrevious = true,
             onStart = messages {
                 ChangeButtonStateReducer(SubmitButtonState.PROGRESS)
             },
-            onError = messages {
-                ChangeButtonStateReducer(SubmitButtonState.IDLE)
-            },
+            onError = messages(
+                { ChangeButtonStateReducer(SubmitButtonState.IDLE) },
+                { ErrorEvent(it.message.toString()) }
+            ),
             onComplete = messages {
                 ChangeButtonStateReducer(SubmitButtonState.SUCCESS)
             }

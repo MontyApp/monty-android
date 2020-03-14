@@ -7,16 +7,24 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
 import androidx.core.content.FileProvider
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.jakewharton.rxbinding2.support.v7.widget.navigationClicks
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.monty.R
+import com.monty.data.model.ui.Address
 import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.Category
 import com.monty.data.model.ui.IntervalData
 import com.monty.data.model.ui.mapper.IntervalMapper
 import com.monty.tool.constant.Constant
 import com.monty.tool.extensions.gone
+import com.monty.tool.extensions.showToast
 import com.monty.tool.extensions.visible
 import com.monty.tool.helper.FileHelper
 import com.monty.tool.intent.Navigation
@@ -27,6 +35,7 @@ import com.monty.ui.common.category.CategoriesAdapter
 import com.monty.ui.common.category.CategoriesDialogFragment
 import com.monty.ui.common.dialog.GetPhotoDialogFragment
 import com.monty.ui.create.contract.*
+import com.monty.ui.map.SearchMapActivity
 import com.squareup.picasso.Picasso
 import com.sumera.koreactor.reactor.MviReactor
 import com.sumera.koreactor.reactor.data.MviEvent
@@ -62,7 +71,7 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
         return getReactor(reactorFactory, CreateAdvertReactor::class.java)
     }
 
-    override val layoutRes: Int = com.monty.R.layout.activity_create_advert
+    override val layoutRes: Int = R.layout.activity_create_advert
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +124,10 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
 
         create_advert_image_delete.clicks()
             .map { OnDeleteImageClickAction }
+            .bindToReactor()
+
+        create_advert_map_click.clicks()
+            .map { OnMapClickAction }
             .bindToReactor()
 
         categoriesAdapter.onItemClick
@@ -204,6 +217,17 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
             .observeState { (categories, selectedCategory) ->
                 categoriesAdapter.updateData(categories, selectedCategory)
             }
+
+        stateObservable.getChange { it.address }
+            .observeState { address ->
+                advert_detail_map_card_no_map.visible(address == Address.EMPTY)
+            }
+
+        stateObservable.getChange { it.address }
+            .filter { it != Address.EMPTY }
+            .observeState { address ->
+                prepareGoogleMap(address)
+            }
     }
 
     override fun bindToEvent(eventsObservable: Observable<MviEvent<CreateAdvertState>>) {
@@ -215,6 +239,13 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
                 BackEvent -> finish()
                 SuccessEvent -> finish()
                 ShowCategoriesEvent -> showCategoriesDialog()
+                SearchMapEvent -> {
+                    startActivityForResult(
+                        SearchMapActivity.getStartIntent(this),
+                        Constant.Intent.SEARCH_MAP
+                    )
+                }
+                is ErrorEvent -> showToast(event.message)
             }
         }
     }
@@ -227,8 +258,30 @@ class CreateAdvertActivity : BaseActivity<CreateAdvertState>() {
                     tempFileUri?.let { sendAction(OnUploadPhotoAction(it)) }
                 Constant.Intent.PICK_IMAGE ->
                     data?.data?.let { sendAction(OnUploadPhotoAction(it)) }
+                Constant.Intent.SEARCH_MAP -> {
+                    data?.getParcelableExtra<Address>(Constant.Bundle.ADDRESS)?.let {
+                        sendAction(OnAddressAction(it))
+                    }
+                }
             }
         }
+    }
+
+    private fun prepareGoogleMap(address: Address) {
+        val mapFragment =
+            supportFragmentManager.findFragmentById(R.id.advert_detail_map_card_map) as SupportMapFragment
+        val callback = OnMapReadyCallback { googleMap ->
+            googleMap.apply {
+                clear()
+                uiSettings.isMapToolbarEnabled = false
+
+                val location = LatLng(address.latitude, address.longitude)
+                val cameraPosition = CameraPosition.Builder().target(location).zoom(16f).build()
+                moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                addMarker(MarkerOptions().position(location))
+            }
+        }
+        mapFragment.getMapAsync(callback)
     }
 
     private fun bindGetPhotoDialogToReactor() {

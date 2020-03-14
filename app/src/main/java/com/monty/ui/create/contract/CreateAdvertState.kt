@@ -1,5 +1,6 @@
 package com.monty.ui.create.contract
 
+import com.monty.data.model.ui.Address
 import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.Category
 import com.monty.data.model.ui.SpinnerData
@@ -17,6 +18,7 @@ data class CreateAdvertState(
     val advert: Advert,
     val photo: File?,
     val image: String,
+    val address: Address,
     val photoState: SubmitState,
     val buttonState: SubmitButtonState,
     val intervalTypes: List<IntervalType>,
@@ -34,6 +36,7 @@ data class CreateAdvertState(
             advert = Advert.EMPTY,
             photo = null,
             image = "",
+            address = Address.EMPTY,
             photoState = SubmitState.IDLE,
             buttonState = SubmitButtonState.IDLE,
             intervalTypes = emptyList(),

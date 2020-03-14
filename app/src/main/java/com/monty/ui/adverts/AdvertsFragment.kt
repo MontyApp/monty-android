@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
 import com.monty.data.model.ui.Category
+import com.monty.data.model.ui.User
 import com.monty.tool.constant.Constant
-import com.monty.tool.extensions.getDistanceInMeters
-import com.monty.tool.extensions.gone
-import com.monty.tool.extensions.titleTypeface
-import com.monty.tool.extensions.visible
+import com.monty.tool.extensions.*
 import com.monty.ui.adverts.contract.*
 import com.monty.ui.base.BaseBottomSheetFragment
 import com.monty.ui.base.BaseFragment
@@ -157,6 +155,9 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
         stateObservable.getChange { it.layoutState }
             .observeState { adverts_stateLayout.setState(it) }
 
+        stateObservable.getChange { it.profile }
+            .observeState { adverts_toolbar_plus.visible(it != User.EMPTY) }
+
         stateObservable.getChange { Pair(it.categories, it.selectedCategory) }
             .observeState { (categories, selected) ->
                 categoriesAdapter.updateData(categories, selected)
@@ -187,6 +188,7 @@ class AdvertsFragment : BaseFragment<AdvertsState>() {
                         )
                     )
                 }
+                is ErrorEvent -> requireContext().showToast(event.message)
                 is ShowCategoriesDialogEvent -> showCategoriesDialog()
                 is ShowSortOptionsDialogEvent -> showSortOptionsDialog()
                 is ShowCategoriesDialogEvent -> showCategoriesDialog()

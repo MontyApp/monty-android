@@ -36,9 +36,17 @@ class AuthStore @Inject constructor(
     }
 
     fun signInUser(data: Map<String, Any>, user: User): Completable {
-        return montyFirebase.signInUser(data).flatMapCompletable { userId ->
-            Completable.fromCallable { storeUser(user.copy(id = userId)) }
-        }
+        return montyFirebase.existUser(user.email)
+            .flatMapCompletable { documents ->
+                if (documents.isEmpty()) {
+                    montyFirebase.signInUser(data).flatMapCompletable { userId ->
+                        Completable.fromCallable { storeUser(user.copy(id = userId)) }
+                    }
+                } else {
+                    val existingUser = documents.first()
+                    Completable.fromCallable { storeUser(user.copy(id = existingUser.id)) }
+                }
+            }
     }
 
     fun editUser(data: Map<String, Any>, id: String): Completable {

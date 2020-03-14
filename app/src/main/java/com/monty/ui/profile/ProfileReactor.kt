@@ -40,8 +40,7 @@ class ProfileReactor @Inject constructor(
         onEmailChangeAction.map { ChangeEmailReducer(it.email) }.bindToView()
         onPhoneChangeAction.map { ChangePhoneReducer(it.phone) }.bindToView()
         onSignInAction.map { SignInEvent }.bindToView()
-        onSignInStartAction.map { ChangeSignInStateReducer(SubmitButtonState.PROGRESS) }
-            .bindToView()
+        onSignInStartAction.map { ChangeSignInStateReducer(SubmitButtonState.PROGRESS) }.bindToView()
 
         stateObservable.getChange { it }
             .filter { it.buttonState != SubmitButtonState.PROGRESS && it.buttonState != SubmitButtonState.SUCCESS }

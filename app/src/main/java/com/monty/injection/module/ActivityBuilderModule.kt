@@ -7,6 +7,8 @@ import com.monty.ui.detail.AdvertDetailActivity
 import com.monty.ui.detail.AdvertDetailActivityModule
 import com.monty.ui.main.MainActivity
 import com.monty.ui.main.MainActivityModule
+import com.monty.ui.map.SearchMapActivity
+import com.monty.ui.map.SearchMapActivityModule
 import com.monty.ui.photo.ShowPhotoActivity
 import com.monty.ui.photo.ShowPhotoActivityModule
 import dagger.Module
@@ -30,4 +32,8 @@ abstract class ActivityBuilderModule {
     @PerActivity
     @ContributesAndroidInjector(modules = [CreateAdvertActivityModule::class])
     abstract fun createAdvertActivity(): CreateAdvertActivity
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = [SearchMapActivityModule::class])
+    abstract fun searchMapActivity(): SearchMapActivity
 }

@@ -14,6 +14,7 @@ interface Constant {
         const val ADVERT_ID = "advert_id"
         const val PHOTO_ADDRESS = "photo_address"
         const val PHOTO_ADDRESS_TYPE = "photo_address_type"
+        const val ADDRESS = "address"
     }
 
     object Intent {
@@ -21,6 +22,7 @@ interface Constant {
         const val PICK_IMAGE = 2
         const val LOCATION_PERMISSION_REQUEST = 3
         const val SIGN_IN_REQUEST = 4
+        const val SEARCH_MAP = 5
     }
 
 

@@ -156,5 +156,6 @@
     <style name="Location" parent="TextRegular.White.14" />
     <style name="TextInputHint" parent="TextLight.Blue.13" />
     <style name="EditTextInputHint" parent="TextRegular.DarkGrey.16" />
+    <style name="Map" parent="TextRegular.DarkGrey.16" />
 
 </resources>

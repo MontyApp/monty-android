@@ -1,10 +1,7 @@
 package com.monty.ui.create.contract
 
 import android.content.Context
-import com.monty.data.model.ui.Advert
-import com.monty.data.model.ui.Category
-import com.monty.data.model.ui.IntervalData
-import com.monty.data.model.ui.SpinnerData
+import com.monty.data.model.ui.*
 import com.monty.data.model.ui.type.IntervalType
 import com.monty.ui.base.SubmitButtonState
 import com.monty.ui.base.SubmitState
@@ -41,6 +38,10 @@ data class ChangePhotoStateReducer(private val state: SubmitState) : CreateAdver
     override fun reduce(oldState: CreateAdvertState) = oldState.copy(photoState = state)
 }
 
+data class ChangeAddressReducer(private val address: Address) : CreateAdvertReducer() {
+    override fun reduce(oldState: CreateAdvertState) = oldState.copy(address = address)
+}
+
 data class ChangeIntervalTypesReducer(private val intervalTypes: List<IntervalType>) : CreateAdvertReducer() {
     override fun reduce(oldState: CreateAdvertState) = oldState.copy(intervalTypes = intervalTypes)
 }
@@ -71,6 +72,7 @@ data class ChangeAdvertReducer(private val advert : Advert, private val context:
             deposit = advert.deposit.value,
             image = advert.image,
             advert = advert,
+            address = advert.address,
             selectedCategory = selectedCategory,
             selectedIntervalType = IntervalData(id = advert.price.interval.name, name = advert.getInterval(context.resources))
         )

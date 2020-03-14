@@ -127,7 +127,10 @@ class AdvertDetailReactor @Inject constructor(
             cancelPrevious = true,
             worker = completable { deleteAdvertCompletabler.init(advertId).execute() },
             onStart = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.REFRESHING)) },
-            onError = messages { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.IDLE)) },
+            onError = messages (
+                { ChangeLayoutStateReducer(PartialLayoutState(pullState = PullState.IDLE)) },
+                { ErrorEvent(it.message.toString()) }
+            ),
             onComplete = messages { BackEvent }
         ).bindToView()
     }

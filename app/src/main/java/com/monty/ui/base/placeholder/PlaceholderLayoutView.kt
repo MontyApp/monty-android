@@ -32,6 +32,8 @@ class PlaceholderLayoutView @JvmOverloads constructor(
             }
         }
 
+    var isEnabledPTR: Boolean = true
+
     init {
         View.inflate(getContext(), R.layout.layout_placeholder, this)
     }
@@ -100,7 +102,7 @@ class PlaceholderLayoutView @JvmOverloads constructor(
             emptyView?.visible(emptyView?.id == shownLayoutId)
             errorView?.visible(errorView?.id == shownLayoutId)
 
-            placeholder_layout_swipeToRefresh.isEnabled = !showLoading
+            placeholder_layout_swipeToRefresh.isEnabled = !showLoading && placeholderLayoutState.pullState != PullState.DISABLED
         }
 
         when (placeholderLayoutState.pullState) {

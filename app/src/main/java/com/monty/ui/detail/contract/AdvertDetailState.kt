@@ -18,6 +18,7 @@ data class AdvertDetailState(
         val INITIAL = AdvertDetailState(
             advert = Advert.EMPTY,
             user = User.EMPTY,
+            profile = User.EMPTY,
             myLocation = Location(""),
             layoutState = PlaceholderLayoutState.DEFAULT
         )

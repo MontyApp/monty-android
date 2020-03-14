@@ -5,8 +5,11 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.monty.R
+import com.monty.data.model.ui.User
 import com.monty.tool.extensions.titleTypeface
+import com.monty.tool.extensions.visible
 import com.monty.ui.base.BaseFragment
+import com.monty.ui.base.placeholder.PullState
 import com.monty.ui.common.AdvertsAdapter
 import com.monty.ui.common.AdvertsSkeleton
 import com.monty.ui.create.CreateAdvertActivity
@@ -70,7 +73,10 @@ class MyAdvertsFragment : BaseFragment<MyAdvertsState>() {
             .observeState { adapter.updateLocation(it) }
 
         stateObservable.getChange { it.layoutState }
-            .observeState { my_adverts_stateLayout.setState(it) }
+            .observeState { my_adverts_stateLayout.setState(it.copy(pullState = PullState.DISABLED)) }
+
+        stateObservable.getChange { it.profile }
+            .observeState { my_adverts_add.visible(it != User.EMPTY) }
     }
 
     override fun bindToEvent(eventsObservable: Observable<MviEvent<MyAdvertsState>>) {

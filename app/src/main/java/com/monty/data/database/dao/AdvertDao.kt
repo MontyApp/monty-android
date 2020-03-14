@@ -16,6 +16,9 @@ abstract class AdvertDao {
     @Query("SELECT * FROM advert")
     abstract fun getAll(): Flowable<List<Advert>>
 
+    @Query("SELECT * FROM advert WHERE advert.user_id = :userId")
+    abstract fun getAllByUserId(userId: String): Flowable<List<Advert>>
+
     @Query(value = "SELECT * FROM advert WHERE advert.id = :advertId LIMIT 1")
     abstract fun getAdvertByIdFlowable(advertId: String): Flowable<Advert>
 

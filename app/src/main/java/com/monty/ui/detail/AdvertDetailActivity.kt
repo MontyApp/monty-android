@@ -16,6 +16,7 @@ import com.monty.tool.constant.Constant
 import com.monty.tool.currency.CurrencyFormatter
 import com.monty.tool.extensions.configureMap
 import com.monty.tool.extensions.drawable
+import com.monty.tool.extensions.showToast
 import com.monty.tool.extensions.visible
 import com.monty.tool.intent.Navigation
 import com.monty.ui.base.BaseActivity
@@ -66,8 +67,6 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
             bindDialogToReactor()
         }
 
-        advert_detail_stateLayout.onRefresh.map { OnRefreshAction }.bindToReactor()
-
         advert_detail_toolbar.navigationClicks()
             .map { OnBackAction }
             .bindToReactor()
@@ -90,10 +89,6 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
 
         advert_detail_toolbar_edit.clicks()
             .map { OnEditAction }
-            .bindToReactor()
-
-        advert_detail_stateLayout.onRefresh
-            .map { OnRefreshAction }
             .bindToReactor()
 
         advert_detail_toolbar_delete.clicks()
@@ -152,9 +147,6 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 }
                 mapFragment.getMapAsync(callback)
             }
-
-        stateObservable.getChange { it.layoutState }
-            .observeState { advert_detail_stateLayout.setState(it) }
     }
 
     override fun bindToEvent(eventsObservable: Observable<MviEvent<AdvertDetailState>>) {
@@ -170,6 +162,7 @@ class AdvertDetailActivity : BaseActivity<AdvertDetailState>() {
                 is NavigateToEditEvent -> startActivity(CreateAdvertActivity.getStartIntent(this, advertId = event.advertId))
                 is ShowDeleteDialogEvent -> showDeleteAdvertDialog()
                 BackEvent -> finish()
+                is ErrorEvent -> showToast(event.message)
             }
         }
     }

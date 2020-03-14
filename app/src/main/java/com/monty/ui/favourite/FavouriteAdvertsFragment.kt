@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.monty.R
 import com.monty.tool.extensions.titleTypeface
 import com.monty.ui.base.BaseFragment
+import com.monty.ui.base.placeholder.PullState
 import com.monty.ui.common.AdvertsAdapter
 import com.monty.ui.common.AdvertsSkeleton
 import com.monty.ui.detail.AdvertDetailActivity
@@ -67,7 +68,7 @@ class FavouriteAdvertsFragment : BaseFragment<FavouriteAdvertsState>() {
             .observeState { adapter.updateLocation(it) }
 
         stateObservable.getChange { it.layoutState }
-            .observeState { favourite_adverts_stateLayout.setState(it) }
+            .observeState { favourite_adverts_stateLayout.setState(it.copy(pullState = PullState.DISABLED)) }
     }
 
     override fun bindToEvent(eventsObservable: Observable<MviEvent<FavouriteAdvertsState>>) {

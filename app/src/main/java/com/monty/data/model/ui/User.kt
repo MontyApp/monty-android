@@ -1,6 +1,9 @@
 package com.monty.data.model.ui
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.monty.data.model.response.ApiUser
 
 @Entity(tableName = "user")
@@ -17,9 +20,6 @@ data class User(
 
     @ColumnInfo(name = "avatar")
     val avatar: String,
-
-    @Embedded(prefix = "address_")
-    val address: Address,
 
     @ColumnInfo(name = "email")
     val email: String,
@@ -38,8 +38,7 @@ data class User(
             lastName = "",
             avatar = "",
             email = "",
-            phone = "",
-            address = Address.EMPTY
+            phone = ""
         )
 
         fun fromApi(apiUser: ApiUser, id: String) = User(
@@ -48,8 +47,7 @@ data class User(
             lastName = apiUser.lastName,
             avatar = apiUser.avatar,
             email = apiUser.email,
-            phone = apiUser.phone,
-            address = Address.fromApi(apiUser.address)
+            phone = apiUser.phone
         )
     }
 }

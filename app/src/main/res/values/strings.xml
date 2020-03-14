@@ -25,7 +25,7 @@
     <string name="profile_last_name">Priezvisko</string>
     <string name="profile_email">E-mail</string>
     <string name="profile_phone">Telefónne číslo</string>
-    <string name="profile_save">Uložit</string>
+    <string name="profile_save">Uložiť</string>
     <string name="profile_save_success">Uloženo</string>
     <string name="profile_sign_in">Prihlásiť sa pomocou Google</string>
     <string name="profile_sign_in_info">Aplikácia Monty prináša revolučný spôsob prenájmu vašich vecí.\n\n Ak chcete využívať aplikáciu Monty naplno, prehlidať a pridávať nové inzeráty, prihláste sa prosím.</string>
@@ -54,6 +54,7 @@
     <string name="create_advert_deposit">Kaucia</string>
     <string name="create_advert_category">Kategória</string>
     <string name="create_advert_address">Kde to bude dostupné?</string>
+    <string name="create_advert_address_info">Vybrať miesto na mape</string>
     <string name="create_advert_add_photo">Pridať fotku</string>
     <string name="create_advert_interval">Obdobie</string>
     <string name="create_advert_add">Pridať inzerát</string>
@@ -66,11 +67,19 @@
     <string name="sort_advert_by_newest">Podľa najnovších</string>
     <string name="sort_advert_by_nearest">Podľa najbližších</string>
 
+    <!-- Map Search -->
+    <string name="map_search_title">Vyberte miesto na mape</string>
+    <string name="map_search_choose">Vybrať</string>
+
     <!-- Get photo dialog -->
     <string name="get_photo_dialog_camera">Vyfotit</string>
     <string name="get_photo_dialog_gallery">Vybrat fotku z galerie</string>
     <string name="toast_photo_too_large">Nelze nahrát fotku větší než %s MB</string>
     <string name="toast_cant_load_photo">Nepodařilo se načíst fotku</string>
+
+    <!-- Error -->
+    <string name="error_no_internet_connection">Skontrolujte internetové pripojenie a opakujte akciu prosím.</string>
+    <string name="error_something_went_wrong">Niečo sa pokazilo. Opakujte akciu neskôr prosím.</string>
 
     <!-- Contact dialog -->
     <string name="contact_dialog_phone">Zavolať</string>

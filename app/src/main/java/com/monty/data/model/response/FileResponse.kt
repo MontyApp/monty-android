@@ -1,3 +1,3 @@
 package com.monty.data.model.response
 
-data class FileResponse(val uuid: String)
+data class FileResponse(val url: String)

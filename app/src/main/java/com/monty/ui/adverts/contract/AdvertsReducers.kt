@@ -3,6 +3,7 @@ package com.monty.ui.adverts.contract
 import android.location.Location
 import com.monty.data.model.ui.Advert
 import com.monty.data.model.ui.Category
+import com.monty.data.model.ui.User
 import com.monty.ui.base.placeholder.PartialLayoutState
 import com.monty.ui.base.placeholder.ViewState
 import com.monty.ui.common.sort.SortOption
@@ -42,6 +43,10 @@ data class ChangeSelectedCategoryReducer(private val selectedCategory: Category)
 
 data class ChangeShowSkeletonReducer(private val showSkeleton: Boolean) : AdvertsReducer() {
     override fun reduce(oldState: AdvertsState) = oldState.copy(showSkeleton = showSkeleton)
+}
+
+data class ChangeProfileReducer(private val profile: User) : AdvertsReducer() {
+    override fun reduce(oldState: AdvertsState) = oldState.copy(profile = profile)
 }
 
 data class ChangeSelectedSortOptionReducer(private val selectedSortOption: SortOption) : AdvertsReducer() {

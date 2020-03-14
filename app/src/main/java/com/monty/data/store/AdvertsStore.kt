@@ -43,6 +43,10 @@ class AdvertsStore @Inject constructor(
         return database.advertDao().getAll().toObservable()
     }
 
+    fun getMyAdverts(userId: String): Observable<List<Advert>> {
+        return database.advertDao().getAllByUserId(userId).toObservable()
+    }
+
     fun getAdvert(advertId: String): Observable<Advert> {
         return database.advertDao()
             .getAdvertByIdFlowable(advertId)

@@ -1,6 +1,7 @@
 package com.monty.ui.create.contract
 
 import android.net.Uri
+import com.monty.data.model.ui.Address
 import com.monty.data.model.ui.Category
 import com.monty.data.model.ui.SpinnerData
 import com.sumera.koreactor.reactor.data.MviAction
@@ -23,7 +24,11 @@ object OnGetPhotoFromCameraAction : CreateAdvertAction()
 
 data class OnUploadPhotoAction(val uri: Uri) : CreateAdvertAction()
 
+data class OnAddressAction(val address: Address) : CreateAdvertAction()
+
 object OnAddImageClickAction : CreateAdvertAction()
+
+object OnMapClickAction : CreateAdvertAction()
 
 object OnBackAction : CreateAdvertAction()
 

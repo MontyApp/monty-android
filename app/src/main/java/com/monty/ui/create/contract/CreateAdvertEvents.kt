@@ -17,3 +17,5 @@ object OpenGalleryEvent : CreateAdvertEvent()
 object BackEvent : CreateAdvertEvent()
 
 object SuccessEvent : CreateAdvertEvent()
+
+object SearchMapEvent : CreateAdvertEvent()

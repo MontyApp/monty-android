@@ -2,6 +2,7 @@ package com.monty.ui.myadverts.contract
 
 import android.location.Location
 import com.monty.data.model.ui.Advert
+import com.monty.data.model.ui.User
 import com.monty.ui.base.placeholder.PartialLayoutState
 import com.monty.ui.base.placeholder.ViewState
 import com.sumera.koreactor.reactor.data.MviStateReducer
@@ -32,4 +33,8 @@ data class ChangeLayoutStateReducer(private val partialLayoutState: PartialLayou
 
 data class ChangeMyLocationReducer(private val myLocation: Location) : MyAdvertsReducer() {
     override fun reduce(oldState: MyAdvertsState) = oldState.copy(myLocation = myLocation)
+}
+
+data class ChangeProfileReducer(private val user: User) : MyAdvertsReducer() {
+    override fun reduce(oldState: MyAdvertsState) = oldState.copy(profile = user)
 }

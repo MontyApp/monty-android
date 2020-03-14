@@ -14,6 +14,7 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.monty.R
 import com.monty.data.model.ui.User
 import com.monty.tool.constant.Constant
+import com.monty.tool.extensions.showToast
 import com.monty.tool.extensions.titleTypeface
 import com.monty.tool.extensions.visible
 import com.monty.tool.transform.CircleTransform
@@ -123,6 +124,7 @@ class ProfileFragment : BaseFragment<ProfileState>() {
                     val signInIntent = googleSignInClient.signInIntent
                     startActivityForResult(signInIntent, Constant.Intent.SIGN_IN_REQUEST)
                 }
+                is ErrorEvent -> requireContext().showToast(event.message)
             }
         }
 
@@ -138,7 +140,7 @@ class ProfileFragment : BaseFragment<ProfileState>() {
                 sendAction(OnSignInStartAction)
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
+                requireContext().showToast(requireContext().getString(R.string.error_something_went_wrong))
             }
         }
     }

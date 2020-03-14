@@ -27,9 +27,9 @@
                 android:layout_gravity="end|center_vertical"
                 android:background="?selectableItemBackgroundBorderless"
                 android:gravity="end|center_vertical"
-                android:visibility="gone"
                 android:paddingStart="@dimen/d2"
                 android:paddingEnd="@dimen/d2"
+                android:visibility="gone"
                 app:srcCompat="@drawable/bg_delete" />
 
             <ImageView
@@ -39,9 +39,9 @@
                 android:layout_gravity="end|center_vertical"
                 android:background="?selectableItemBackgroundBorderless"
                 android:gravity="end|center_vertical"
-                android:visibility="gone"
                 android:paddingStart="@dimen/d2"
                 android:paddingEnd="@dimen/d2"
+                android:visibility="gone"
                 app:srcCompat="@drawable/bg_edit" />
 
             <ImageView
@@ -58,268 +58,235 @@
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
-    <com.monty.ui.base.placeholder.PlaceholderLayoutView
-        android:id="@+id/advert_detail_stateLayout"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/state_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/d4">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/state_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/d4">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
+                android:id="@+id/advert_detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="230dp"
+                app:layout_collapseMode="parallax"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/advert_detail_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    app:layout_collapseMode="parallax"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/advert_detail_title"
+                style="@style/TitleDark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                app:layout_constraintEnd_toStartOf="@+id/advert_detail_price_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_image"
+                tools:text="Kolo na víkend" />
 
-                <TextView
-                    android:id="@+id/advert_detail_title"
-                    style="@style/TitleDark"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    app:layout_constraintEnd_toStartOf="@+id/advert_detail_price_barrier"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_image"
-                    tools:text="Kolo na víkend" />
+            <TextView
+                android:id="@+id/advert_detail_price"
+                style="@style/TitleDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/advert_detail_title"
+                tools:text="100€" />
 
-                <TextView
-                    android:id="@+id/advert_detail_price"
-                    style="@style/TitleDark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/advert_detail_title"
-                    tools:text="100€" />
+            <TextView
+                android:id="@+id/advert_detail_price_interval"
+                style="@style/SmallDescriptionDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_price"
+                tools:text="za týždeň" />
 
-                <TextView
-                    android:id="@+id/advert_detail_price_interval"
-                    style="@style/SmallDescriptionDark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_price"
-                    tools:text="za týždeň" />
+            <TextView
+                android:id="@+id/advert_detail_description"
+                style="@style/Description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_title"
+                tools:text="Plně funkční, kolo s blatníky, zvonkem, ..." />
 
-                <TextView
-                    android:id="@+id/advert_detail_description"
-                    style="@style/Description"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_title"
-                    tools:text="Plně funkční, kolo s blatníky, zvonkem, ..." />
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/advert_detail_price_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="left"
+                app:constraint_referenced_ids="advert_detail_price_interval,advert_detail_price" />
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/advert_detail_price_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="left"
-                    app:constraint_referenced_ids="advert_detail_price_interval,advert_detail_price" />
+            <View
+                android:id="@+id/advert_detail_description_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                android:background="@color/light_grey"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_description" />
 
-                <View
-                    android:id="@+id/advert_detail_description_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    android:background="@color/light_grey"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_description" />
+            <TextView
+                android:id="@+id/advert_detail_deposit_title"
+                style="@style/Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                android:text="@string/advert_detail_deposit_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_description_separator" />
 
-                <TextView
-                    android:id="@+id/advert_detail_deposit_title"
-                    style="@style/Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    android:text="@string/advert_detail_deposit_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_description_separator" />
+            <TextView
+                android:id="@+id/advert_detail_deposit_price"
+                style="@style/Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/advert_detail_deposit_title"
+                tools:text="100€" />
 
-                <TextView
-                    android:id="@+id/advert_detail_deposit_price"
-                    style="@style/Description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/advert_detail_deposit_title"
-                    tools:text="100€" />
+            <TextView
+                android:id="@+id/advert_detail_deposit_info"
+                style="@style/SmallDescriptionDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d1"
+                android:layout_marginRight="@dimen/d4"
+                android:text="@string/advert_detail_deposit_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_title" />
 
-                <TextView
-                    android:id="@+id/advert_detail_deposit_info"
-                    style="@style/SmallDescriptionDark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d1"
-                    android:layout_marginRight="@dimen/d4"
-                    android:text="@string/advert_detail_deposit_info"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_title" />
+            <View
+                android:id="@+id/advert_detail_deposit_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                android:background="@color/light_grey"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_info" />
 
-                <View
-                    android:id="@+id/advert_detail_deposit_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    android:background="@color/light_grey"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_info" />
+            <TextView
+                android:id="@+id/advert_detail_address_title"
+                style="@style/Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                android:text="@string/advert_detail_address_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_separator" />
 
-                <TextView
-                    android:id="@+id/advert_detail_address_title"
-                    style="@style/Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    android:text="@string/advert_detail_address_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_deposit_separator" />
-
-                <FrameLayout
-                    android:id="@+id/advert_detail_map_card"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d2"
-                    android:layout_marginRight="@dimen/d4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_address_title">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cardCornerRadius="@dimen/monty_radius"
-                        app:cardElevation="0dp">
-
-                        <fragment
-                            android:id="@+id/advert_detail_map"
-                            android:name="com.google.android.gms.maps.SupportMapFragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            map:mapType="normal" />
-
-                    </androidx.cardview.widget.CardView>
-
-                    <View
-                        android:id="@+id/advert_detail_map_click"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/bg_selected_with_radius" />
-
-                </FrameLayout>
-
-                <View
-                    android:id="@+id/advert_detail_user_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    android:background="@color/light_grey"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_map_card" />
-
-                <TextView
-                    android:id="@+id/advert_detail_user_title"
-                    style="@style/Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d4"
-                    android:layout_marginRight="@dimen/d4"
-                    android:text="@string/advert_detail_user_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_separator" />
+            <FrameLayout
+                android:id="@+id/advert_detail_map_card"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d2"
+                android:layout_marginRight="@dimen/d4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_address_title">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/advert_detail_user_card"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/d4"
-                    android:layout_marginTop="@dimen/d2"
-                    android:layout_marginRight="@dimen/d4"
                     app:cardCornerRadius="@dimen/monty_radius"
-                    app:cardElevation="@dimen/d1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_title">
+                    app:cardElevation="0dp">
 
-                    <com.monty.ui.common.UserView
-                        android:id="@+id/advert_detail_user"
+                    <fragment
+                        android:id="@+id/advert_detail_map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        map:mapType="normal" />
 
                 </androidx.cardview.widget.CardView>
 
-                <com.monty.ui.base.SubmitButton
-                    android:id="@+id/advert_detail_contact"
+                <View
+                    android:id="@+id/advert_detail_map_click"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/d4"
-                    app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_card"
-                    app:sffr_label_disabled="@string/advert_detail_contact"
-                    app:sffr_label_idle="@string/advert_detail_contact" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_selected_with_radius" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+            </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/state_empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/d4"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/d4"
-                app:srcCompat="@drawable/ic_favourite_inactive" />
+            <View
+                android:id="@+id/advert_detail_user_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                android:background="@color/light_grey"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_map_card" />
 
             <TextView
+                android:id="@+id/advert_detail_user_title"
+                style="@style/Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d4"
+                android:layout_marginRight="@dimen/d4"
+                android:text="@string/advert_detail_user_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_separator" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/advert_detail_user_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/d4"
+                android:layout_marginTop="@dimen/d2"
+                android:layout_marginRight="@dimen/d4"
+                app:cardCornerRadius="@dimen/monty_radius"
+                app:cardElevation="@dimen/d1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_title">
+
+                <com.monty.ui.common.UserView
+                    android:id="@+id/advert_detail_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.cardview.widget.CardView>
+
+            <com.monty.ui.base.SubmitButton
+                android:id="@+id/advert_detail_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/d6"
-                android:gravity="center"
-                android:paddingLeft="@dimen/d4"
-                android:paddingRight="@dimen/d4"
-                android:text="Empty text" />
+                android:layout_margin="@dimen/d4"
+                app:layout_constraintTop_toBottomOf="@+id/advert_detail_user_card"
+                app:sffr_label_disabled="@string/advert_detail_contact"
+                app:sffr_label_idle="@string/advert_detail_contact" />
 
-        </LinearLayout>
-    </com.monty.ui.base.placeholder.PlaceholderLayoutView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
 
 

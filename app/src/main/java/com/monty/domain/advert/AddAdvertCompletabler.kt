@@ -1,6 +1,7 @@
 package com.monty.domain.advert
 
 import com.google.firebase.firestore.GeoPoint
+import com.monty.data.model.ui.Address
 import com.monty.data.model.ui.User
 import com.monty.data.store.AdvertsStore
 import com.monty.data.store.AuthStore
@@ -22,6 +23,7 @@ class AddAdvertCompletabler @Inject constructor(
     private var interval: String = ""
     private var deposit: Float = 0f
     private var categoryId: Int = 0
+    private var address: Address = Address.EMPTY
 
     fun init(
         title: String,
@@ -31,7 +33,8 @@ class AddAdvertCompletabler @Inject constructor(
         interval: String,
         deposit: Float,
         categoryId: Int,
-        advertId: String = ""
+        advertId: String = "",
+        address: Address
     ) = apply {
         this.title = title
         this.description = description
@@ -41,6 +44,7 @@ class AddAdvertCompletabler @Inject constructor(
         this.price = price
         this.categoryId = categoryId
         this.advertId = advertId
+        this.address = address
     }
 
     override fun create(): Completable {
@@ -54,8 +58,8 @@ class AddAdvertCompletabler @Inject constructor(
                     "deposit" to deposit,
                     "price" to price,
                     "categoryId" to categoryId,
-                    "address" to GeoPoint(49.195061, 16.606836),
-                    "currency" to "czk",
+                    "address" to GeoPoint(address.latitude, address.longitude),
+                    "currency" to "€",
                     "createdAt" to LocalDateTime.now().toString(),
                     "userId" to profile.id
                 )
