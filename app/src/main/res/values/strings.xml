@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">monty-android</string>
+    <string name="app_name">Monty</string>
 
     <!-- Bottom menu -->
     <string name="menu_adverts">Inzeráty</string>
